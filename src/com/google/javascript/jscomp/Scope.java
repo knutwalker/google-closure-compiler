@@ -279,10 +279,17 @@ public class Scope
     }
 
     public String getInputName() {
+<<<<<<< HEAD
       if (input == null)
         return "<non-file>";
       else
         return input.getName();
+=======
+      if (input == null) {
+        return "<non-file>";
+      }
+      return input.getName();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     public boolean isNoShadow() {
@@ -551,9 +558,15 @@ public class Scope
    */
   public boolean isDeclared(String name, boolean recurse) {
     Scope scope = this;
+<<<<<<< HEAD
     if (scope.vars.containsKey(name))
       return true;
 
+=======
+    if (scope.vars.containsKey(name)) {
+      return true;
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     if (scope.parent != null && recurse) {
       return scope.parent.isDeclared(name, recurse);
     }
@@ -607,7 +620,11 @@ public class Scope
    * Returns whether this is a local scope (i.e. not the global scope).
    */
   public boolean isLocal() {
+<<<<<<< HEAD
     return !isGlobal();
+=======
+    return parent != null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -617,4 +634,25 @@ public class Scope
     return Iterators.filter(
         getVars(), DECLARATIVELY_UNBOUND_VARS_WITHOUT_TYPES);
   }
+<<<<<<< HEAD
+=======
+
+  static interface TypeResolver {
+    void resolveTypes();
+  }
+
+  private TypeResolver typeResolver;
+
+  /** Resolve all type references. Only used on typed scopes. */
+  void resolveTypes() {
+    if (typeResolver != null) {
+      typeResolver.resolveTypes();
+      typeResolver = null;
+    }
+  }
+
+  void setTypeResolver(TypeResolver resolver) {
+    this.typeResolver = resolver;
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

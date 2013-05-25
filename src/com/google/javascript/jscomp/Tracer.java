@@ -180,7 +180,11 @@ final class Tracer {
   private long[] extraTracingValues;
 
   /** The type for grouping traces, may be null */
+<<<<<<< HEAD
   private final @Nullable String type;
+=======
+  @Nullable private final String type;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /** A comment string for the report */
   private final String comment;
@@ -303,12 +307,21 @@ final class Tracer {
    * Converts 'v' to a string and pads it with up to 16 spaces for
    * improved alignment.
    * @param v The value to convert.
+<<<<<<< HEAD
    * @param digits_column_width The desired with of the string.
    */
   private static String longToPaddedString(long v, int digits_column_width) {
     int digit_width = numDigits(v);
     StringBuilder sb = new StringBuilder();
     appendSpaces(sb, digits_column_width - digit_width);
+=======
+   * @param digitsColumnWidth The desired with of the string.
+   */
+  private static String longToPaddedString(long v, int digitsColumnWidth) {
+    int digitWidth = numDigits(v);
+    StringBuilder sb = new StringBuilder();
+    appendSpaces(sb, digitsColumnWidth - digitWidth);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     sb.append(v);
     return sb.toString();
   }
@@ -399,12 +412,20 @@ final class Tracer {
    * Stop the trace.
    * This may only be done once and must be done from the same thread
    * that started it.
+<<<<<<< HEAD
    * @param silence_threshold Traces for time less than silence_threshold
+=======
+   * @param silenceThreshold Traces for time less than silence_threshold
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * ms will be left out of the trace report. A value of -1 indicates
    * that the current ThreadTrace silence_threshold should be used.
    * @return The time that this trace actually ran
    */
+<<<<<<< HEAD
   long stop(int silence_threshold) {
+=======
+  long stop(int silenceThreshold) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     Preconditions.checkState(Thread.currentThread() == startThread);
 
     ThreadTrace trace = getThreadTrace();
@@ -429,11 +450,19 @@ final class Tracer {
       return 0;
     }
 
+<<<<<<< HEAD
     trace.endEvent(this, silence_threshold);
     return stopTimeMs - startTimeMs;
   }
 
   /** Stop the trace using the default silence_threshold
+=======
+    trace.endEvent(this, silenceThreshold);
+    return stopTimeMs - startTimeMs;
+  }
+
+  /** Stop the trace using the default silenceThreshold
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    *
    * @return  The time that this trace actually ran.
    */
@@ -474,9 +503,15 @@ final class Tracer {
     events.init();
   }
 
+<<<<<<< HEAD
   static void initCurrentThreadTrace(int default_silence_threshold) {
     initCurrentThreadTrace();
     setDefaultSilenceThreshold(default_silence_threshold);
+=======
+  static void initCurrentThreadTrace(int defaultSilenceThreshold) {
+    initCurrentThreadTrace();
+    setDefaultSilenceThreshold(defaultSilenceThreshold);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -572,17 +607,29 @@ final class Tracer {
   /**
    * This map tracks counts of tracers for each type over all time.
    */
+<<<<<<< HEAD
   private static @Nullable AtomicTracerStatMap typeToCountMap;
+=======
+  @Nullable private static AtomicTracerStatMap typeToCountMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * This map tracks counts of silent tracers for each type over all time.
    */
+<<<<<<< HEAD
   private static @Nullable AtomicTracerStatMap typeToSilentMap;
+=======
+  @Nullable private static AtomicTracerStatMap typeToSilentMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * This map tracks time (ms) for each type over all time.
    */
+<<<<<<< HEAD
   private static @Nullable AtomicTracerStatMap typeToTimeMap;
+=======
+  @Nullable private static AtomicTracerStatMap typeToTimeMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * This method MUST be called before getTypeToCountMap (and friends)
@@ -602,7 +649,11 @@ final class Tracer {
    * map must be synchronized on the map.  If enableTypeMaps has not
    * been called, this will return null.
    */
+<<<<<<< HEAD
   static @Nullable Map<String, Long> getTypeToCountMap() {
+=======
+  @Nullable static Map<String, Long> getTypeToCountMap() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return typeToCountMap != null ? typeToCountMap.getMap() : null;
   }
 
@@ -611,7 +662,11 @@ final class Tracer {
    * map must be synchronized on the map.  If enableTypeMaps has not
    * been called, this will return null.
    */
+<<<<<<< HEAD
   static @Nullable Map<String, Long> getTypeToSilentMap() {
+=======
+  @Nullable static Map<String, Long> getTypeToSilentMap() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return typeToSilentMap != null ? typeToSilentMap.getMap() : null;
   }
 
@@ -620,7 +675,11 @@ final class Tracer {
    * map must be synchronized on the map.  If enableTypeMaps has not
    * been called, this will return null.
    */
+<<<<<<< HEAD
   static @Nullable Map<String, Long> getTypeToTimeMap() {
+=======
+  @Nullable static Map<String, Long> getTypeToTimeMap() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return typeToTimeMap != null ? typeToTimeMap.getMap() : null;
   }
 
@@ -931,6 +990,7 @@ final class Tracer {
      */
     private int getMaxDigits() {
       long etime = -1;
+<<<<<<< HEAD
       long max_time = 0;
       for (Event e : events) {
         if (etime != -1) {
@@ -940,11 +1000,26 @@ final class Tracer {
         if (!e.isStart) {
           long time = e.tracer.stopTimeMs - e.tracer.startTimeMs;
           max_time = Math.max(max_time, time);
+=======
+      long maxTime = 0;
+      for (Event e : events) {
+        if (etime != -1) {
+          long time = e.eventTime() - etime;
+          maxTime = Math.max(maxTime, time);
+        }
+        if (!e.isStart) {
+          long time = e.tracer.stopTimeMs - e.tracer.startTimeMs;
+          maxTime = Math.max(maxTime, time);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         etime = e.eventTime();
       }
       // Minimum is 3 to preserve an indent even when max is small.
+<<<<<<< HEAD
       return Math.max(3, numDigits(max_time));
+=======
+      return Math.max(3, numDigits(maxTime));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 
@@ -1030,7 +1105,11 @@ final class Tracer {
    *
    */
   static final class AtomicTracerStatMap {
+<<<<<<< HEAD
     private ConcurrentMap<String, Long> map =
+=======
+    private final ConcurrentMap<String, Long> map =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         new ConcurrentHashMap<String, Long>();
 
     /**

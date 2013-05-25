@@ -42,9 +42,13 @@ package com.google.javascript.rhino.jstype;
 import static com.google.javascript.rhino.jstype.TernaryValue.UNKNOWN;
 
 import com.google.common.base.Joiner;
+<<<<<<< HEAD
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+=======
+import com.google.common.base.Predicate;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.collect.Lists;
 import com.google.javascript.rhino.ErrorReporter;
 
@@ -559,6 +563,7 @@ public class UnionType extends JSType {
   JSType resolveInternal(ErrorReporter t, StaticScope<JSType> scope) {
     setResolvedTypeInternal(this); // for circularly defined types.
 
+<<<<<<< HEAD
     boolean changed = false;
     ImmutableList.Builder<JSType> resolvedTypes = ImmutableList.builder();
     for (JSType alternate : alternates) {
@@ -572,6 +577,15 @@ public class UnionType extends JSType {
           newAlternates.hashCode() == this.hashcode);
       alternates = newAlternates;
     }
+=======
+    // Just resolve the alternates, but do not update as that breaks some error
+    // reporting cases.
+    for (JSType alternate : alternates) {
+      alternate.resolve(t, scope);
+    }
+    // Ensure the union is in a normalized state.
+    rebuildAlternates();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return this;
   }
 

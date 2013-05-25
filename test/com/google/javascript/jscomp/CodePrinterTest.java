@@ -454,6 +454,13 @@ public class CodePrinterTest extends TestCase {
     // Test we correctly handle an in operator in the test clause.
     assertPrint("var a={}; for (;(\"length\" in a);) {}",
         "var a={};for(;\"length\"in a;);");
+<<<<<<< HEAD
+=======
+
+    // Test we correctly handle an in operator inside a comma.
+    assertPrintSame("for(x,(y in z);;)foo()");
+    assertPrintSame("for(var x,w=(y in z);;)foo()");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testLiteralProperty() {
@@ -1419,6 +1426,13 @@ public class CodePrinterTest extends TestCase {
     assertPrint("var x = -0.0;", "var x=-0");
   }
 
+<<<<<<< HEAD
+=======
+  public void testIssue942() {
+    assertPrint("var x = {0: 1};", "var x={0:1}");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testIssue601() {
     assertPrint("'\\v' == 'v'", "\"\\v\"==\"v\"");
     assertPrint("'\\u000B' == '\\v'", "\"\\x0B\"==\"\\v\"");

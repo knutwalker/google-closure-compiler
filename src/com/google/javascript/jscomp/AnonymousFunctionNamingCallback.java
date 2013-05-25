@@ -20,7 +20,10 @@ import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Visitor that performs naming operations on anonymous functions by
  * means of the FunctionNamer interface.  Anonymous functions are

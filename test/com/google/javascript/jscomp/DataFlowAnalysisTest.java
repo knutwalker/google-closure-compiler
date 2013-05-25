@@ -78,7 +78,11 @@ public class DataFlowAnalysisTest extends TestCase {
    * A variable.
    */
   static class Variable extends Value {
+<<<<<<< HEAD
     private String name;
+=======
+    private final String name;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     /**
      * Constructor.
@@ -117,7 +121,11 @@ public class DataFlowAnalysisTest extends TestCase {
    * A number constant.
    */
   static class Number extends Value {
+<<<<<<< HEAD
     private int value;
+=======
+    private final int value;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     /**
      * Constructor
@@ -383,6 +391,14 @@ public class DataFlowAnalysisTest extends TestCase {
       }
       return false;
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public int hashCode() {
+      return constMap.hashCode();
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   private static class ConstPropJoinOp

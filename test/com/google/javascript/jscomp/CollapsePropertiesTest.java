@@ -27,8 +27,16 @@ import com.google.javascript.rhino.Node;
 public class CollapsePropertiesTest extends CompilerTestCase {
 
   private static String EXTERNS =
+<<<<<<< HEAD
       "var window; function alert(s) {} function parseInt(s) {}" +
       "/** @constructor */ function String() {}";
+=======
+      "var window;\n" +
+      "function alert(s) {}\n" +
+      "function parseInt(s) {}\n" +
+      "/** @constructor */ function String() {};\n" +
+      "var arguments";
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private boolean collapsePropertiesOnExternTypes = false;
 
@@ -706,9 +714,20 @@ public class CollapsePropertiesTest extends CompilerTestCase {
          "var a$b$c = function(){}; a$b$c();");
   }
 
+<<<<<<< HEAD
   public void testFunctionAlias() {
     test("var a = {}; a.b = {}; a.b.c = function(){}; a.b.d = a.b.c;",
          "var a$b$c = function(){}; var a$b$d = a$b$c;");
+=======
+  public void testFunctionAlias1() {
+    test("var a = {}; a.b = {}; a.b.c = function(){}; a.b.d = a.b.c;a.b.d=null",
+         "var a$b$c = function(){}; var a$b$d = a$b$c;a$b$d=null;");
+  }
+
+  public void testFunctionAlias2() {
+    test("var a = {}; a.b = {}; a.b.c = function(){}; a.b.d = a.b.c;use(a.b.d)",
+         "var a$b$c = function(){}; var a$b$d = null;use(a$b$c);");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testCallToRedefinedFunction() {
@@ -932,7 +951,12 @@ public class CollapsePropertiesTest extends CompilerTestCase {
     // This verifies that replacements are done in the right order. Collapsing
     // the l-value in an assignment affects the parse tree immediately above
     // the r-value, so we update all rvalues before any lvalues.
+<<<<<<< HEAD
     test("var a = {b: 0}; a.c = a.b;", "var a$b = 0; var a$c = a$b;");
+=======
+    test("var a = {b: 0}; a.c = a.b;a.c = null",
+         "var a$b = 0; var a$c = a$b;a$c = null");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testCallOnUndefinedProperty() {
@@ -1093,6 +1117,20 @@ public class CollapsePropertiesTest extends CompilerTestCase {
          "}", null, null);
   }
 
+<<<<<<< HEAD
+=======
+  public void testIssue931() {
+    collapsePropertiesOnExternTypes = true;
+    testSame(
+      "function f() {\n" +
+      "  return function () {\n" +
+      "    var args = arguments;\n" +
+      "    setTimeout(function() { alert(args); }, 0);\n" +
+      "  }\n" +
+      "};\n");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testDoNotCollapsePropertyOnExternType() {
     collapsePropertiesOnExternTypes = false;
     test("String.myFunc = function() {}; String.myFunc()",
@@ -1488,4 +1526,119 @@ public class CollapsePropertiesTest extends CompilerTestCase {
     assertTrue(varNode.isVar());
     assertTrue(varNode.getJSDocInfo().isConstructor());
   }
+<<<<<<< HEAD
+=======
+
+  public void testTypeDefAlias1() {
+    test(
+        "/** @constructor */ var D = function() {};\n" +
+        "/** @constructor */ D.L = function() {};\n" +
+        "/** @type {D.L} */ D.L.A = new D.L();\n" +
+        "\n" +
+        "/** @const */ var M = {};\n" +
+        "/** @typedef {D.L} */ M.L = D.L;\n" +
+        "\n" +
+        "use(M.L.A);",
+
+        "var D = function() {};\n" +
+        "var D$L = function() {};\n" +
+        "var D$L$A = new D$L();\n" +
+        "var M$L = null\n" +
+        "use(D$L$A);");
+  }
+
+  public void testTypeDefAlias2() {
+    // TODO(johnlenz): make CollapseProperties safer around aliases of
+    // functions and object literals.  Currently, this pass trades correctness
+    // for code size.  We should able to create a safer compromise by teaching
+    // the pass about goog.inherits and similiar calls.
+    test(
+        "/** @constructor */ var D = function() {};\n" +
+        "/** @constructor */ D.L = function() {};\n" +
+        "/** @type {D.L} */ D.L.A = new D.L();\n" +
+        "\n" +
+        "/** @const */ var M = {};\n" +
+        "if (random) { /** @typedef {D.L} */ M.L = D.L; }\n" +
+        "\n" +
+        "use(M.L);\n" +
+        "use(M.L.A);\n",
+
+        "var D = function() {};\n" +
+        "var D$L = function() {};\n" +
+        "var D$L$A = new D$L();\n" +
+        "if (random) { var M$L = D$L; }\n" +
+        "use(M$L);\n" +
+        "use(M$L.A);");
+  }
+
+  public void testGlobalAliasWithProperties1() {
+    test("var ns = {}; " +
+        "/** @constructor */ ns.Foo = function() {};\n" +
+        "/** @enum {number} */ ns.Foo.EventType = {A:1, B:2};" +
+        "/** @constructor */ ns.Bar = ns.Foo;\n" +
+        "var x = function() {use(ns.Bar.EventType.A)};\n" +
+        "use(x);",
+        "var ns$Foo = function(){};" +
+        "var ns$Foo$EventType$A = 1;" +
+        "var ns$Foo$EventType$B = 2;" +
+        "var ns$Bar = null;" +
+        "var x = function(){use(ns$Foo$EventType$A)};" +
+        "use(x);");
+  }
+
+  public void testGlobalAliasWithProperties2() {
+    // Reassignment of properties was necessary to prevent invalid code in
+    // previous iterations of this optimization.  Verify we don't break
+    // code like this.  Now it causes a back-off of the collapsing because
+    // the value is assigned more than once.
+    test("var ns = {}; " +
+        "/** @constructor */ ns.Foo = function() {};\n" +
+        "/** @enum {number} */ ns.Foo.EventType = {A:1, B:2};" +
+        "/** @constructor */ ns.Bar = ns.Foo;\n" +
+        "/** @enum {number} */ ns.Bar.EventType = ns.Foo.EventType;\n" +
+        "var x = function() {use(ns.Bar.EventType.A)};\n" +
+        "use(x)",
+        "var ns$Foo = function(){};" +
+        "var ns$Foo$EventType = {A:1, B:2};" +
+        "var ns$Bar = null;" +
+        "ns$Foo$EventType = ns$Foo$EventType;\n" +
+        "var x = function(){use(ns$Foo$EventType.A)};" +
+        "use(x);");
+  }
+
+  public void testGlobalAliasWithProperties3() {
+    test("var ns = {}; " +
+        "/** @constructor */ ns.Foo = function() {};\n" +
+        "/** @enum {number} */ ns.Foo.EventType = {A:1, B:2};" +
+        "/** @constructor */ ns.Bar = ns.Foo;\n" +
+        "/** @enum {number} */ ns.Bar.Other = {X:1, Y:2};\n" +
+        "var x = function() {use(ns.Bar.Other.X)};\n" +
+        "use(x)",
+        "var ns$Foo=function(){};" +
+        "var ns$Foo$EventType$A=1;" +
+        "var ns$Foo$EventType$B=2;" +
+        "var ns$Bar=null;" +
+        "var ns$Foo$Other$X=1;" +
+        "var ns$Foo$Other$Y=2;" +
+        "var x=function(){use(ns$Foo$Other$X)};" +
+        "use(x)\n");
+  }
+
+  public void testGlobalAliasWithProperties4() {
+    testSame("" +
+        "var nullFunction = function(){};\n" +
+        "var blob = {};\n" +
+        "blob.init = nullFunction;\n" +
+        "use(blob)");
+  }
+
+  public void testGlobalAliasWithProperties5() {
+    testSame(
+        "/** @constructor */ var blob = function() {}",
+        "var nullFunction = function(){};\n" +
+        "blob.init = nullFunction;\n" +
+        "use(blob.init)",
+        null);
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

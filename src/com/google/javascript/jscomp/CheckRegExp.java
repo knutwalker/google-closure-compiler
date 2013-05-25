@@ -17,8 +17,13 @@ package com.google.javascript.jscomp;
 
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
 import com.google.javascript.jscomp.regex.RegExpTree;
+<<<<<<< HEAD
 import com.google.javascript.rhino.Token;
 import com.google.javascript.rhino.Node;
+=======
+import com.google.javascript.rhino.Node;
+import com.google.javascript.rhino.Token;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * Look for references to the global RegExp object that would cause

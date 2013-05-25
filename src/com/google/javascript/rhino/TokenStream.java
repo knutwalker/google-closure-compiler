@@ -190,11 +190,23 @@ public class TokenStream {
     public static boolean isJSIdentifier(String s) {
       int length = s.length();
 
+<<<<<<< HEAD
       if (length == 0 || !Character.isJavaIdentifierStart(s.charAt(0)))
         return false;
 
       for (int i = 1; i < length; i++) {
         if (!Character.isJavaIdentifierPart(s.charAt(i))) {
+=======
+      if (length == 0 ||
+          Character.isIdentifierIgnorable(s.charAt(0)) ||
+          !Character.isJavaIdentifierStart(s.charAt(0))) {
+        return false;
+      }
+
+      for (int i = 1; i < length; i++) {
+        if (Character.isIdentifierIgnorable(s.charAt(i)) ||
+            !Character.isJavaIdentifierPart(s.charAt(i))) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           return false;
         }
       }

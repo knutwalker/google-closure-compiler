@@ -22,6 +22,10 @@ import com.google.common.collect.Lists;
 import com.google.javascript.jscomp.DefinitionsRemover.Definition;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.Collection;
 import java.util.List;
 

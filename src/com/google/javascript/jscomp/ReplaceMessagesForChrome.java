@@ -25,7 +25,10 @@ import com.google.javascript.rhino.Token;
 import java.util.Collections;
 import java.util.List;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Replaces user-visible messages with appropriate calls to
  * chrome.i18n.getMessage. The first argument to getMessage is the id of the

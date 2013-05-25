@@ -20,6 +20,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.List;
 import java.util.Locale;
 
@@ -45,7 +49,11 @@ class PeepholeReplaceKnownMethods extends AbstractPeepholeOptimization{
 
   @Override
   Node optimizeSubtree(Node subtree) {
+<<<<<<< HEAD
     if (subtree.isCall() ){
+=======
+    if (subtree.isCall()){
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       return tryFoldKnownMethods(subtree);
     }
     return subtree;
@@ -243,9 +251,16 @@ class PeepholeReplaceKnownMethods extends AbstractPeepholeOptimization{
         return n;
       } else {
         double tmpRadix = secondArg.getDouble();
+<<<<<<< HEAD
         if (tmpRadix != (int)tmpRadix)
           return n;
         radix = (int)tmpRadix;
+=======
+        if (tmpRadix != (int) tmpRadix) {
+          return n;
+        }
+        radix = (int) tmpRadix;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         if (radix < 0 || radix == 1 || radix > 36) {
           return n;
         }
@@ -331,8 +346,12 @@ class PeepholeReplaceKnownMethods extends AbstractPeepholeOptimization{
         double newVal = Double.parseDouble(stringVal);
         newNode = IR.number(newVal);
         normalizedNewVal = normalizeNumericString(String.valueOf(newVal));
+<<<<<<< HEAD
       }
       catch(NumberFormatException e) {
+=======
+      } catch (NumberFormatException e) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         return n;
       }
       // Make sure that the parsed number matches the original string

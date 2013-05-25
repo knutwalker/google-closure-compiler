@@ -43,7 +43,11 @@ public class ParserTest extends BaseJSTypeTestCase {
 
   private static final String MISSING_GT_MESSAGE =
       "Bad type annotation. " +
+<<<<<<< HEAD
       com.google.javascript.rhino.ScriptRuntime.getMessage0(
+=======
+      com.google.javascript.rhino.SimpleErrorReporter.getMessage0(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           "msg.jsdoc.missing.gt");
 
   private static final String MISPLACED_TYPE_ANNOTATION =
@@ -130,7 +134,11 @@ public class ParserTest extends BaseJSTypeTestCase {
 
     assertEquals(Token.GETELEM, call.getType());
     assertEquals(3, call.getLineno());
+<<<<<<< HEAD
     assertEquals(2, call.getCharno());
+=======
+    assertEquals(1, call.getCharno());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testLinenoCharnoForComparison() throws Exception {
@@ -305,8 +313,11 @@ public class ParserTest extends BaseJSTypeTestCase {
   public void testJSDocAttachment3() {
     Node assignNode = parse(
         "/** @type number */goog.FOO = 5;").getFirstChild().getFirstChild();
+<<<<<<< HEAD
 
     // ASSIGN
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertEquals(Token.ASSIGN, assignNode.getType());
     JSDocInfo info = assignNode.getJSDocInfo();
     assertNotNull(info);
@@ -315,7 +326,11 @@ public class ParserTest extends BaseJSTypeTestCase {
 
   public void testJSDocAttachment4() {
     Node varNode = parse(
+<<<<<<< HEAD
         "var a, /** @define {number} */b = 5;").getFirstChild();
+=======
+        "var a, /** @define {number} */ b = 5;").getFirstChild();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // ASSIGN
     assertEquals(Token.VAR, varNode.getType());
@@ -479,6 +494,69 @@ public class ParserTest extends BaseJSTypeTestCase {
     assertNotNull(exprCall.getFirstChild().getJSDocInfo());
   }
 
+<<<<<<< HEAD
+=======
+  public void testJSDocAttachment17() {
+    Node fn =
+        parse(
+            "function f() { " +
+            "  return /** @type {string} */ (g(1 /** @desc x */));" +
+            "};").getFirstChild();
+    assertEquals(Token.FUNCTION, fn.getType());
+    Node cast = fn.getLastChild().getFirstChild().getFirstChild();
+    assertEquals(Token.CAST, cast.getType());
+  }
+
+  public void testJSDocAttachment18() {
+    Node fn =
+        parse(
+            "function f() { " +
+            "  var x = /** @type {string} */ (y);" +
+            "};").getFirstChild();
+    assertEquals(Token.FUNCTION, fn.getType());
+    Node cast =
+        fn.getLastChild().getFirstChild().getFirstChild().getFirstChild();
+    assertEquals(Token.CAST, cast.getType());
+  }
+
+  public void testInlineJSDocAttachment1() {
+    Node fn = parse("function f(/** string */ x) {}").getFirstChild();
+    assertTrue(fn.isFunction());
+
+    JSDocInfo info =
+        fn.getFirstChild().getNext().getFirstChild().getJSDocInfo();
+    assertNotNull(info);
+    assertTypeEquals(STRING_TYPE, info.getType());
+  }
+
+  public void testInlineJSDocAttachment2() {
+    Node fn = parse(
+        "function f(/**\n" +
+        " * {string}\n" +
+        " */ x) {}").getFirstChild();
+    assertTrue(fn.isFunction());
+
+    JSDocInfo info =
+        fn.getFirstChild().getNext().getFirstChild().getJSDocInfo();
+    assertNotNull(info);
+    assertTypeEquals(STRING_TYPE, info.getType());
+  }
+
+  public void testInlineJSDocAttachment3() {
+    parse(
+        "function f(/** @type {string} */ x) {}",
+        "Bad type annotation. type not recognized due to syntax error");
+  }
+
+  public void testInlineJSDocAttachment4() {
+    parse(
+        "function f(/**\n" +
+        " * @type {string}\n" +
+        " */ x) {}",
+        "Bad type annotation. type not recognized due to syntax error");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testIncorrectJSDocDoesNotAlterJSParsing1() throws Exception {
     assertNodeEquality(
         parse("var a = [1,2]"),
@@ -981,28 +1059,44 @@ public class ParserTest extends BaseJSTypeTestCase {
   }
 
   public void testMisplacedTypeAnnotation2() {
+<<<<<<< HEAD
     // missing parenthese for the cast.
+=======
+    // missing parentheses for the cast.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     parse(
         "var o = /** @type {string} */ getValue();",
         MISPLACED_TYPE_ANNOTATION);
   }
 
   public void testMisplacedTypeAnnotation3() {
+<<<<<<< HEAD
     // missing parenthese for the cast.
+=======
+    // missing parentheses for the cast.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     parse(
         "var o = 1 + /** @type {string} */ value;",
         MISPLACED_TYPE_ANNOTATION);
   }
 
   public void testMisplacedTypeAnnotation4() {
+<<<<<<< HEAD
     // missing parenthese for the cast.
+=======
+    // missing parentheses for the cast.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     parse(
         "var o = /** @type {!Array.<string>} */ ['hello', 'you'];",
         MISPLACED_TYPE_ANNOTATION);
   }
 
   public void testMisplacedTypeAnnotation5() {
+<<<<<<< HEAD
     // missing parenthese for the cast.
+=======
+    // missing parentheses for the cast.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     parse(
         "var o = (/** @type {!Foo} */ {});",
         MISPLACED_TYPE_ANNOTATION);
@@ -1031,10 +1125,16 @@ public class ParserTest extends BaseJSTypeTestCase {
   }
 
   public void testValidTypeAnnotation3() {
+<<<<<<< HEAD
     // These two we don't currently support in the type checker but
     // we would like to.
     parse("try {} catch (/** @type {Error} */ e) {}");
     parse("function f(/** @type {string} */ a) {}");
+=======
+    // This one we don't currently support in the type checker but
+    // we would like to.
+    parse("try {} catch (/** @type {Error} */ e) {}");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**

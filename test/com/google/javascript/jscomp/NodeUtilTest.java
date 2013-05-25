@@ -1643,6 +1643,27 @@ public class NodeUtilTest extends TestCase {
     assertEquals(false, executedOnceTestCase("if (1) { try {} finally {x} }"));
   }
 
+<<<<<<< HEAD
+=======
+  public void testNewQualifiedNameNode1() {
+    Node actual = NodeUtil.newQualifiedNameNode(
+        new GoogleCodingConvention(), "ns.prop");
+    Node expected = IR.getprop(
+        IR.name("ns"),
+        IR.string("prop"));
+    assertNodeTreesEqual(expected, actual);
+  }
+
+  public void testNewQualifiedNameNode2() {
+    Node actual = NodeUtil.newQualifiedNameNode(
+        new GoogleCodingConvention(), "this.prop");
+    Node expected = IR.getprop(
+        IR.thisNode(),
+        IR.string("prop"));
+    assertNodeTreesEqual(expected, actual);
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private boolean executedOnceTestCase(String code) {
     Node ast = parse(code);
     Node nameNode = getNameNode(ast, "x");
@@ -1654,6 +1675,15 @@ public class NodeUtilTest extends TestCase {
     return lVal == null ? null : lVal.getString();
   }
 
+<<<<<<< HEAD
+=======
+  private void assertNodeTreesEqual(
+      Node expected, Node actual) {
+    String error = expected.checkTreeEquals(actual);
+    assertNull(error, error);
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   static void testFunctionName(String js, String expected) {
     assertEquals(
         expected,

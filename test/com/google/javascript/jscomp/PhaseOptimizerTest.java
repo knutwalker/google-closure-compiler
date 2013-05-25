@@ -33,6 +33,10 @@ import java.util.Random;
  */
 public class PhaseOptimizerTest extends TestCase {
   private final List<String> passesRun = Lists.newArrayList();
+<<<<<<< HEAD
+=======
+  private final Node dummyRoot = new Node(Token.BLOCK);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private PhaseOptimizer optimizer;
   private Compiler compiler;
   private PerformanceTracker tracker;
@@ -42,8 +46,12 @@ public class PhaseOptimizerTest extends TestCase {
     passesRun.clear();
     compiler = new Compiler();
     compiler.initCompilerOptionsIfTesting();
+<<<<<<< HEAD
     tracker = new PerformanceTracker(
         new Node(Token.BLOCK), TracerMode.TIMING_ONLY);
+=======
+    tracker = new PerformanceTracker(dummyRoot, TracerMode.TIMING_ONLY);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     optimizer = new PhaseOptimizer(compiler, tracker, null);
   }
 
@@ -74,7 +82,11 @@ public class PhaseOptimizerTest extends TestCase {
   public void testNotInfiniteLoop() {
     Loop loop = optimizer.addFixedPointLoop();
     addLoopedPass(loop, "x", PhaseOptimizer.MAX_LOOPS - 1);
+<<<<<<< HEAD
     optimizer.process(null, null);
+=======
+    optimizer.process(null, dummyRoot);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertEquals("There should be no errors.", 0, compiler.getErrorCount());
   }
 
@@ -82,7 +94,11 @@ public class PhaseOptimizerTest extends TestCase {
     Loop loop = optimizer.addFixedPointLoop();
     addLoopedPass(loop, "x", PhaseOptimizer.MAX_LOOPS + 1);
     try {
+<<<<<<< HEAD
       optimizer.process(null, null);
+=======
+      optimizer.process(null, dummyRoot);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       fail("Expected RuntimeException");
     } catch (RuntimeException e) {
       assertTrue(e.getMessage().contains(PhaseOptimizer.OPTIMIZE_LOOP_ERROR));
@@ -98,6 +114,7 @@ public class PhaseOptimizerTest extends TestCase {
     assertPasses("a", "x", "y", "x", "y", "x", "x", "y", "z");
   }
 
+<<<<<<< HEAD
   public void testSanityCheck() {
     Loop loop = optimizer.addFixedPointLoop();
     addLoopedPass(loop, "x", 1);
@@ -107,6 +124,8 @@ public class PhaseOptimizerTest extends TestCase {
     assertPasses("x", "sanity", "x", "sanity", "z", "sanity");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testConsumption1() {
     optimizer.consume(
         Lists.newArrayList(
@@ -143,7 +162,13 @@ public class PhaseOptimizerTest extends TestCase {
     try {
       addLoopedPass(loop, "x", 1);
       fail("Expected exception");
+<<<<<<< HEAD
     } catch (IllegalArgumentException e) {}
+=======
+    } catch (IllegalArgumentException e) {
+      return;
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testPassOrdering() {
@@ -155,7 +180,11 @@ public class PhaseOptimizerTest extends TestCase {
       addLoopedPass(
           loop, optimalOrder.remove(random.nextInt(optimalOrder.size())), 0);
     }
+<<<<<<< HEAD
     optimizer.process(null, null);
+=======
+    optimizer.process(null, dummyRoot);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertEquals(PhaseOptimizer.OPTIMAL_ORDER, passesRun);
   }
 
@@ -173,7 +202,11 @@ public class PhaseOptimizerTest extends TestCase {
     addOneTimePass("x2");
     addOneTimePass("x3");
     addOneTimePass("x4");
+<<<<<<< HEAD
     optimizer.process(null, null);
+=======
+    optimizer.process(null, dummyRoot);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertEquals(4, progressList.size());
     assertEquals(25, Math.round(progressList.get(0)));
     assertEquals(50, Math.round(progressList.get(1)));
@@ -182,7 +215,11 @@ public class PhaseOptimizerTest extends TestCase {
   }
 
   public void assertPasses(String ... names) {
+<<<<<<< HEAD
     optimizer.process(null, null);
+=======
+    optimizer.process(null, dummyRoot);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertEquals(Lists.newArrayList(names), passesRun);
   }
 

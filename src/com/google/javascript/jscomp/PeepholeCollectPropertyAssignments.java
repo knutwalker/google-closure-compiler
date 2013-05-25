@@ -18,8 +18,13 @@ package com.google.javascript.jscomp;
 
 import com.google.common.base.Preconditions;
 import com.google.javascript.rhino.IR;
+<<<<<<< HEAD
 import com.google.javascript.rhino.Token;
 import com.google.javascript.rhino.Node;
+=======
+import com.google.javascript.rhino.Node;
+import com.google.javascript.rhino.Token;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * A pass that looks for assignments to properties of an object or array

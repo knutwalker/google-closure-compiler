@@ -17,9 +17,15 @@
 package com.google.javascript.jscomp;
 
 import com.google.javascript.jscomp.ControlFlowGraph.Branch;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.graph.GraphvizGraph;
 import com.google.javascript.jscomp.graph.DiGraph.DiGraphEdge;
 import com.google.javascript.jscomp.graph.DiGraph.DiGraphNode;
+=======
+import com.google.javascript.jscomp.graph.DiGraph.DiGraphEdge;
+import com.google.javascript.jscomp.graph.DiGraph.DiGraphNode;
+import com.google.javascript.jscomp.graph.GraphvizGraph;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.jscomp.graph.GraphvizGraph.GraphvizEdge;
 import com.google.javascript.jscomp.graph.GraphvizGraph.GraphvizNode;
 import com.google.javascript.rhino.Node;
@@ -47,13 +53,21 @@ public class DotFormatter {
   private static final String LINE = " -- ";
 
   // stores the current assignment of node to keys
+<<<<<<< HEAD
   private HashMap<Node, Integer> assignments = new HashMap<Node, Integer>();
+=======
+  private final HashMap<Node, Integer> assignments = new HashMap<Node, Integer>();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   // key count in order to assign a unique key to each node
   private int keyCount = 0;
 
   // the builder used to generate the dot diagram
+<<<<<<< HEAD
   private Appendable builder;
+=======
+  private final Appendable builder;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private final ControlFlowGraph<Node> cfg;
 

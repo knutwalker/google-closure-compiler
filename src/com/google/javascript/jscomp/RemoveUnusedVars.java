@@ -397,8 +397,13 @@ class RemoveUnusedVars
       while ((lastArg = argList.getLastChild()) != null) {
         Var var = fnScope.getVar(lastArg.getString());
         if (!referenced.contains(var)) {
+<<<<<<< HEAD
           argList.removeChild(lastArg);
           compiler.reportCodeChange();
+=======
+          compiler.reportChangeToEnclosingScope(lastArg);
+          argList.removeChild(lastArg);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         } else {
           break;
         }
@@ -447,12 +452,21 @@ class RemoveUnusedVars
      */
     public void applyChanges() {
       for (Node n : toRemove) {
+<<<<<<< HEAD
         n.getParent().removeChild(n);
         compiler.reportCodeChange();
       }
       for (Node n : toReplaceWithZero) {
         n.getParent().replaceChild(n, IR.number(0).srcref(n));
         compiler.reportCodeChange();
+=======
+        compiler.reportChangeToEnclosingScope(n);
+        n.getParent().removeChild(n);
+      }
+      for (Node n : toReplaceWithZero) {
+        compiler.reportChangeToEnclosingScope(n);
+        n.getParent().replaceChild(n, IR.number(0).srcref(n));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
     }
 
@@ -476,7 +490,11 @@ class RemoveUnusedVars
       if (param != null) {
         // Take care of the following siblings first.
         boolean hasFollowing = markUnreferencedFunctionArgs(
+<<<<<<< HEAD
             scope, function, referenced, param.getNext(), paramIndex+1,
+=======
+            scope, function, referenced, param.getNext(), paramIndex + 1,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             canChangeSignature);
 
         Var var = scope.getVar(param.getString());
@@ -504,7 +522,11 @@ class RemoveUnusedVars
       } else {
         // Anything past the last formal parameter can be removed from the call
         // sites.
+<<<<<<< HEAD
         tryRemoveAllFollowingArgs(function, paramIndex-1);
+=======
+        tryRemoveAllFollowingArgs(function, paramIndex - 1);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         return false;
       }
     }
@@ -776,8 +798,13 @@ class RemoveUnusedVars
    */
   private void removeAllAssigns(Var var) {
     for (Assign assign : assignsByVar.get(var)) {
+<<<<<<< HEAD
       assign.remove();
       compiler.reportCodeChange();
+=======
+      compiler.reportChangeToEnclosingScope(assign.assignNode);
+      assign.remove();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 
@@ -807,8 +834,13 @@ class RemoveUnusedVars
       // Remove calls to inheritance-defining functions where the unreferenced
       // class is the subclass.
       for (Node exprCallNode : classDefiningCalls.get(var)) {
+<<<<<<< HEAD
         NodeUtil.removeChild(exprCallNode.getParent(), exprCallNode);
         compiler.reportCodeChange();
+=======
+        compiler.reportChangeToEnclosingScope(exprCallNode);
+        NodeUtil.removeChild(exprCallNode.getParent(), exprCallNode);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
 
       // Regardless of what happens to the original declaration,
@@ -834,8 +866,13 @@ class RemoveUnusedVars
         // that's taken care of in removeUnreferencedFunctionArgs.
       } else if (NodeUtil.isFunctionExpression(toRemove)) {
         if (!preserveFunctionExpressionNames) {
+<<<<<<< HEAD
           toRemove.getFirstChild().setString("");
           compiler.reportCodeChange();
+=======
+          compiler.reportChangeToEnclosingScope(toRemove);
+          toRemove.getFirstChild().setString("");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         // Don't remove bleeding functions.
       } else if (parent != null &&
@@ -849,19 +886,33 @@ class RemoveUnusedVars
         // declaration itself and just leave the value, e.g.,
         // var a = foo(); => foo();
         if (toRemove.getChildCount() == 1) {
+<<<<<<< HEAD
           parent.replaceChild(toRemove,
               IR.exprResult(nameNode.removeFirstChild()));
           compiler.reportCodeChange();
+=======
+          compiler.reportChangeToEnclosingScope(toRemove);
+          parent.replaceChild(toRemove,
+              IR.exprResult(nameNode.removeFirstChild()));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
       } else if (toRemove.isVar() &&
           toRemove.getChildCount() > 1) {
         // For var declarations with multiple names (i.e. var a, b, c),
         // only remove the unreferenced name
+<<<<<<< HEAD
         toRemove.removeChild(nameNode);
         compiler.reportCodeChange();
       } else if (parent != null) {
         NodeUtil.removeChild(parent, toRemove);
         compiler.reportCodeChange();
+=======
+        compiler.reportChangeToEnclosingScope(toRemove);
+        toRemove.removeChild(nameNode);
+      } else if (parent != null) {
+        compiler.reportChangeToEnclosingScope(toRemove);
+        NodeUtil.removeChild(parent, toRemove);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
     }
   }

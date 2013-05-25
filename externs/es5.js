@@ -36,6 +36,10 @@ Function.prototype.bind = function(selfObj, var_args) {};
 
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/Trim
@@ -44,6 +48,10 @@ String.prototype.trim = function() {};
 
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/TrimLeft
@@ -52,6 +60,10 @@ String.prototype.trimLeft = function() {};
 
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String/TrimRight
@@ -229,3 +241,41 @@ Date.prototype.toISOString = function() {};
  * @override
  */
 Date.prototype.toJSON = function(opt_ignoredKey) {};
+<<<<<<< HEAD
+=======
+
+
+/**
+ * A fake type to model the JSON object.
+ * @constructor
+ */
+var JSONType = function() {};
+
+
+/**
+ * @param {string} jsonStr The string to parse.
+ * @param {(function(string, *) : *)=} opt_reviver
+ * @return {*} The JSON object.
+ * @throws {Error}
+ * @nosideeffects
+ */
+JSONType.prototype.parse = function(jsonStr, opt_reviver) {};
+
+
+/**
+ * @param {*} jsonObj Input object.
+ * @param {(Array.<string>|(function(string, *) : *)|null)=} opt_replacer
+ * @param {(number|string)=} opt_space
+ * @return {string} JSON string which represents jsonObj.
+ * @throws {Error}
+ * @nosideeffects
+ */
+JSONType.prototype.stringify = function(jsonObj, opt_replacer, opt_space) {};
+
+
+/**
+ * @type {!JSONType}
+ * @suppress {duplicate}
+ */
+var JSON;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

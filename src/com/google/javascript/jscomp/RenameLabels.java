@@ -29,7 +29,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * RenameLabels renames all the labels so that they have short names, to reduce
  * code size and also to obfuscate the code.
@@ -73,10 +76,22 @@ final class RenameLabels implements CompilerPass {
   private final Supplier<String> nameSupplier;
   private final boolean removeUnused;
 
+<<<<<<< HEAD
   RenameLabels(AbstractCompiler compiler) {
     this(compiler, new DefaultNameSupplier(), true);
   }
 
+=======
+  RenameLabels(final AbstractCompiler compiler) {
+    this(compiler, new DefaultNameSupplier(), true);
+  }
+
+  RenameLabels(final AbstractCompiler compiler, final NameGenerator nameGen) {
+    this(compiler, new DefaultNameSupplier(nameGen), true);
+    nameGen.restartNaming();
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   RenameLabels(
       AbstractCompiler compiler,
       Supplier<String> supplier,
@@ -88,8 +103,20 @@ final class RenameLabels implements CompilerPass {
 
   static class DefaultNameSupplier implements Supplier<String> {
     // NameGenerator is used to create safe label names.
+<<<<<<< HEAD
     final NameGenerator nameGenerator =
         new NameGenerator(new HashSet<String>(), "", null);
+=======
+    private final NameGenerator nameGenerator;
+
+    private DefaultNameSupplier(final NameGenerator nameGen) {
+      this.nameGenerator = nameGen;
+    }
+
+    private DefaultNameSupplier() {
+      this.nameGenerator = new NameGenerator(new HashSet<String>(), "", null);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     @Override
     public String get() {

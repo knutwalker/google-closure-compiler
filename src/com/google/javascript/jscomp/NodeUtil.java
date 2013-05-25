@@ -35,6 +35,10 @@ import com.google.javascript.rhino.jstype.TernaryValue;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -1167,6 +1171,18 @@ public final class NodeUtil {
    * 14 call, member () [] .
    */
   static int precedence(int type) {
+<<<<<<< HEAD
+=======
+    int precedence = precedenceWithDefault(type);
+    if (precedence != -1) {
+      return precedence;
+    }
+    throw new Error("Unknown precedence for " +
+        Token.name(type) + " (type " + type + ")");
+  }
+
+  static int precedenceWithDefault(int type) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     switch (type) {
       case Token.COMMA:  return 0;
       case Token.ASSIGN_BITOR:
@@ -1237,9 +1253,15 @@ public final class NodeUtil {
       case Token.CAST:
         return 16;
 
+<<<<<<< HEAD
       default: throw new Error("Unknown precedence for " +
                                Token.name(type) +
                                " (type " + type + ")");
+=======
+      default:
+        // Statements are lower precedence than expressions.
+        return -1;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 
@@ -2297,7 +2319,17 @@ public final class NodeUtil {
     if (endPos == -1) {
       return newName(convention, name);
     }
+<<<<<<< HEAD
     Node node = newName(convention, name.substring(0, endPos));
+=======
+    Node node;
+    String nodeName = name.substring(0, endPos);
+    if ("this".equals(nodeName)) {
+      node = IR.thisNode();
+    } else {
+      node = newName(convention, nodeName);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     int startPos;
     do {
       startPos = endPos + 1;
@@ -2316,6 +2348,29 @@ public final class NodeUtil {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Creates a node representing a qualified name.
+   *
+   * @param name A qualified name (e.g. "foo" or "foo.bar.baz")
+   * @return A NAME or GETPROP node
+   */
+  public static Node newQualifiedNameNodeDeclaration(
+      CodingConvention convention, String name, Node value, JSDocInfo info) {
+    Node result;
+    Node nameNode = newQualifiedNameNode(convention, name);
+    if (nameNode.isName()) {
+      result = IR.var(nameNode, value);
+      result.setJSDocInfo(info);
+    } else {
+      result = IR.exprResult(IR.assign(nameNode, value));
+      result.getFirstChild().setJSDocInfo(info);
+    }
+    return result;
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Creates a node representing a qualified name, copying over the source
    * location information from the basis node and assigning the given original
    * name to the node.
@@ -3258,4 +3313,68 @@ public final class NodeUtil {
     }
     return false;
   }
+<<<<<<< HEAD
+=======
+
+  /**
+   * Given an AST and its copy, map the root node of each scope of main to the
+   * corresponding root node of clone
+   */
+  public static Map<Node, Node> mapMainToClone(Node main, Node clone) {
+    Preconditions.checkState(main.isEquivalentTo(clone));
+    Map<Node, Node> mtoc = new HashMap<Node, Node>();
+    mtoc.put(main, clone);
+    mtocHelper(mtoc, main, clone);
+    return mtoc;
+  }
+
+  private static void mtocHelper(Map<Node, Node> map, Node main, Node clone) {
+    if (main.isFunction()) {
+      map.put(main, clone);
+    }
+    Node mchild = main.getFirstChild(), cchild = clone.getFirstChild();
+    while (mchild != null) {
+      mtocHelper(map, mchild, cchild);
+      mchild = mchild.getNext();
+      cchild = cchild.getNext();
+    }
+  }
+
+  /** Checks that the scope roots marked as changed have indeed changed */
+  public static void verifyScopeChanges(Map<Node, Node> map,
+      Node main, boolean verifyUnchangedNodes,
+      AbstractCompiler compiler) {
+    // compiler is passed only to call compiler.toSource during debugging to see
+    // mismatches in scopes
+
+    // If verifyUnchangedNodes is false, we are comparing the initial AST to the
+    // final AST. Don't check unmarked nodes b/c they may have been changed by
+    // non-loopable passes.
+    // If verifyUnchangedNodes is true, we are comparing the ASTs before & after
+    // a pass. Check all scope roots.
+    final Map<Node, Node> mtoc = map;
+    final boolean checkUnchanged = verifyUnchangedNodes;
+    Node clone = mtoc.get(main);
+    if (main.getChangeTime() > clone.getChangeTime()) {
+      Preconditions.checkState(!main.isEquivalentToShallow(clone));
+    } else if (checkUnchanged) {
+      Preconditions.checkState(main.isEquivalentToShallow(clone));
+    }
+    visitPreOrder(main,
+        new Visitor() {
+          @Override
+          public void visit(Node n) {
+            if (n.isFunction() && mtoc.containsKey(n)) {
+              Node clone = mtoc.get(n);
+              if (n.getChangeTime() > clone.getChangeTime()) {
+                Preconditions.checkState(!n.isEquivalentToShallow(clone));
+              } else if (checkUnchanged) {
+                Preconditions.checkState(n.isEquivalentToShallow(clone));
+              }
+            }
+          }
+        },
+        Predicates.<Node>alwaysTrue());
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

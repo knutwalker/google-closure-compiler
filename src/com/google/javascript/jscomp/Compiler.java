@@ -92,6 +92,13 @@ public class Compiler extends AbstractCompiler {
       "JSC_MISSING_ENTRY_ERROR",
       "required entry point \"{0}\" never provided");
 
+<<<<<<< HEAD
+=======
+  static final DiagnosticType MISSING_MODULE_ERROR = DiagnosticType.error(
+      "JSC_MISSING_ENTRY_ERROR",
+      "unknown module \"{0}\" specified in entry point spec");
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   // Used in PerformanceTracker
   static final String PARSING_PASS_NAME = "parseInputs";
 
@@ -164,6 +171,12 @@ public class Compiler extends AbstractCompiler {
 
   private ReverseAbstractInterpreter abstractInterpreter;
   private TypeValidator typeValidator;
+<<<<<<< HEAD
+=======
+  // The compiler can ask phaseOptimizer for things like which pass is currently
+  // running, or which functions have been changed by optimizations
+  private PhaseOptimizer phaseOptimizer = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   public PerformanceTracker tracker;
 
@@ -234,8 +247,12 @@ public class Compiler extends AbstractCompiler {
   }
 
   /**
+<<<<<<< HEAD
    * Creates n Compiler that reports errors and warnings to an output
    * stream.
+=======
+   * Creates a Compiler that reports errors and warnings to an output stream.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    */
   public Compiler(PrintStream stream) {
     addChangeHandler(recentChange);
@@ -288,6 +305,26 @@ public class Compiler extends AbstractCompiler {
       }
     }
 
+<<<<<<< HEAD
+=======
+    reconcileOptionsWithGuards();
+
+    // Initialize the warnings guard.
+    List<WarningsGuard> guards = Lists.newArrayList();
+    guards.add(
+        new SuppressDocWarningsGuard(
+            getDiagnosticGroups().getRegisteredGroups()));
+    guards.add(options.getWarningsGuard());
+
+    this.warningsGuard = new ComposeWarningsGuard(guards);
+  }
+
+  /**
+   * When the CompilerOptions and its WarningsGuard overlap, reconcile
+   * any discrepencies.
+   */
+  protected void reconcileOptionsWithGuards() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     // DiagnosticGroups override the plain checkTypes option.
     if (options.enables(DiagnosticGroups.CHECK_TYPES)) {
       options.checkTypes = true;
@@ -316,6 +353,7 @@ public class Compiler extends AbstractCompiler {
           CheckLevel.ERROR);
     }
 
+<<<<<<< HEAD
     // Initialize the warnings guard.
     List<WarningsGuard> guards = Lists.newArrayList();
     guards.add(
@@ -325,18 +363,27 @@ public class Compiler extends AbstractCompiler {
 
     ComposeWarningsGuard composedGuards = new ComposeWarningsGuard(guards);
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     // All passes must run the variable check. This synthesizes
     // variables later so that the compiler doesn't crash. It also
     // checks the externs file for validity. If you don't want to warn
     // about missing variable declarations, we shut that specific
     // error off.
     if (!options.checkSymbols &&
+<<<<<<< HEAD
         !composedGuards.enables(DiagnosticGroups.CHECK_VARIABLES)) {
       composedGuards.addGuard(new DiagnosticGroupWarningsGuard(
           DiagnosticGroups.CHECK_VARIABLES, CheckLevel.OFF));
     }
 
     this.warningsGuard = composedGuards;
+=======
+        !options.enables(DiagnosticGroups.CHECK_VARIABLES)) {
+      options.setWarningLevel(
+          DiagnosticGroups.CHECK_VARIABLES, CheckLevel.OFF);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -732,11 +779,14 @@ public class Compiler extends AbstractCompiler {
         return;
       }
 
+<<<<<<< HEAD
       if (options.isExternExportsEnabled()
           || options.externExportsPath != null) {
         externExports();
       }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       // IDE-mode is defined to stop here, before the heavy rewriting begins.
       if (!options.ideMode) {
         optimize();
@@ -806,7 +856,11 @@ public class Compiler extends AbstractCompiler {
 
     // We are currently only interested in check-passes for progress reporting
     // as it is used for IDEs, that's why the maximum progress is set to 1.0.
+<<<<<<< HEAD
     PhaseOptimizer phaseOptimizer = new PhaseOptimizer(this, tracker,
+=======
+    phaseOptimizer = new PhaseOptimizer(this, tracker,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         new PhaseOptimizer.ProgressRange(getProgress(), 1.0));
     if (options.devMode == DevMode.EVERY_PASS) {
       phaseOptimizer.setSanityCheck(sanityCheck);
@@ -839,6 +893,10 @@ public class Compiler extends AbstractCompiler {
     }
 
     runCustomPasses(CustomPassExecutionTime.BEFORE_OPTIMIZATIONS);
+<<<<<<< HEAD
+=======
+    phaseOptimizer = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   private void externExports() {
@@ -1349,6 +1407,7 @@ public class Compiler extends AbstractCompiler {
         } catch (CircularDependencyException e) {
           report(JSError.make(
               JSModule.CIRCULAR_DEPENDENCY_ERROR, e.getMessage()));
+<<<<<<< HEAD
 
           // If in IDE mode, we ignore the error and keep going.
           if (hasErrors()) {
@@ -1362,6 +1421,19 @@ public class Compiler extends AbstractCompiler {
           if (hasErrors()) {
             return null;
           }
+=======
+        } catch (MissingProvideException e) {
+          report(JSError.make(
+              MISSING_ENTRY_ERROR, e.getMessage()));
+        } catch (JSModuleGraph.MissingModuleException e) {
+          report(JSError.make(
+              MISSING_MODULE_ERROR, e.getMessage()));
+        }
+
+        // If in IDE mode, we ignore the error and keep going.
+        if (hasErrors()) {
+          return null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
       }
 
@@ -1385,8 +1457,17 @@ public class Compiler extends AbstractCompiler {
           }
         }
 
+<<<<<<< HEAD
         if (options.sourceMapOutputPath != null ||
             options.nameReferenceReportPath != null) {
+=======
+        // TODO(johnlenz): we shouldn't need to check both isExternExportsEnabled and
+        // externExportsPath.
+        if (options.sourceMapOutputPath != null ||
+            options.nameReferenceReportPath != null ||
+            options.isExternExportsEnabled() ||
+            options.externExportsPath != null) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
           // Annotate the nodes in the tree with information from the
           // input file. This information is used to construct the SourceMap.
@@ -1889,7 +1970,17 @@ public class Compiler extends AbstractCompiler {
     // unmodified local names.
     normalize();
 
+<<<<<<< HEAD
     PhaseOptimizer phaseOptimizer = new PhaseOptimizer(this, tracker, null);
+=======
+    // Create extern exports after the normalize because externExports depends on unique names.
+    if (options.isExternExportsEnabled()
+        || options.externExportsPath != null) {
+      externExports();
+    }
+
+    phaseOptimizer = new PhaseOptimizer(this, tracker, null);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     if (options.devMode == DevMode.EVERY_PASS) {
       phaseOptimizer.setSanityCheck(sanityCheck);
     }
@@ -1898,6 +1989,10 @@ public class Compiler extends AbstractCompiler {
     }
     phaseOptimizer.consume(getPassConfig().getOptimizations());
     phaseOptimizer.process(externsRoot, jsRoot);
+<<<<<<< HEAD
+=======
+    phaseOptimizer = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   @Override
@@ -1962,8 +2057,12 @@ public class Compiler extends AbstractCompiler {
     endPass();
   }
 
+<<<<<<< HEAD
   protected final CodeChangeHandler.RecentChange recentChange =
       new CodeChangeHandler.RecentChange();
+=======
+  protected final RecentChange recentChange = new RecentChange();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private final List<CodeChangeHandler> codeChangeHandlers =
       Lists.<CodeChangeHandler>newArrayList();
 
@@ -1982,11 +2081,56 @@ public class Compiler extends AbstractCompiler {
     codeChangeHandlers.remove(handler);
   }
 
+<<<<<<< HEAD
   /**
    * All passes should call reportCodeChange() when they alter
    * the JS tree structure. This is verified by CompilerTestCase.
    * This allows us to optimize to a fixed point.
    */
+=======
+  @Override
+  void setScope(Node n) {
+    if (phaseOptimizer != null) {
+      phaseOptimizer.setScope(n);
+    }
+  }
+
+  @Override
+  Node getJsRoot() {
+    return jsRoot;
+  }
+
+  @Override
+  boolean hasScopeChanged(Node n) {
+    if (!analyzeChangedScopesOnly || phaseOptimizer == null) {
+      return true;
+    }
+    return phaseOptimizer.hasScopeChanged(n);
+  }
+
+  @Override
+  void reportChangeToEnclosingScope(Node n) {
+    if (phaseOptimizer != null) {
+      phaseOptimizer.reportChangeToEnclosingScope(n);
+      phaseOptimizer.startCrossScopeReporting();
+      reportCodeChange();
+      phaseOptimizer.endCrossScopeReporting();
+    } else {
+      reportCodeChange();
+    }
+  }
+
+  /**
+   * Some tests don't want to call the compiler "wholesale," they may not want
+   * to call check and/or optimize. With this method, tests can execute custom
+   * optimization loops.
+   */
+  @VisibleForTesting
+  void setPhaseOptimizer(PhaseOptimizer po) {
+    this.phaseOptimizer = po;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   @Override
   public void reportCodeChange() {
     for (CodeChangeHandler handler : codeChangeHandlers) {

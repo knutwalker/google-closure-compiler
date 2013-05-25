@@ -19,7 +19,10 @@ package com.google.javascript.jscomp;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.jscomp.Scope.Var;
 import com.google.javascript.jscomp.type.ClosureReverseAbstractInterpreter;
 import com.google.javascript.jscomp.type.SemanticReverseAbstractInterpreter;
@@ -4397,7 +4400,11 @@ public class LooseTypeCheckTest extends CompilerTypeTestCase {
 
   public void testBug1942972() throws Exception {
     testTypes(
+<<<<<<< HEAD
         "var google = {\n"+
+=======
+        "var google = {\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "  gears: {\n" +
         "    factory: {},\n" +
         "    workerPool: {}\n" +
@@ -5053,7 +5060,11 @@ public class LooseTypeCheckTest extends CompilerTypeTestCase {
         "/** @type {Foo} */ var x = /** @type {Foo} */ ({})");
 
     testTypes("/** @constructor */ function Foo() {} \n" +
+<<<<<<< HEAD
         "/** @type {Foo} */ var x = (/** @type {Foo} */ y)");
+=======
+        "/** @type {Foo} */ var x = /** @type {Foo} */ (y)");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testNestedCasts() throws Exception {
@@ -6865,7 +6876,11 @@ public class LooseTypeCheckTest extends CompilerTypeTestCase {
         compiler,
         new SemanticReverseAbstractInterpreter(
             compiler.getCodingConvention(), registry),
+<<<<<<< HEAD
         registry, topScope, scopeCreator, CheckLevel.WARNING, CheckLevel.OFF)
+=======
+        registry, topScope, scopeCreator, CheckLevel.WARNING)
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         .process(null, second);
 
     assertEquals(1, compiler.getWarningCount());

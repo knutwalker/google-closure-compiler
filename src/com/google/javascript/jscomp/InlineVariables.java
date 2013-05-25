@@ -28,12 +28,19 @@ import com.google.javascript.jscomp.ReferenceCollectingCallback.ReferenceCollect
 import com.google.javascript.jscomp.ReferenceCollectingCallback.ReferenceMap;
 import com.google.javascript.jscomp.Scope.Var;
 import com.google.javascript.rhino.Node;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Using the infrastructure provided by VariableReferencePass, identify
  * variables that are used only once and in a way that is safe to move, and then
@@ -356,25 +363,42 @@ class InlineVariables implements CompilerPass {
      * Do the actual work of inlining a single declaration into a single
      * reference.
      */
+<<<<<<< HEAD
     private void inline(Var v, Reference declaration,
                         Reference init, Reference reference) {
+=======
+    private void inline(Var v, Reference decl, Reference init, Reference ref) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       Node value = init.getAssignedValue();
       Preconditions.checkState(value != null);
       // Check for function declarations before the value is moved in the AST.
       boolean isFunctionDeclaration = NodeUtil.isFunctionDeclaration(value);
+<<<<<<< HEAD
 
       inlineValue(v, reference, value.detachFromParent());
       if (declaration != init) {
+=======
+      compiler.reportChangeToEnclosingScope(ref.getNode());
+      inlineValue(v, ref, value.detachFromParent());
+      if (decl != init) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         Node expressRoot = init.getGrandparent();
         Preconditions.checkState(expressRoot.isExprResult());
         NodeUtil.removeChild(expressRoot.getParent(), expressRoot);
       }
+<<<<<<< HEAD
 
       // Function declarations have already been removed.
       if (!isFunctionDeclaration) {
         removeDeclaration(declaration);
       } else {
         compiler.reportCodeChange();
+=======
+      // Function declarations have already been removed.
+      if (!isFunctionDeclaration) {
+        compiler.reportChangeToEnclosingScope(decl.getNode());
+        removeDeclaration(decl);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
     }
 
@@ -412,19 +436,31 @@ class InlineVariables implements CompilerPass {
     /**
      * Remove the given VAR declaration.
      */
+<<<<<<< HEAD
     private void removeDeclaration(Reference declaration) {
       Node varNode = declaration.getParent();
       Node grandparent = declaration.getGrandparent();
 
       varNode.removeChild(declaration.getNode());
 
+=======
+    private void removeDeclaration(Reference decl) {
+      Node varNode = decl.getParent();
+      Node grandparent = decl.getGrandparent();
+
+      compiler.reportChangeToEnclosingScope(decl.getNode());
+      varNode.removeChild(decl.getNode());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       // Remove var node if empty
       if (!varNode.hasChildren()) {
         Preconditions.checkState(varNode.isVar());
         NodeUtil.removeChild(grandparent, varNode);
       }
+<<<<<<< HEAD
 
       compiler.reportCodeChange();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     /**
@@ -436,15 +472,23 @@ class InlineVariables implements CompilerPass {
      *     to re-parent.
      */
     private void inlineValue(Var v, Reference ref, Node value) {
+<<<<<<< HEAD
+=======
+      compiler.reportChangeToEnclosingScope(ref.getNode());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (ref.isSimpleAssignmentToName()) {
         // This is the initial assignment.
         ref.getGrandparent().replaceChild(ref.getParent(), value);
       } else {
         ref.getParent().replaceChild(ref.getNode(), value);
       }
+<<<<<<< HEAD
 
       blacklistVarReferencesInTree(value, v.scope);
       compiler.reportCodeChange();
+=======
+      blacklistVarReferencesInTree(value, v.scope);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     /**

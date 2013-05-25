@@ -295,7 +295,11 @@ public class LinkedDirectedGraph<N, E>
   public List<GraphNode<N, E>> getNeighborNodes(DiGraphNode<N, E> node) {
     List<GraphNode<N, E>> result = Lists.newArrayList();
     for (Iterator<GraphNode<N, E>> i =
+<<<<<<< HEAD
       ((LinkedDirectedGraphNode<N, E>) node).neighborIterator();i.hasNext();) {
+=======
+      ((LinkedDirectedGraphNode<N, E>) node).neighborIterator(); i.hasNext();) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       result.add(i.next());
     }
     return result;

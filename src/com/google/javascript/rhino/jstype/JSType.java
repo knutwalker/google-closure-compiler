@@ -69,7 +69,11 @@ public abstract class JSType implements Serializable {
 
   private boolean resolved = false;
   private JSType resolveResult = null;
+<<<<<<< HEAD
   protected final TemplateTypeMap templateTypeMap;
+=======
+  protected TemplateTypeMap templateTypeMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private boolean inTemplatedCheckVisit = false;
   private static final CanCastToVisitor CAN_CAST_TO_VISITOR =
@@ -458,6 +462,17 @@ public abstract class JSType implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Extends the template type map associated with this type, merging in the
+   * keys and values of the specified map.
+   */
+  public void extendTemplateTypeMap(TemplateTypeMap otherMap) {
+    templateTypeMap = templateTypeMap.extend(otherMap);
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Tests whether this type is an {@code Object}, or any subtype thereof.
    * @return {@code this &lt;: Object}
    */
@@ -1250,6 +1265,7 @@ public abstract class JSType implements Serializable {
       return false;
     }
 
+<<<<<<< HEAD
     // templatized types.
     if (thisType.isTemplatizedType()) {
       return !areIncompatibleArrays(thisType, thatType) &&
@@ -1263,6 +1279,37 @@ public abstract class JSType implements Serializable {
         return false;
       }
     }
+=======
+    // TemplateTypeMaps. This check only returns false if the TemplateTypeMaps
+    // are not equivalent.
+    TemplateTypeMap thisTypeParams = thisType.getTemplateTypeMap();
+    TemplateTypeMap thatTypeParams = thatType.getTemplateTypeMap();
+    boolean templateMatch = true;
+    if (isExemptFromTemplateTypeInvariance(thatType)) {
+      // Array and Object are exempt from template type invariance; their
+      // template types maps are considered a match only if the ObjectElementKey
+      // values are subtypes/supertypes of one another.
+      TemplateType key = thisType.registry.getObjectElementKey();
+      JSType thisElement = thisTypeParams.getTemplateType(key);
+      JSType thatElement = thatTypeParams.getTemplateType(key);
+
+      templateMatch = thisElement.isSubtype(thatElement)
+          || thatElement.isSubtype(thisElement);
+    } else {
+      templateMatch = thisTypeParams.checkEquivalenceHelper(
+          thatTypeParams, EquivalenceMethod.INVARIANT);
+    }
+    if (!templateMatch) {
+      return false;
+    }
+
+    // Templatized types. The above check guarantees TemplateTypeMap
+    // equivalence; check if the base type is a subtype.
+    if (thisType.isTemplatizedType()) {
+      return thisType.toMaybeTemplatizedType().getReferencedType().isSubtype(
+              thatType);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // proxy types
     if (thatType instanceof ProxyObjectType) {
@@ -1273,6 +1320,7 @@ public abstract class JSType implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
    * Determines if two types are incompatible Arrays, meaning that their element
    * template types are not subtypes of one another.
    */
@@ -1295,6 +1343,8 @@ public abstract class JSType implements Serializable {
   }
 
   /**
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Determines if the specified type is exempt from standard invariant
    * templatized typing rules.
    */

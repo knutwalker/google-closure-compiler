@@ -54,6 +54,11 @@ public class ConvertToDottedPropertiesTest extends CompilerTestCase {
     testSame("a[$]");
     testSame("a[p()]");
     testSame("a['default']");
+<<<<<<< HEAD
+=======
+    // Ignorable control characters are ok in Java identifiers, but not in JS.
+    testSame("a['A\u0004']");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     // upper case lower half of o from phonetic extensions set.
     // valid in Safari, not in Firefox, IE.
     test("a['\u1d17A']", "a['\u1d17A']");
@@ -67,6 +72,10 @@ public class ConvertToDottedPropertiesTest extends CompilerTestCase {
     testSame("({'':0})");
     testSame("({'1.0':0})");
     testSame("({'\u1d17A':0})");
+<<<<<<< HEAD
+=======
+    testSame("({'a\u0004b':0})");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void test5746867() {

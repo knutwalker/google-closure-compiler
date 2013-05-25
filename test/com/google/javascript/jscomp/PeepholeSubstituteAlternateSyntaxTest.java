@@ -52,11 +52,17 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
 
   @Override
   public CompilerPass getProcessor(final Compiler compiler) {
+<<<<<<< HEAD
     CompilerPass peepholePass =
       new PeepholeOptimizationsPass(compiler,
           new PeepholeSubstituteAlternateSyntax(late))
       .setRetraverseOnChange(false);
 
+=======
+    PeepholeOptimizationsPass peepholePass = new PeepholeOptimizationsPass(
+        compiler, new PeepholeSubstituteAlternateSyntax(late));
+    peepholePass.setRetraverseOnChange(false);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return peepholePass;
   }
 
@@ -92,6 +98,7 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     scTest.test(js, expected);
   }
 
+<<<<<<< HEAD
   /** Check that removing blocks with 1 child works */
   public void testFoldOneChildBlocks() {
     late = false;
@@ -305,6 +312,8 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     fold("x = !true", "x = !1");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testFoldRegExpConstructor() {
     enableNormalize();
 
@@ -332,7 +341,13 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     // Don't fold really long regexp literals, because Opera 9.2's
     // regexp parser will explode.
     String longRegexp = "";
+<<<<<<< HEAD
     for (int i = 0; i < 200; i++) longRegexp += "x";
+=======
+    for (int i = 0; i < 200; i++) {
+      longRegexp += "x";
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     foldSame("x = RegExp(\"" + longRegexp + "\")");
 
     // Shouldn't fold RegExp unnormalized because
@@ -472,6 +487,7 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
         "Object(), Array(\"abc\", Object(), Array(Array())))");
   }
 
+<<<<<<< HEAD
   public void testMinimizeExprCondition() {
     fold("(x ? true : false) && y()", "x&&y()");
     fold("(x ? false : true) && y()", "(!x)&&y()");
@@ -579,6 +595,8 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
          "function f(){if(a()){return}}");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testFoldStandardConstructors() {
     foldSame("new Foo('a')");
     foldSame("var x = new goog.Foo(1)");
@@ -594,6 +612,7 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     fold("var x = new Array(20)", "var x = Array(20)");
   }
 
+<<<<<<< HEAD
   public void testSubsituteReturn() {
 
     fold("function f() { while(x) { return }}",
@@ -808,11 +827,14 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     fold("if(x)if(y){if(z){while(1){}}}", "if(x&&y&&z){while(1){}}");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testFoldTrueFalse() {
     fold("x = true", "x = !0");
     fold("x = false", "x = !1");
   }
 
+<<<<<<< HEAD
   public void testIssue291() {
     fold("if (true) { f.onchange(); }", "if (1) f.onchange();");
     foldSame("if (f) { f.onchange(); }");
@@ -820,6 +842,8 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     fold("if (f) { f.bonchange(); }", "f && f.bonchange();");
     foldSame("if (f) { f['x'](); }");
   }
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testUndefined() {
     foldSame("var x = undefined");
     foldSame("function f(f) {var undefined=2;var x = undefined;}");
@@ -850,15 +874,24 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     fold("(a(), b()), (c(), d());", "a(); b(); (c(), d());");
     fold("a(); b(); (c(), d());", "a(); b(); c(); d();");
     fold("foo(), true", "foo();true");
+<<<<<<< HEAD
     fold("foo();true", "foo();1");
     fold("function x(){foo(), !0}", "function x(){foo(); !0}");
     fold("function x(){foo(); !0}", "function x(){foo(); 1}");
+=======
+    foldSame("foo();true");
+    fold("function x(){foo(), !0}", "function x(){foo(); !0}");
+    foldSame("function x(){foo(); !0}");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testComma1() {
     late = false;
     fold("1, 2", "1; 2");
+<<<<<<< HEAD
     fold("1; 2", "1; 1");
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     late = true;
     foldSame("1, 2");
   }
@@ -891,6 +924,7 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     foldSame("a(), b(), 1");
   }
 
+<<<<<<< HEAD
   public void testObjectLiteral() {
     test("({})", "1");
     test("({a:1})", "1");
@@ -905,6 +939,8 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     testSame("([foo()])");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testStringArraySplitting() {
     testSame("var x=['1','2','3','4']");
     testSame("var x=['1','2','3','4','5']");
@@ -927,6 +963,7 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     testSame("var x=[',', ' ', ';', '{', '}']");
   }
 
+<<<<<<< HEAD
   public void testRemoveElseCause() {
     test("function f() {" +
          " if(x) return 1;" +
@@ -963,6 +1000,8 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
     testSame("function f() { if (x) { if (y) { return 1; } } else f() }");
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testBindToCall1() {
     test("(goog.bind(f))()", "f()");
     test("(goog.bind(f,a))()", "f.call(a)");
@@ -1072,7 +1111,10 @@ public class PeepholeSubstituteAlternateSyntaxTest extends CompilerTestCase {
       // Don't rewrite if the bind isn't the immediate call target
       testSame("goog.bind(f.m).call(g)");
     }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 }

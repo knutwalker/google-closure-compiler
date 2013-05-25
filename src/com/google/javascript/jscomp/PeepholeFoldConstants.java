@@ -589,7 +589,11 @@ class PeepholeFoldConstants extends AbstractPeepholeOptimization {
     }
 
     // Note: Right hand side folding is handled by
+<<<<<<< HEAD
     // PeepholeSubstituteAlternateSyntax#tryMinimizeCondition
+=======
+    // PeepholeMinimizeConditions#tryMinimizeCondition
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     if (result != null) {
       // Fold it!
@@ -794,8 +798,12 @@ class PeepholeFoldConstants extends AbstractPeepholeOptimization {
         (NodeUtil.isAssociative(opType) && NodeUtil.isCommutative(opType))
         || n.isAdd());
 
+<<<<<<< HEAD
     Preconditions.checkState(
         !n.isAdd()|| !NodeUtil.mayBeString(n));
+=======
+    Preconditions.checkState(!n.isAdd() || !NodeUtil.mayBeString(n));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // Use getNumberValue to handle constants like "NaN" and "Infinity"
     // other values are converted to numbers elsewhere.

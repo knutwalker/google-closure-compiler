@@ -29,14 +29,20 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * NodeTraversal allows an iteration through the nodes in the parse tree,
  * and facilitates the optimizations on the parse tree.
  *
  */
 public class NodeTraversal {
+<<<<<<< HEAD
   // Package protected for tests
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private final AbstractCompiler compiler;
   private final Callback callback;
 
@@ -80,15 +86,29 @@ public class NodeTraversal {
   /** Possible callback for scope entry and exist **/
   private ScopedCallback scopeCallback;
 
+<<<<<<< HEAD
   /**
    * Callback
+=======
+  /** Callback for passes that iterate over a list of functions */
+  public interface FunctionCallback {
+    void visit(AbstractCompiler compiler, Node fnRoot);
+  }
+
+  /**
+   * Callback for tree-based traversals
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    */
   public interface Callback {
     /**
      * <p>Visits a node in pre order (before visiting its children) and decides
      * whether this node's children should be traversed. If children are
      * traversed, they will be visited by
+<<<<<<< HEAD
      * {@link #visit(NodeTraversal, Node, Node)} in post order.</p>
+=======
+     * {@link #visit(NodeTraversal, Node, Node)} in postorder.</p>
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
      * <p>Implementations can have side effects (e.g. modifying the parse
      * tree).</p>
      * @return whether the children of this node should be visited
@@ -96,7 +116,11 @@ public class NodeTraversal {
     boolean shouldTraverse(NodeTraversal nodeTraversal, Node n, Node parent);
 
     /**
+<<<<<<< HEAD
      * <p>Visits a node in post order (after its children have been visited).
+=======
+     * <p>Visits a node in postorder (after its children have been visited).
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
      * A node is visited only if all its parents should be traversed
      * ({@link #shouldTraverse(NodeTraversal, Node, Node)}).</p>
      * <p>Implementations can have side effects (e.g. modifying the parse
@@ -124,7 +148,11 @@ public class NodeTraversal {
   }
 
   /**
+<<<<<<< HEAD
    * Abstract callback to visit all nodes in post order.
+=======
+   * Abstract callback to visit all nodes in postorder.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    */
   public abstract static class AbstractPostOrderCallback implements Callback {
     @Override
@@ -134,8 +162,19 @@ public class NodeTraversal {
     }
   }
 
+<<<<<<< HEAD
   /**
    * Abstract scoped callback to visit all nodes in post order.
+=======
+  /** Abstract callback to visit all nodes in preorder. */
+  public abstract static class AbstractPreOrderCallback implements Callback {
+    @Override
+    public void visit(NodeTraversal t, Node n, Node parent) {}
+  }
+
+  /**
+   * Abstract scoped callback to visit all nodes in postorder.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    */
   public abstract static class AbstractScopedCallback
       implements ScopedCallback {
@@ -274,6 +313,10 @@ public class NodeTraversal {
       sourceName = "";
       curNode = root;
       pushScope(root);
+<<<<<<< HEAD
+=======
+      // null parent ensures that the shallow callbacks will traverse root
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       traverseBranch(root, null);
       popScope();
     } catch (Exception unexpectedException) {
@@ -393,6 +436,7 @@ public class NodeTraversal {
     }
   }
 
+<<<<<<< HEAD
   /**
    * Gets the compiler.
    */
@@ -400,6 +444,10 @@ public class NodeTraversal {
     // TODO(nicksantos): Remove this type cast. This is just temporary
     // while refactoring.
     return (Compiler) compiler;
+=======
+  public AbstractCompiler getCompiler() {
+    return compiler;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -410,7 +458,11 @@ public class NodeTraversal {
     Node cur = curNode;
     while (cur != null) {
       int line = cur.getLineno();
+<<<<<<< HEAD
       if (line >=0) {
+=======
+      if (line >= 0) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         return line;
       }
       cur = cur.getParent();
@@ -448,6 +500,42 @@ public class NodeTraversal {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Traversal for passes that work only on changed functions.
+   * Suppose a loopable pass P1 uses this traversal.
+   * Then, if a function doesn't change between two runs of P1, it won't look at
+   * the function the second time.
+   * (We're assuming that P1 runs to a fixpoint, o/w we may miss optimizations.)
+   *
+   * Most changes are reported with calls to Compiler.reportCodeChange(), which
+   * doesn't know which scope changed. We keep track of the current scope by
+   * calling Compiler.setScope inside pushScope and popScope.
+   * The automatic tracking can be wrong in rare cases when a pass changes scope
+   * w/out causing a call to pushScope or popScope. It's very hard to find the
+   * places where this happens unless a bug is triggered.
+   * Passes that do cross-scope modifications call
+   * Compiler.reportChangeToEnclosingScope(Node n).
+   */
+  public static void traverseChangedFunctions(
+      AbstractCompiler compiler, FunctionCallback callback) {
+    final AbstractCompiler comp = compiler;
+    final FunctionCallback cb = callback;
+    final Node jsRoot = comp.getJsRoot();
+    NodeTraversal t = new NodeTraversal(comp, new AbstractPreOrderCallback() {
+        @Override
+        public final boolean shouldTraverse(NodeTraversal t, Node n, Node p) {
+          if ((n == jsRoot || n.isFunction()) && comp.hasScopeChanged(n)) {
+            cb.visit(comp, n);
+          }
+          return true;
+        }
+      });
+    t.traverse(jsRoot);
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Traverses a node recursively.
    */
   public static void traverse(
@@ -474,7 +562,10 @@ public class NodeTraversal {
   /**
    * Traverses a branch.
    */
+<<<<<<< HEAD
   @SuppressWarnings("fallthrough")
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void traverseBranch(Node n, Node parent) {
     int type = n.getType();
     if (type == Token.SCRIPT) {
@@ -483,6 +574,7 @@ public class NodeTraversal {
     }
 
     curNode = n;
+<<<<<<< HEAD
     if (!callback.shouldTraverse(this, n, parent)) return;
 
     switch (type) {
@@ -499,21 +591,44 @@ public class NodeTraversal {
           child = next;
         }
         break;
+=======
+    if (!callback.shouldTraverse(this, n, parent)) {
+      return;
+    }
+
+    if (type == Token.FUNCTION) {
+      traverseFunction(n, parent);
+    } else {
+      for (Node child = n.getFirstChild(); child != null; ) {
+        // child could be replaced, in which case our child node
+        // would no longer point to the true next
+        Node next = child.getNext();
+        traverseBranch(child, n);
+        child = next;
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     curNode = n;
     callback.visit(this, n, parent);
   }
 
+<<<<<<< HEAD
   /**
    * Traverses a function.
    */
+=======
+  /** Traverses a function. */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void traverseFunction(Node n, Node parent) {
     Preconditions.checkState(n.getChildCount() == 3);
     Preconditions.checkState(n.isFunction());
 
     final Node fnName = n.getFirstChild();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     boolean isFunctionExpression = (parent != null)
         && NodeUtil.isFunctionExpression(n);
 
@@ -538,8 +653,12 @@ public class NodeTraversal {
     traverseBranch(args, n);
 
     // Body
+<<<<<<< HEAD
     Preconditions.checkState(body.getNext() == null &&
             body.isBlock(), body);
+=======
+    Preconditions.checkState(body.getNext() == null && body.isBlock(), body);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     traverseBranch(body, n);
 
     popScope();
@@ -562,6 +681,10 @@ public class NodeTraversal {
   /** Creates a new scope (e.g. when entering a function). */
   private void pushScope(Node node) {
     Preconditions.checkState(curNode != null);
+<<<<<<< HEAD
+=======
+    compiler.setScope(node);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     scopeRoots.push(node);
     cfgs.push(null);
     if (scopeCallback != null) {
@@ -572,6 +695,10 @@ public class NodeTraversal {
   /** Creates a new scope (e.g. when entering a function). */
   private void pushScope(Scope s) {
     Preconditions.checkState(curNode != null);
+<<<<<<< HEAD
+=======
+    compiler.setScope(s.getRootNode());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     scopes.push(s);
     cfgs.push(null);
     if (scopeCallback != null) {
@@ -590,6 +717,12 @@ public class NodeTraversal {
       scopeRoots.pop();
     }
     cfgs.pop();
+<<<<<<< HEAD
+=======
+    if (hasScope()) {
+      compiler.setScope(getScopeRoot());
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /** Gets the current scope. */
@@ -605,7 +738,11 @@ public class NodeTraversal {
       scopes.push(scope);
     }
     scopeRoots.clear();
+<<<<<<< HEAD
 
+=======
+    // No need to call compiler.setScope; the top scopeRoot is now the top scope
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return scope;
   }
 
@@ -647,8 +784,13 @@ public class NodeTraversal {
   /** Reports a diagnostic (error or warning) */
   public void report(Node n, DiagnosticType diagnosticType,
       String... arguments) {
+<<<<<<< HEAD
     JSError error = JSError.make(getBestSourceFileName(n),
         n, diagnosticType, arguments);
+=======
+    JSError error = JSError.make(
+        getBestSourceFileName(n), n, diagnosticType, arguments);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     compiler.report(error);
   }
 

@@ -102,8 +102,12 @@ public class SemanticReverseAbstractInterpreter
   /**
    * Merging function for inequality comparisons between types.
    */
+<<<<<<< HEAD
   private final
       Function<TypePair, TypePair> INEQ =
+=======
+  private final Function<TypePair, TypePair> ineq =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     new Function<TypePair, TypePair>() {
       @Override
       public TypePair apply(TypePair p) {
@@ -233,7 +237,11 @@ public class SemanticReverseAbstractInterpreter
       case Token.GE:
       case Token.GT:
         if (outcome) {
+<<<<<<< HEAD
           return caseEquality(condition, blindScope, INEQ);
+=======
+          return caseEquality(condition, blindScope, ineq);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         break;
 
@@ -357,7 +365,15 @@ public class SemanticReverseAbstractInterpreter
         left, blindScope, !condition);
     StaticSlot<JSType> leftVar = leftScope.findUniqueRefinedSlot(blindScope);
     if (leftVar == null) {
+<<<<<<< HEAD
       return blindScope;
+=======
+      // If we did create a more precise scope, blindScope has a child and
+      // it is frozen. We can't just throw it away to return it. So we
+      // must create a child instead.
+      return blindScope == leftScope ?
+          blindScope : blindScope.createChildFlowScope();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
     FlowScope rightScope = firstPreciserScopeKnowingConditionOutcome(
         left, blindScope, condition);
@@ -365,7 +381,12 @@ public class SemanticReverseAbstractInterpreter
         right, rightScope, !condition);
     StaticSlot<JSType> rightVar = rightScope.findUniqueRefinedSlot(blindScope);
     if (rightVar == null || !leftVar.getName().equals(rightVar.getName())) {
+<<<<<<< HEAD
       return blindScope;
+=======
+      return blindScope == rightScope ?
+          blindScope : blindScope.createChildFlowScope();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
     JSType type = leftVar.getType().getLeastSupertype(rightVar.getType());
     FlowScope informed = blindScope.createChildFlowScope();

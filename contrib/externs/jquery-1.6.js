@@ -1549,7 +1549,11 @@ jQuery.Promise.prototype.then = function(doneCallbacks, failCallbacks) {};
 /**
  * @param {(string|Object.<string,*>)} arg1
  * @param {(string|number|boolean|function(number,String))=} arg2
+<<<<<<< HEAD
  * @return {(string|jQuery)}
+=======
+ * @return {(string|boolean|!jQuery)}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 jQuery.prototype.prop = function(arg1, arg2) {};
 

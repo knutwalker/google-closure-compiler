@@ -1688,6 +1688,10 @@ public class NativeArray extends IdScriptableObject implements List
         return true;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     public int size() {
         long longLen = length;
         if (longLen > Integer.MAX_VALUE) {
@@ -1696,6 +1700,14 @@ public class NativeArray extends IdScriptableObject implements List
         return (int) longLen;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public boolean isEmpty() {
+        return length == 0;
+    }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     public Object get(long index) {
         if (index < 0 || index >= length) {
             throw new IndexOutOfBoundsException();

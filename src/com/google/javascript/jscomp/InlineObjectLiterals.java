@@ -35,7 +35,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Using the infrastructure provided by {@link ReferenceCollectingCallback},
  * identify variables that are only ever assigned to object literals
@@ -214,7 +217,11 @@ class InlineObjectLiterals implements CompilerPass {
         // Make sure that the value is not self-referential. IOW,
         // disallow things like x = {b: x.a}.
         //
+<<<<<<< HEAD
         // TODO: Only exclude unorderable self-referential
+=======
+        // TODO(user): Only exclude unorderable self-referential
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         // assignments. i.e. x = {a: x.b, b: x.a} is not orderable,
         // but x = {a: 1, b: x.a} is.
         //
@@ -427,6 +434,10 @@ class InlineObjectLiterals implements CompilerPass {
           blacklistVarReferencesInTree(val, v.scope);
         }
         vnode.getParent().addChildBefore(varnode, vnode);
+<<<<<<< HEAD
+=======
+        compiler.reportChangeToEnclosingScope(vnode);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
 
       if (defined) {
@@ -434,8 +445,16 @@ class InlineObjectLiterals implements CompilerPass {
       }
 
       for (Reference ref : referenceInfo.references) {
+<<<<<<< HEAD
         // The init/decl have already been converted.
         if (defined && ref == init) continue;
+=======
+        compiler.reportChangeToEnclosingScope(ref.getNode());
+        // The init/decl have already been converted.
+        if (defined && ref == init) {
+          continue;
+        }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
         if (ref.isLvalue()) {
           // Assignments have to be handled specially, since they
@@ -463,8 +482,11 @@ class InlineObjectLiterals implements CompilerPass {
           ref.getGrandparent().replaceChild(ref.getParent(), replacement);
         }
       }
+<<<<<<< HEAD
 
       compiler.reportCodeChange();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 }

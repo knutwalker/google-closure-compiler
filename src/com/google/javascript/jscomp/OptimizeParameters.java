@@ -45,7 +45,11 @@ class OptimizeParameters
     implements CompilerPass, OptimizeCalls.CallGraphCompilerPass {
 
   private final AbstractCompiler compiler;
+<<<<<<< HEAD
   private List<Node> removedNodes = Lists.newArrayList();
+=======
+  private final List<Node> removedNodes = Lists.newArrayList();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   OptimizeParameters(AbstractCompiler compiler) {
     this.compiler = compiler;
@@ -202,7 +206,11 @@ class OptimizeParameters
         continueLooking = buildParameterList(parameters, cur, site.scope);
         firstCall = false;
       } else {
+<<<<<<< HEAD
         continueLooking= findFixedParameters(parameters, cur);
+=======
+        continueLooking = findFixedParameters(parameters, cur);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       if (!continueLooking) {
         return;
@@ -302,7 +310,11 @@ class OptimizeParameters
       index++;
     }
 
+<<<<<<< HEAD
     for (;index < parameters.size(); index++) {
+=======
+    for (; index < parameters.size(); index++) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       parameters.get(index).setShouldRemove(false);
     }
 

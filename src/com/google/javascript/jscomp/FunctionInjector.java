@@ -901,10 +901,17 @@ class FunctionInjector {
       // NOTE 2: The aliasing overhead is currently an under-estimate,
       // as some parameters are aliased because of the parameters used.
       // Perhaps we should just assume all parameters will be aliased?
+<<<<<<< HEAD
       final int INLINE_BLOCK_OVERHEAD = 4; // "X:{}"
       final int PER_RETURN_OVERHEAD = 2;   // "return" --> "break X"
       final int PER_RETURN_RESULT_OVERHEAD = 3; // "XX="
       final int PER_ALIAS_OVERHEAD = 3; // "XX="
+=======
+      final int inlineBlockOverhead = 4; // "X:{}"
+      final int perReturnOverhead = 2;   // "return" --> "break X"
+      final int perReturnResultOverhead = 3; // "XX="
+      final int perAliasOverhead = 3; // "XX="
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
       // TODO(johnlenz): Counting the number of returns is relatively expensive
       //   this information should be determined during the traversal and
@@ -912,12 +919,21 @@ class FunctionInjector {
       int returnCount = NodeUtil.getNodeTypeReferenceCount(
           block, Token.RETURN, new NodeUtil.MatchShallowStatement());
       int resultCount = (returnCount > 0) ? returnCount - 1 : 0;
+<<<<<<< HEAD
       int baseOverhead = (returnCount > 0) ? INLINE_BLOCK_OVERHEAD : 0;
 
       int overhead = baseOverhead
           + returnCount * PER_RETURN_OVERHEAD
           + resultCount * PER_RETURN_RESULT_OVERHEAD
           + aliasCount * PER_ALIAS_OVERHEAD;
+=======
+      int baseOverhead = (returnCount > 0) ? inlineBlockOverhead : 0;
+
+      int overhead = baseOverhead
+          + returnCount * perReturnOverhead
+          + resultCount * perReturnResultOverhead
+          + aliasCount * perAliasOverhead;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
       return (overhead - costDeltaFunctionOverhead);
     }

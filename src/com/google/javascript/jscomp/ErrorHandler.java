@@ -16,8 +16,11 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * The error handler is any generic sink for warnings and errors,
  * after they've passed through any filtering {@code WarningsGuard}s.

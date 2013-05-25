@@ -15,7 +15,11 @@
  */
 
 /**
+<<<<<<< HEAD
  * @fileoverview Externs for Underscore 1.3.1
+=======
+ * @fileoverview Externs for Underscore 1.3.1.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *
  * TODO: Wrapper objects.
  * TODO: _.bind - for some reason this plays up in practice.
@@ -29,7 +33,11 @@
  * @return {!_}
  * @constructor
  */
+<<<<<<< HEAD
 function _(obj) {};
+=======
+function _(obj) {}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 // Collection functions
 
@@ -166,6 +174,7 @@ _.all = function(obj, iterator, opt_context) {};
 
 /**
  * @param {Object|Array} obj
+<<<<<<< HEAD
  * @param {Function} iterator
  * @param {Object=} opt_context
  * @return {boolean}
@@ -179,6 +188,21 @@ _.some = function(obj, iterator, opt_context) {};
  * @return {boolean}
  */
 _.any = function(obj, iterator, opt_context) {};
+=======
+ * @param {Function=} opt_iterator
+ * @param {Object=} opt_context
+ * @return {boolean}
+ */
+_.some = function(obj, opt_iterator, opt_context) {};
+
+/**
+ * @param {Object|Array} obj
+ * @param {Function=} opt_iterator
+ * @param {Object=} opt_context
+ * @return {boolean}
+ */
+_.any = function(obj, opt_iterator, opt_context) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {Object|Array} obj
@@ -529,7 +553,11 @@ _.isEmpty = function(obj) {};
  * @param {*} obj
  * @return {boolean}
  */
+<<<<<<< HEAD
 _.isElement = function(obj) {}
+=======
+_.isElement = function(obj) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {*} obj
@@ -628,7 +656,11 @@ _.identity = function(value) {};
  * @param {Function} iterator
  * @param {Object=} opt_context
  */
+<<<<<<< HEAD
 _.times = function (n, iterator, opt_context) {};
+=======
+_.times = function(n, iterator, opt_context) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {string} s

@@ -285,6 +285,7 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
   }
 
   public void testIssue4177428a() {
+<<<<<<< HEAD
     test(
         "f = function() {\n" +
         "  var action;\n" +
@@ -299,6 +300,9 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "  }\n" +
         "  alert(action)\n" + // but not this.
         "};",
+=======
+    testSame(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "f = function() {\n" +
         "  var action;\n" +
         "  a: {\n" +
@@ -307,6 +311,7 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
         "    }\n" +
         "  }\n" +
         "  alert(action)\n" +  // but not this.
@@ -332,6 +337,17 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "  }\n" +
         "  alert(action)\n" + // but not this.
         "};",
+=======
+        "      break a\n" +  // Keep this...
+        "    }\n" +
+        "  }\n" +
+        "  alert(action)\n" + // and this.
+        "};");
+  }
+
+  public void testIssue4177428b() {
+    testSame(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "f = function() {\n" +
         "  var action;\n" +
         "  a: {\n" +
@@ -341,11 +357,16 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
         "      break a\n" +  // Remove this...
+=======
+        "      break a\n" +  // Keep this...
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "    }\n" +
         "    } finally {\n" +
         "    }\n" +
         "  }\n" +
+<<<<<<< HEAD
         "  alert(action)\n" +  // but not this.
         "};"
         );
@@ -369,6 +390,14 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "  }\n" +
         "  alert(action)\n" + // but not this.
         "};",
+=======
+        "  alert(action)\n" + // and this.
+        "};");
+  }
+
+  public void testIssue4177428c() {
+    testSame(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "f = function() {\n" +
         "  var action;\n" +
         "  a: {\n" +
@@ -379,6 +408,7 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
         "    }\n" +
         "    }\n" +
         "  }\n" +
@@ -389,6 +419,18 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
 
   public void testIssue4177428_continue() {
     test(
+=======
+        "      break a\n" +  // Keep this...
+        "    }\n" +
+        "    }\n" +
+        "  }\n" +
+        "  alert(action)\n" + // and this.
+        "};");
+  }
+
+  public void testIssue4177428_continue() {
+    testSame(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "f = function() {\n" +
         "  var action;\n" +
         "  a: do {\n" +
@@ -397,6 +439,7 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
         "      continue a\n" +  // Remove this...
         "    }\n" +
         "  } while(false)\n" +
@@ -415,6 +458,13 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "  alert(action)\n" +
         "};"
         );
+=======
+        "      continue a\n" +  // Keep this...
+        "    }\n" +
+        "  } while(false)\n" +
+        "  alert(action)\n" + // and this.
+        "};");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testIssue4177428_return() {
@@ -427,10 +477,17 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
         "      return\n" +  // Remove this...
         "    }\n" +
         "  }\n" +
         "  alert(action)\n" + // and this.
+=======
+        "      return\n" +  // Keep this...
+        "    }\n" +
+        "  }\n" +
+        "  alert(action)\n" + // and remove this.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "};",
         "f = function() {\n" +
         "  var action;\n" +
@@ -440,6 +497,10 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
         "      proto = new Proto\n" +
         "    } finally {\n" +
         "      action = proto;\n" +
+<<<<<<< HEAD
+=======
+        "      return\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "    }\n" +
         "  }\n" +
         "};"
@@ -470,4 +531,16 @@ public class UnreachableCodeEliminationTest extends CompilerTestCase {
   public void testForInLoop() {
     testSame("for(var x in y) {}");
   }
+<<<<<<< HEAD
+=======
+
+  public void testDontRemoveBreakInTryFinally() throws Exception {
+    testSame("function f() {b:try{throw 9} finally {break b} return 1;}");
+  }
+
+  public void testDontRemoveBreakInTryFinallySwitch() throws Exception {
+    testSame("function f() {b:try{throw 9} finally {" +
+             "switch(x) {case 1: break b} } return 1;}");
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

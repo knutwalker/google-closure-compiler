@@ -16,10 +16,15 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
+=======
+import java.util.logging.Level;
+import java.util.logging.Logger;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * An error manager that logs errors and warnings using a logger in addition to

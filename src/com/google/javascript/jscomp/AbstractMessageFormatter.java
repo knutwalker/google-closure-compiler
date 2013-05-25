@@ -16,7 +16,10 @@
 package com.google.javascript.jscomp;
 
 import com.google.common.collect.ImmutableSet;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.Set;
 
@@ -79,8 +82,14 @@ public abstract class AbstractMessageFormatter implements MessageFormatter {
   }
 
   private String maybeColorize(String text, Color color) {
+<<<<<<< HEAD
     if (!colorize) return text;
 
+=======
+    if (!colorize) {
+      return text;
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return color.getControlCharacter() +
         text + Color.RESET.getControlCharacter();
   }

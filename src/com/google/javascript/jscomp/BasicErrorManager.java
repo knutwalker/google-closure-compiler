@@ -17,7 +17,10 @@
 package com.google.javascript.jscomp;
 
 import com.google.common.collect.Sets;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.ArrayList;
 import java.util.Comparator;

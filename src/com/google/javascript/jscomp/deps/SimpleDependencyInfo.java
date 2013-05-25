@@ -100,4 +100,13 @@ public class SimpleDependencyInfo implements DependencyInfo {
         + "provides=%3$s, requires=%4$s)", srcPathRelativeToClosure,
         pathOfDefiningFile, provides, requires);
   }
+<<<<<<< HEAD
+=======
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(provides, requires,
+        srcPathRelativeToClosure, pathOfDefiningFile);
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

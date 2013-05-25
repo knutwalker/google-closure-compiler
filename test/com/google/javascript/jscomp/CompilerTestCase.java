@@ -21,7 +21,10 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CodeChangeHandler.RecentChange;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.jscomp.CompilerOptions.LanguageMode;
 import com.google.javascript.jscomp.type.ReverseAbstractInterpreter;
 import com.google.javascript.jscomp.type.SemanticReverseAbstractInterpreter;
@@ -32,6 +35,10 @@ import junit.framework.TestCase;
 
 import java.io.IOException;
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Map;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * <p>Base class for testing JS compiler classes that change
@@ -66,6 +73,12 @@ public abstract class CompilerTestCase extends TestCase  {
   /** Error level reported by type checker. */
   private CheckLevel typeCheckLevel;
 
+<<<<<<< HEAD
+=======
+  /** Whether to the test compiler pass before the type check. */
+  protected boolean runTypeCheckAfterProcessing = false;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Whether the Normalize pass runs before pass being tested. */
   private boolean normalizeEnabled = false;
 
@@ -75,6 +88,12 @@ public abstract class CompilerTestCase extends TestCase  {
   /** Whether to check that all line number information is preserved. */
   private boolean checkLineNumbers = true;
 
+<<<<<<< HEAD
+=======
+  /** Whether we expect parse warnings in the current test. */
+  private boolean expectParseWarningsThisTest = false;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * An expected symbol table error. Only useful for testing the
    * symbol table error-handling.
@@ -145,6 +164,14 @@ public abstract class CompilerTestCase extends TestCase  {
     this("", true);
   }
 
+<<<<<<< HEAD
+=======
+  @Override protected void tearDown() throws Exception {
+    super.tearDown();
+    expectParseWarningsThisTest = false;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * Gets the compiler pass instance to use for a test.
    *
@@ -309,6 +336,14 @@ public abstract class CompilerTestCase extends TestCase  {
     astValidationEnabled = validate;
   }
 
+<<<<<<< HEAD
+=======
+  /** Whether we should ignore parse warnings for the current test method. */
+  protected void setExpectParseWarningsThisTest() {
+    expectParseWarningsThisTest = true;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Returns a newly created TypeCheck. */
   private static TypeCheck createTypeCheck(Compiler compiler,
       CheckLevel level) {
@@ -316,8 +351,12 @@ public abstract class CompilerTestCase extends TestCase  {
         new SemanticReverseAbstractInterpreter(compiler.getCodingConvention(),
             compiler.getTypeRegistry());
 
+<<<<<<< HEAD
     return new TypeCheck(compiler, rai, compiler.getTypeRegistry(),
         level, CheckLevel.OFF);
+=======
+    return new TypeCheck(compiler, rai, compiler.getTypeRegistry(), level);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -723,7 +762,10 @@ public abstract class CompilerTestCase extends TestCase  {
     test(compiler, expected, error, warning, null);
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * Verifies that the compiler pass's JS output matches the expected output
    * and (optionally) that an expected warning is issued. Or, if an error is
@@ -747,6 +789,14 @@ public abstract class CompilerTestCase extends TestCase  {
     Node root = compiler.parseInputs();
     assertTrue("Unexpected parse error(s): " +
         Joiner.on("\n").join(compiler.getErrors()), root != null);
+<<<<<<< HEAD
+=======
+    if (!expectParseWarningsThisTest) {
+      assertTrue("Unexpected parse warnings(s): " +
+          Joiner.on("\n").join(compiler.getWarnings()),
+          compiler.getWarnings().length == 0);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     if (astValidationEnabled) {
       (new AstValidator()).validateRoot(root);
@@ -758,6 +808,10 @@ public abstract class CompilerTestCase extends TestCase  {
     Node rootClone = root.cloneTree();
     Node externsRootClone = rootClone.getFirstChild();
     Node mainRootClone = rootClone.getLastChild();
+<<<<<<< HEAD
+=======
+    Map<Node, Node> mtoc = NodeUtil.mapMainToClone(mainRoot, mainRootClone);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     int numRepetitions = getNumRepetitions();
     ErrorManager[] errorManagers = new ErrorManager[numRepetitions];
@@ -784,7 +838,11 @@ public abstract class CompilerTestCase extends TestCase  {
         // Running it twice can cause unpredictable behavior because duplicate
         // objects for the same type are created, and the type system
         // uses reference equality to compare many types.
+<<<<<<< HEAD
         if (typeCheckEnabled && i == 0) {
+=======
+        if (!runTypeCheckAfterProcessing && typeCheckEnabled && i == 0) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           TypeCheck check = createTypeCheck(compiler, typeCheckLevel);
           check.processForTesting(externsRoot, mainRoot);
         }
@@ -809,6 +867,14 @@ public abstract class CompilerTestCase extends TestCase  {
           (new LineNumberCheck(compiler)).process(externsRoot, mainRoot);
         }
 
+<<<<<<< HEAD
+=======
+        if (runTypeCheckAfterProcessing && typeCheckEnabled && i == 0) {
+          TypeCheck check = createTypeCheck(compiler, typeCheckLevel);
+          check.processForTesting(externsRoot, mainRoot);
+        }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         hasCodeChanged = hasCodeChanged || recentChange.hasCodeChanged();
         aggregateWarningCount += errorManagers[i].getWarningCount();
         aggregateWarnings.addAll(Lists.newArrayList(compiler.getWarnings()));
@@ -882,7 +948,11 @@ public abstract class CompilerTestCase extends TestCase  {
       boolean codeChange = !mainRootClone.isEquivalentTo(mainRoot);
       boolean externsChange = !externsRootClone.isEquivalentTo(externsRoot);
 
+<<<<<<< HEAD
       // Generally, externs should not be change by the compiler passes.
+=======
+      // Generally, externs should not be changed by the compiler passes.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (externsChange && !allowExternsChanges) {
         String explanation = externsRootClone.checkTreeEquals(externsRoot);
         fail("Unexpected changes to externs" +
@@ -901,6 +971,12 @@ public abstract class CompilerTestCase extends TestCase  {
             hasCodeChanged);
       }
 
+<<<<<<< HEAD
+=======
+      // Check correctness of the changed-scopes-only traversal
+      NodeUtil.verifyScopeChanges(mtoc, mainRoot, false, compiler);
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (expected != null) {
         if (compareAsTree) {
           String explanation = expectedRoot.checkTreeEquals(mainRoot);
@@ -915,7 +991,12 @@ public abstract class CompilerTestCase extends TestCase  {
 
       // Verify normalization is not invalidated.
       Node normalizeCheckRootClone = root.cloneTree();
+<<<<<<< HEAD
       Node normalizeCheckExternsRootClone = normalizeCheckRootClone.getFirstChild();
+=======
+      Node normalizeCheckExternsRootClone =
+          normalizeCheckRootClone.getFirstChild();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       Node normalizeCheckMainRootClone = normalizeCheckRootClone.getLastChild();
       new PrepareAst(compiler).process(
           normalizeCheckExternsRootClone, normalizeCheckMainRootClone);

@@ -19,7 +19,10 @@ package com.google.javascript.jscomp;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.JSDocInfo;
 import com.google.javascript.rhino.Node;
@@ -73,7 +76,11 @@ class AngularPass extends AbstractPostOrderCallback implements CompilerPass {
   final AbstractCompiler compiler;
 
   /** Nodes annotated with @ngInject */
+<<<<<<< HEAD
   private List<NodeContext> injectables = new ArrayList<NodeContext>();
+=======
+  private final List<NodeContext> injectables = new ArrayList<NodeContext>();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   public AngularPass(AbstractCompiler compiler) {
     this.compiler = compiler;
@@ -115,6 +122,7 @@ class AngularPass extends AbstractPostOrderCallback implements CompilerPass {
       // creates `something.$inject = ['param1', 'param2']` node.
       Node statement = IR.exprResult(
           IR.assign(
+<<<<<<< HEAD
               NodeUtil.newQualifiedNameNode(convention,
                   name + "." + INJECT_PROPERTY_NAME),
               dependenciesArray
@@ -123,6 +131,27 @@ class AngularPass extends AbstractPostOrderCallback implements CompilerPass {
       // adds `something.$inject = [...]` node after the annotated node.
       Node target = entry.getTarget();
       target.getParent().addChildAfter(statement, target);
+=======
+              IR.getelem(
+                  NodeUtil.newQualifiedNameNode(convention, name),
+                  IR.string(INJECT_PROPERTY_NAME)),
+              dependenciesArray
+          )
+      );
+      // adds `something.$inject = [...]` node after the annotated node or the following
+      // goog.inherits call.
+      Node insertionPoint = entry.getTarget();
+      Node next = insertionPoint.getNext();
+      while (next != null &&
+             NodeUtil.isExprCall(next) &&
+             convention.getClassesDefinedByCall(
+                 next.getFirstChild()) != null) {
+        insertionPoint = next;
+        next = insertionPoint.getNext();
+      }
+
+      insertionPoint.getParent().addChildAfter(statement, insertionPoint);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       codeChanged = true;
     }
     if (codeChanged) {
@@ -255,6 +284,7 @@ class AngularPass extends AbstractPostOrderCallback implements CompilerPass {
 
   class NodeContext {
     /** Name of the function/object. */
+<<<<<<< HEAD
     private String name;
     /** Node jsDoc is attached to. */
     private Node node;
@@ -262,6 +292,15 @@ class AngularPass extends AbstractPostOrderCallback implements CompilerPass {
     private Node functionNode;
     /** Node after which to inject the new code */
     private Node target;
+=======
+    private final String name;
+    /** Node jsDoc is attached to. */
+    private final Node node;
+    /** Function node */
+    private final Node functionNode;
+    /** Node after which to inject the new code */
+    private final Node target;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     public NodeContext(String name, Node node, Node functionNode, Node target) {
       this.name = name;

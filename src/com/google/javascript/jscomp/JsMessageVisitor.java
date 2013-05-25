@@ -52,7 +52,11 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
   static final DiagnosticType MESSAGE_HAS_NO_TEXT =
       DiagnosticType.warning("JSC_MSG_HAS_NO_TEXT",
           "Message value of {0} is just an empty string. "
+<<<<<<< HEAD
               + "Empty messages are forbidden." );
+=======
+              + "Empty messages are forbidden.");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   static final DiagnosticType MESSAGE_TREE_MALFORMED =
       DiagnosticType.error("JSC_MSG_TREE_MALFORMED",
@@ -584,7 +588,11 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
           // Check that all placeholders from the message text have appropriate
           // object literal keys
           for (String phName : builder.getPlaceholders()) {
+<<<<<<< HEAD
             if(!phNames.contains(phName)) {
+=======
+            if (!phNames.contains(phName)) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
               throw new MalformedException(
                   "Unrecognized message placeholder referenced: " + phName,
                   returnNode);
@@ -710,7 +718,11 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
     // values
     Set<String> usedPlaceholders = builder.getPlaceholders();
     for (String phName : usedPlaceholders) {
+<<<<<<< HEAD
       if(!phNames.contains(phName)) {
+=======
+      if (!phNames.contains(phName)) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         throw new MalformedException(
             "Unrecognized message placeholder referenced: " + phName,
             objLitNode);
@@ -720,7 +732,11 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
     // Check that objLiteral have only names that are present in the
     // message text
     for (String phName : phNames) {
+<<<<<<< HEAD
       if(!usedPlaceholders.contains(phName)) {
+=======
+      if (!usedPlaceholders.contains(phName)) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         throw new MalformedException(
             "Unused message placeholder: " + phName,
             objLitNode);
@@ -741,7 +757,11 @@ abstract class JsMessageVisitor extends AbstractPostOrderCallback
       throws MalformedException {
     String value = extractStringFromStringExprNode(node);
 
+<<<<<<< HEAD
     while(true) {
+=======
+    while (true) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       int phBegin = value.indexOf(PH_JS_PREFIX);
       if (phBegin < 0) {
         // Just a string literal

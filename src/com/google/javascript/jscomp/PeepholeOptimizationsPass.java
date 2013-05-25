@@ -16,12 +16,19 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.javascript.rhino.Node;
 
 import java.util.ArrayList;
 
+=======
+import com.google.javascript.jscomp.NodeTraversal.AbstractShallowCallback;
+import com.google.javascript.jscomp.NodeTraversal.FunctionCallback;
+import com.google.javascript.rhino.Node;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * A compiler pass to run various peephole optimizations (e.g. constant folding,
  * some useless code removal, some minimizations).
@@ -29,6 +36,7 @@ import java.util.ArrayList;
  * @author dcc@google.com (Devin Coughlin)
  * @author acleung@google.com (Alan Leung)(
  */
+<<<<<<< HEAD
 class PeepholeOptimizationsPass
     implements CompilerPass {
   private AbstractCompiler compiler;
@@ -87,6 +95,16 @@ class PeepholeOptimizationsPass
       traversalState.peek().changed = true;
     }
   }
+=======
+class PeepholeOptimizationsPass implements CompilerPass {
+  private AbstractCompiler compiler;
+
+  // Use an array here for faster iteration compared to ImmutableSet
+  private final AbstractPeepholeOptimization[] peepholeOptimizations;
+
+  private boolean retraverseOnChange;
+  private RecentChange handler;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * Creates a peephole optimization pass that runs the given
@@ -96,11 +114,20 @@ class PeepholeOptimizationsPass
       AbstractPeepholeOptimization... optimizations) {
     this.compiler = compiler;
     this.peepholeOptimizations = optimizations;
+<<<<<<< HEAD
   }
   
   PeepholeOptimizationsPass setRetraverseOnChange(boolean retraverse) {
     this.retraverseOnChange = retraverse;
     return this;
+=======
+    this.retraverseOnChange = true;
+    this.handler = new RecentChange();
+  }
+
+  void setRetraverseOnChange(boolean retraverse) {
+    this.retraverseOnChange = retraverse;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public AbstractCompiler getCompiler() {
@@ -109,14 +136,32 @@ class PeepholeOptimizationsPass
 
   @Override
   public void process(Node externs, Node root) {
+<<<<<<< HEAD
     PeepholeChangeHandler handler = new PeepholeChangeHandler();
     compiler.addChangeHandler(handler);
     beginTraversal();
     traverse(root);
+=======
+    compiler.addChangeHandler(handler);
+    beginTraversal();
+    NodeTraversal.traverseChangedFunctions(compiler, new FunctionCallback() {
+        @Override
+        public void visit(AbstractCompiler compiler, Node root) {
+          if (root.isFunction()) {
+            root = root.getLastChild();
+          }
+          do {
+            handler.reset();
+            NodeTraversal.traverse(compiler, root, new PeepCallback());
+          } while (retraverseOnChange && handler.hasCodeChanged());
+        }
+      });
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     endTraversal();
     compiler.removeChangeHandler(handler);
   }
 
+<<<<<<< HEAD
   private void traverse(Node node) {
     // The goal here is to avoid retraversing
     // the entire AST to catch newly created opportunities.
@@ -200,6 +245,27 @@ class PeepholeOptimizationsPass
         }
       }
     } while(somethingChanged);
+=======
+  private class PeepCallback extends AbstractShallowCallback {
+    @Override
+    public void visit(NodeTraversal t, Node n, Node parent) {
+      Node currentNode = n, newNode;
+      boolean codeChanged = false;
+      do {
+        codeChanged = false;
+        for (AbstractPeepholeOptimization optim : peepholeOptimizations) {
+          newNode = optim.optimizeSubtree(currentNode);
+          if (newNode != currentNode) {
+            codeChanged = true;
+            currentNode = newNode;
+          }
+          if (currentNode == null) {
+            return;
+          }
+        }
+      } while(codeChanged);
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**

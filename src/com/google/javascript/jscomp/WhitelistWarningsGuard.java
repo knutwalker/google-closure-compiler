@@ -29,7 +29,10 @@ import com.google.common.collect.TreeMultimap;
 import com.google.common.io.CharStreams;
 import com.google.common.io.Files;
 import com.google.common.io.InputSupplier;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.io.File;
 import java.io.IOException;
@@ -201,6 +204,10 @@ public class WhitelistWarningsGuard extends WarningsGuard {
     return warning;
   }
 
+<<<<<<< HEAD
+=======
+  /** Whitelist builder */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static class WhitelistBuilder implements ErrorHandler {
     private final Set<JSError> warnings = Sets.newLinkedHashSet();
     private String productName = null;
@@ -263,7 +270,11 @@ public class WhitelistWarningsGuard extends WarningsGuard {
         out.append("# When you fix any of these warnings, run "
             + generatorTarget + " task.\n");
       }
+<<<<<<< HEAD
       
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (headerNote != null) {
         out.append("#"
             + Joiner.on("\n# ").join(Splitter.on("\n").split(headerNote))

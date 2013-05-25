@@ -215,6 +215,18 @@ final class ExternExportsPass extends NodeTraversal.AbstractPostOrderCallback
     private Node createExternFunction(Node exportedFunction) {
       Node paramList = NodeUtil.getFunctionParameters(exportedFunction)
           .cloneTree();
+<<<<<<< HEAD
+=======
+      // Use the original parameter names so that the externs look pretty.
+      Node param = paramList.getFirstChild();
+      while (param != null && param.isName()) {
+        String originalName = (String) param.getProp(Node.ORIGINALNAME_PROP);
+        if (originalName != null) {
+          param.setString(originalName);
+        }
+        param = param.getNext();
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       Node externFunction = IR.function(IR.name(""), paramList, IR.block());
 
       checkForFunctionsWithUnknownTypes(exportedFunction);
@@ -240,7 +252,11 @@ final class ExternExportsPass extends NodeTraversal.AbstractPostOrderCallback
       for (Node child = exportedObjectLit.getFirstChild();
            child != null;
            child = child.getNext()) {
+<<<<<<< HEAD
         // TODO: handle getters or setters?
+=======
+        // TODO(user): handle getters or setters?
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         if (child.isStringKey()) {
           lit.addChildToBack(
               IR.propdef(

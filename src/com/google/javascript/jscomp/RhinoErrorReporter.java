@@ -17,9 +17,14 @@
 package com.google.javascript.jscomp;
 
 import com.google.common.collect.ImmutableMap;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 import com.google.javascript.rhino.ErrorReporter;
 import com.google.javascript.rhino.ScriptRuntime;
+=======
+import com.google.javascript.rhino.ErrorReporter;
+import com.google.javascript.rhino.SimpleErrorReporter;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -57,6 +62,13 @@ class RhinoErrorReporter {
           "Type annotations are not allowed here. " +
           "Are you missing parentheses?");
 
+<<<<<<< HEAD
+=======
+  static final DiagnosticType PARSE_TREE_TOO_DEEP =
+      DiagnosticType.error("PARSE_TREE_TOO_DEEP",
+          "Parse tree too deep.");
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   // A map of Rhino messages to their DiagnosticType.
   private final Map<Pattern, DiagnosticType> typeMap;
 
@@ -74,6 +86,7 @@ class RhinoErrorReporter {
 
   private RhinoErrorReporter(AbstractCompiler compiler) {
     this.compiler = compiler;
+<<<<<<< HEAD
     typeMap = ImmutableMap.of(
         // Trailing comma
         replacePlaceHolders(
@@ -98,6 +111,39 @@ class RhinoErrorReporter {
         Pattern.compile("^Bad type annotation.*"),
         TYPE_PARSE_ERROR
         );
+=======
+    typeMap = ImmutableMap.<Pattern, DiagnosticType>builder()
+        // Trailing comma
+        .put(replacePlaceHolders(
+            com.google.javascript.rhino.head.ScriptRuntime.getMessage0(
+                "msg.extra.trailing.comma")),
+            TRAILING_COMMA)
+
+        // Duplicate parameter
+        .put(replacePlaceHolders(
+            com.google.javascript.rhino.head.ScriptRuntime.getMessage0(
+                "msg.dup.parms")),
+            DUPLICATE_PARAM)
+
+        // Unknown @annotations.
+        .put(replacePlaceHolders(
+            SimpleErrorReporter.getMessage0("msg.bad.jsdoc.tag")),
+            BAD_JSDOC_ANNOTATION)
+
+        .put(Pattern.compile("^Type annotations are not allowed here.*"),
+            MISPLACED_TYPE_ANNOTATION)
+
+        // Type annotation errors.
+        .put(Pattern.compile("^Bad type annotation.*"),
+            TYPE_PARSE_ERROR)
+
+        // Parse tree too deep.
+        .put(replacePlaceHolders(
+            com.google.javascript.rhino.head.ScriptRuntime.getMessage0(
+                "msg.too.deep.parser.recursion")),
+            PARSE_TREE_TOO_DEEP)
+        .build();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public static com.google.javascript.rhino.head.ErrorReporter
@@ -121,16 +167,35 @@ class RhinoErrorReporter {
         makeError(message, sourceName, line, lineOffset, CheckLevel.ERROR));
   }
 
+<<<<<<< HEAD
+=======
+  protected DiagnosticType mapError(String message) {
+    for (Entry<Pattern, DiagnosticType> entry : typeMap.entrySet()) {
+      if (entry.getKey().matcher(message).matches()) {
+        return entry.getValue();
+      }
+    }
+    return null;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private JSError makeError(String message, String sourceName, int line,
       int lineOffset, CheckLevel defaultLevel) {
 
     // Try to see if the message is one of the rhino errors we want to
     // expose as DiagnosticType by matching it with the regex key.
+<<<<<<< HEAD
     for (Entry<Pattern, DiagnosticType> entry : typeMap.entrySet()) {
       if (entry.getKey().matcher(message).matches()) {
         return JSError.make(
             sourceName, line, lineOffset, entry.getValue(), message);
       }
+=======
+    DiagnosticType type = mapError(message);
+    if (type != null) {
+      return JSError.make(
+          sourceName, line, lineOffset, type, message);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     return JSError.make(sourceName, line, lineOffset, defaultLevel,
@@ -168,6 +233,13 @@ class RhinoErrorReporter {
     public com.google.javascript.rhino.head.EvaluatorException
         runtimeError(String message, String sourceName, int line,
             String lineSource, int lineOffset) {
+<<<<<<< HEAD
+=======
+      DiagnosticType type = mapError(message);
+      if (type != null) {
+        super.errorAtLine(message, sourceName, line, lineOffset);
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       return new com.google.javascript.rhino.head.EvaluatorException(
           message, sourceName, line, lineSource, lineOffset);
     }

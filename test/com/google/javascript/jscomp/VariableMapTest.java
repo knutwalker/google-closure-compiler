@@ -137,7 +137,11 @@ public class VariableMapTest extends TestCase {
     }
   }
 
+<<<<<<< HEAD
   public void testReverseThrowsErrorOnDuplicate() throws ParseException {
+=======
+  public void testReverseThrowsErrorOnDuplicate() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     VariableMap vm = new VariableMap(ImmutableMap.of("AA", "b", "BB", "b"));
     try {
       vm.getNewNameToOriginalNameMap();
@@ -146,7 +150,11 @@ public class VariableMapTest extends TestCase {
     }
   }
 
+<<<<<<< HEAD
   public void testReverseLookupOfNullFindsNoName() throws ParseException {
+=======
+  public void testReverseLookupOfNullFindsNoName() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     VariableMap vm = new VariableMap(ImmutableMap.of("AA", "a", "BB", "b"));
     assertNull(vm.lookupSourceName(null));
   }

@@ -154,7 +154,12 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
   }
 
   public void testSubtypeWithInterfaceThisType() {
+<<<<<<< HEAD
     FunctionType iface = registry.createInterfaceType("I", null);
+=======
+    FunctionType iface = registry.createInterfaceType("I", null,
+        ImmutableList.<TemplateType>of());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     FunctionType ifaceReturnBoolean = new FunctionBuilder(registry)
         .withParamsNode(registry.createParameters())
         .withTypeOfThis(iface.getInstanceType())
@@ -196,7 +201,12 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
   }
 
   public void testInterfacePrototypeChain1() {
+<<<<<<< HEAD
     FunctionType iface = registry.createInterfaceType("I", null);
+=======
+    FunctionType iface = registry.createInterfaceType("I", null,
+        ImmutableList.<TemplateType>of());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertTypeEquals(
         iface.getPrototype(),
         iface.getInstanceType().getImplicitPrototype());
@@ -206,11 +216,21 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
   }
 
   public void testInterfacePrototypeChain2() {
+<<<<<<< HEAD
     FunctionType iface = registry.createInterfaceType("I", null);
     iface.getPrototype().defineDeclaredProperty(
         "numberProp", NUMBER_TYPE, null);
 
     FunctionType subIface = registry.createInterfaceType("SubI", null);
+=======
+    FunctionType iface = registry.createInterfaceType("I", null,
+        ImmutableList.<TemplateType>of());
+    iface.getPrototype().defineDeclaredProperty(
+        "numberProp", NUMBER_TYPE, null);
+
+    FunctionType subIface = registry.createInterfaceType("SubI", null,
+        ImmutableList.<TemplateType>of());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     subIface.setExtendedInterfaces(
         Lists.<ObjectType>newArrayList(iface.getInstanceType()));
     assertTypeEquals(
@@ -226,6 +246,34 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
     assertFalse(subIfaceInst.isPropertyTypeInferred("numberProp"));
   }
 
+<<<<<<< HEAD
+=======
+  public void testInterfacePrototypeChain3() {
+    TemplateType templateT = registry.createTemplateType("T");
+    FunctionType iface = registry.createInterfaceType("I", null,
+        ImmutableList.of(templateT));
+    iface.getPrototype().defineDeclaredProperty(
+        "genericProp", templateT, null);
+
+    FunctionType subIface = registry.createInterfaceType("SubI", null,
+        ImmutableList.<TemplateType>of());
+    subIface.setExtendedInterfaces(
+        Lists.<ObjectType>newArrayList(iface.getInstanceType()));
+    assertTypeEquals(
+        subIface.getPrototype(),
+        subIface.getInstanceType().getImplicitPrototype());
+    assertTypeEquals(
+        OBJECT_TYPE,
+        subIface.getPrototype().getImplicitPrototype());
+
+    ObjectType subIfaceInst = subIface.getInstanceType();
+    assertTrue(subIfaceInst.hasProperty("genericProp"));
+    assertTrue(subIfaceInst.isPropertyTypeDeclared("genericProp"));
+    assertFalse(subIfaceInst.isPropertyTypeInferred("genericProp"));
+    assertEquals(templateT, subIfaceInst.getPropertyType("genericProp"));
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void assertLeastSupertype(String s, JSType t1, JSType t2) {
     assertEquals(s, t1.getLeastSupertype(t2).toString());
     assertEquals(s, t2.getLeastSupertype(t1).toString());
@@ -325,9 +373,16 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
   }
 
   public void testTemplatedFunctionDerivedFunctions() {
+<<<<<<< HEAD
     FunctionType fn = new FunctionBuilder(registry)
       .withTypeOfThis(new TemplateType(registry, "T"))
       .withTemplateKeys(ImmutableList.of("T"))
+=======
+    TemplateType template = registry.createTemplateType("T");
+    FunctionType fn = new FunctionBuilder(registry)
+      .withTypeOfThis(template)
+      .withTemplateKeys(ImmutableList.of(template))
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       .withReturnType(BOOLEAN_TYPE).build();
 
     assertEquals("[T]", fn.getPropertyType("call").getTemplateTypeMap()
@@ -348,8 +403,15 @@ public class FunctionTypeTest extends BaseJSTypeTestCase {
   }
 
   public void testSetImplementsOnInterface() {
+<<<<<<< HEAD
     FunctionType iface = registry.createInterfaceType("I", null);
     FunctionType subIface = registry.createInterfaceType("SubI", null);
+=======
+    FunctionType iface = registry.createInterfaceType("I", null,
+        ImmutableList.<TemplateType>of());
+    FunctionType subIface = registry.createInterfaceType("SubI", null,
+        ImmutableList.<TemplateType>of());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     try {
       subIface.setImplementedInterfaces(
           ImmutableList.of(iface.getInstanceType()));

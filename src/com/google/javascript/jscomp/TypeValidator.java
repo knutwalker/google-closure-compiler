@@ -26,7 +26,10 @@ import static com.google.javascript.rhino.jstype.JSTypeNative.OBJECT_TYPE;
 import static com.google.javascript.rhino.jstype.JSTypeNative.STRING_TYPE;
 import static com.google.javascript.rhino.jstype.JSTypeNative.UNKNOWN_TYPE;
 import static com.google.javascript.rhino.jstype.JSTypeNative.VOID_TYPE;
+<<<<<<< HEAD
 import static com.google.javascript.rhino.jstype.JSTypeRegistry.OBJECT_INDEX_TEMPLATE;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import com.google.common.base.Objects;
 import com.google.common.base.Preconditions;
@@ -40,6 +43,11 @@ import com.google.javascript.rhino.jstype.JSTypeNative;
 import com.google.javascript.rhino.jstype.JSTypeRegistry;
 import com.google.javascript.rhino.jstype.ObjectType;
 import com.google.javascript.rhino.jstype.StaticSlot;
+<<<<<<< HEAD
+=======
+import com.google.javascript.rhino.jstype.TemplateTypeMap;
+import com.google.javascript.rhino.jstype.TemplateTypeMapReplacer;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.rhino.jstype.UnknownType;
 
 import java.text.MessageFormat;
@@ -75,9 +83,14 @@ class TypeValidator {
       "found   : {1}\n" +
       "required: {2}";
 
+<<<<<<< HEAD
   // TODO(johnlenz): reenable this after after the next release.
   static final DiagnosticType INVALID_CAST =
       DiagnosticType.disabled("JSC_INVALID_CAST",
+=======
+  static final DiagnosticType INVALID_CAST =
+      DiagnosticType.warning("JSC_INVALID_CAST",
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           "invalid cast - must be a subtype or supertype\n" +
           "from: {0}\n" +
           "to  : {1}");
@@ -336,9 +349,15 @@ class TypeValidator {
       ObjectType dereferenced = objType.dereference();
       if (dereferenced != null && dereferenced
           .getTemplateTypeMap()
+<<<<<<< HEAD
           .hasTemplateKey(OBJECT_INDEX_TEMPLATE)) {
         expectCanAssignTo(t, indexNode, indexType, dereferenced
             .getTemplateTypeMap().getTemplateType(OBJECT_INDEX_TEMPLATE),
+=======
+          .hasTemplateKey(typeRegistry.getObjectIndexKey())) {
+        expectCanAssignTo(t, indexNode, indexType, dereferenced
+            .getTemplateTypeMap().getTemplateType(typeRegistry.getObjectIndexKey()),
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             "restricted index type");
       } else if (dereferenced != null && dereferenced.isArrayType()) {
         expectNumber(t, indexNode, indexType, "array access");
@@ -620,10 +639,25 @@ class TypeValidator {
       propNode = propNode == null ? n : propNode;
 
       JSType found = propSlot.getType();
+<<<<<<< HEAD
       JSType required
           = implementedInterface.getImplicitPrototype().getPropertyType(prop);
       found = found.restrictByNotNullOrUndefined();
       required = required.restrictByNotNullOrUndefined();
+=======
+      found = found.restrictByNotNullOrUndefined();
+
+      JSType required
+          = implementedInterface.getImplicitPrototype().getPropertyType(prop);
+      TemplateTypeMap typeMap = implementedInterface.getTemplateTypeMap();
+      if (!typeMap.isEmpty()) {
+        TemplateTypeMapReplacer replacer = new TemplateTypeMapReplacer(
+            typeRegistry, typeMap);
+        required = required.visit(replacer);
+      }
+      required = required.restrictByNotNullOrUndefined();
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (!found.isSubtype(required)) {
         // Implemented, but not correctly typed
         FunctionType constructor =

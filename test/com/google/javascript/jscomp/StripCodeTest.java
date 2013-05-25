@@ -255,12 +255,21 @@ public class StripCodeTest extends CompilerTestCase {
   }
 
   public void testPublicPropertyAssignment() {
+<<<<<<< HEAD
     // We don't eliminate property assignments on vars/properties that we
     // remove, since the debugging classes should have setter methods instead
     // of public properties.
     testSame("rootLogger.someProperty=3");
     testSame("this.blcLogger_.level=x");
     testSame("goog.ui.Component.logger.prop=y");
+=======
+    // Eliminate property assignments on vars/properties that we
+    // remove as otherwise we create invalid code.
+    test("goog.debug.Logger = 1; goog.debug.Logger.prop=2; ", "");
+    test("this.blcLogger_.level=x", "");
+    test("goog.ui.Component.logger.prop=y", "");
+    test("goog.ui.Component.logger.prop.foo.bar=baz", "");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testGlobalCallWithStrippedType() {
@@ -353,7 +362,11 @@ public class StripCodeTest extends CompilerTestCase {
          "e.f.TraceXXX.prototype.yyy = 2;", "");
   }
 
+<<<<<<< HEAD
   public void testStripCallsToStrippedNames() {
+=======
+  public void testStripCallsToStrippedNames1() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     test("a = function() { this.logger_ = function(msg){}; };" +
          "a.prototype.b = function() { this.logger_('hi'); }",
          "a=function(){};a.prototype.b=function(){}");
@@ -363,13 +376,45 @@ public class StripCodeTest extends CompilerTestCase {
          "a=function(){};a.prototype.b=function(){}");
   }
 
+<<<<<<< HEAD
   public void testStripVarsInitializedFromStrippedNames() {
+=======
+  public void testStripCallsToStrippedNames2() {
+    test("a = function() {};" +
+         "a.prototype.logger_ = function(msg) {};" +
+         "a.prototype.b = function() { this.logger_('hi'); }",
+         "a=function(){};a.prototype.b=function(){}");
+  }
+
+  public void testStripCallsToStrippedNames3() {
+    test("a = function() { this.logger_ = function(msg){}; };" +
+         "a.prototype.b = function() { this.logger_('hi').foo = 2; }",
+         "a=function(){};a.prototype.b=function(){2;}");
+  }
+
+  public void testStripCallsToStrippedNames4() {
+    test("a = this.logger_().foo;",
+         "a = null;");
+  }
+
+  public void testStripVarsInitializedFromStrippedNames1() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     test("a = function() { this.logger_ = function() { return 1; }; };" +
          "a.prototype.b = function() { " +
          "  var one = this.logger_(); if (one) foo() }",
           "a=function(){};a.prototype.b=function(){if(null)foo()}");
   }
 
+<<<<<<< HEAD
+=======
+  public void testStripVarsInitializedFromStrippedNames2() {
+    test("a = function() { this.logger_ = function() { return 1; }; };" +
+         "a.prototype.b = function() { " +
+         "  var one = this.logger_.foo.bar(); if (one) foo() }",
+         "a=function(){};a.prototype.b=function(){if(null)foo()}");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testReportErrorOnStripInNestedAssignment() {
     // Strip name
     test("(foo.logger_ = 7) + 8",
@@ -397,6 +442,14 @@ public class StripCodeTest extends CompilerTestCase {
          "function foo() {} foo.bar = null;");
   }
 
+<<<<<<< HEAD
+=======
+  public void testNewOperatior3() {
+    test("(new goog.debug.Logger()).foo().bar = 2;",
+         "2;");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testCrazyNesting1() {
     test("var x = {}; x[new goog.debug.Logger()] = 3;",
          "var x = {}; x[null] = 3;");
@@ -422,4 +475,25 @@ public class StripCodeTest extends CompilerTestCase {
          "var z = goog.debug.Logger.getLogger(); x(y[z['foo']]);",
          "var x = function() {}; var y = {}; x(y[null]);");
   }
+<<<<<<< HEAD
+=======
+
+  public void testNamespace1() {
+    test(
+        "var x = {};x.traceutil = {};x.traceutil.FOO = 1;",
+        "var x = {};");
+  }
+
+
+  public void testMethodCallTriggersRemoval() {
+    test("this.logger_.foo.bar();",
+        "");
+  }
+
+  public void testRemoveExpressionByName() {
+    test("this.logger_.foo.bar;",
+        "");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

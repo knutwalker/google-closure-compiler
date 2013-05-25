@@ -17,6 +17,7 @@
 package com.google.javascript.jscomp;
 
 import com.google.common.base.Preconditions;
+<<<<<<< HEAD
 
 import com.google.javascript.jscomp.parsing.ParserRunner;
 
@@ -25,6 +26,14 @@ import com.google.javascript.rhino.InputId;
 import com.google.javascript.rhino.Node;
 import java.io.IOException;
 
+=======
+import com.google.javascript.jscomp.parsing.ParserRunner;
+import com.google.javascript.rhino.IR;
+import com.google.javascript.rhino.InputId;
+import com.google.javascript.rhino.Node;
+
+import java.io.IOException;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.logging.Logger;
 
 /**

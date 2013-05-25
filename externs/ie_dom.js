@@ -274,10 +274,17 @@ function ClipboardData() {}
 
 /**
  * @see http://msdn.microsoft.com/en-us/library/ms535220(VS.85).aspx
+<<<<<<< HEAD
  * @param {string} type Type of clipboard data to clear. 'Text' or
  *     'URL' or 'File' or 'HTML' or 'Image'.
  */
 ClipboardData.prototype.clearData = function(type) {};
+=======
+ * @param {string=} opt_type Type of clipboard data to clear. 'Text' or
+ *     'URL' or 'File' or 'HTML' or 'Image'.
+ */
+ClipboardData.prototype.clearData = function(opt_type) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @see http://msdn.microsoft.com/en-us/library/ms535220(VS.85).aspx
@@ -304,6 +311,16 @@ Window.prototype.ActiveXObject;
 var window;
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number|undefined|null} immediateID
+ * @see https://developer.mozilla.org/en-US/docs/DOM/window.clearImmediate
+ * @see http://msdn.microsoft.com/en-us/library/ie/hh924825(v=vs.85).aspx
+ */
+Window.prototype.clearImmediate = function(immediateID) {};
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://msdn.microsoft.com/en-us/library/ms535220(VS.85).aspx
  * @type ClipboardData
  */
@@ -463,6 +480,17 @@ Window.prototype.resizeTo = function(width, height) {};
 Window.prototype.setActive;
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {function()} callback
+ * @return {number}
+ * @see https://developer.mozilla.org/en-US/docs/DOM/window.setImmediate
+ * @see http://msdn.microsoft.com/en-us/library/ie/hh773176(v=vs.85).aspx
+ */
+Window.prototype.setImmediate = function(callback) {};
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://msdn.microsoft.com/en-us/library/ms536758(VS.85).aspx
  */
 Window.prototype.showHelp;
@@ -516,6 +544,10 @@ History.prototype.forward = function() {};
 HTMLFrameElement.prototype.allowTransparency;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {Window}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://msdn.microsoft.com/en-us/library/ms533692(VS.85).aspx
  */
 HTMLFrameElement.prototype.contentWindow;
@@ -528,6 +560,10 @@ HTMLFrameElement.prototype.contentWindow;
 HTMLIFrameElement.prototype.allowTransparency;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {Window}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://msdn.microsoft.com/en-us/library/ms533692(VS.85).aspx
  */
 HTMLIFrameElement.prototype.contentWindow;
@@ -972,6 +1008,15 @@ Element.prototype.attachEvent;
 Element.prototype.canHaveChildren;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {string}
+ * @see http://msdn.microsoft.com/en-us/library/ms533559(v=vs.85).aspx
+ */
+Element.prototype.classid;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} iCoordX Integer that specifies the client window coordinate
  *     of x.
  * @param {number} iCoordY Integer that specifies the client window coordinate

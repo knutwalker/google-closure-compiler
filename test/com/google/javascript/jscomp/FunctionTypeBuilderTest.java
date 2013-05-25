@@ -116,6 +116,29 @@ public class FunctionTypeBuilderTest extends CompilerTestCase {
         + "expected: function (new:Function, ...[*]): ?");
   }
 
+<<<<<<< HEAD
+=======
+  public void testInlineJsDoc() throws Exception {
+    testSame(
+        "/** @return {number} */ function f(/** string */ x) { return x; }", "",
+        TypeValidator.TYPE_MISMATCH_WARNING,
+        "inconsistent return type\n" +
+        "found   : string\n" +
+        "required: number");
+  }
+
+  public void testInlineJsDoc2() throws Exception {
+    testSame(
+        "/** @return {T} \n @template T */ " +
+        "function f(/** T */ x) { return x; }" +
+        "/** @type {string} */ var x = f(1);", "",
+        TypeValidator.TYPE_MISMATCH_WARNING,
+        "initializing variable\n" +
+        "found   : number\n" +
+        "required: string");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testExternSubTypes() throws Exception {
     testSame(ALL_NATIVE_EXTERN_TYPES, "", null);
 

@@ -81,6 +81,18 @@ final public class JSDocInfoBuilder {
     }
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Sets the position of original JSDoc comment.
+   */
+  public void recordOriginalCommentPosition(int position) {
+    if (parseDocumentation) {
+      currentInfo.setOriginalCommentPosition(position);
+    }
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public boolean shouldParseDocumentation() {
     return parseDocumentation;
   }
@@ -394,6 +406,26 @@ final public class JSDocInfoBuilder {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Records that the {@link JSDocInfo} being built should have its {@link
+   * JSDocInfo#isStableIdGenerator()} flag set to {@code true}.
+   *
+   * @return {@code true} if the stableIdGenerator flag was recorded and {@code false} if it was
+   *     already recorded.
+   */
+  public boolean recordMappedIdGenerator() {
+    if (!currentInfo.isMappedIdGenerator()) {
+      currentInfo.setMappedIdGenerator(true);
+      populated = true;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Records the version.
    */
   public boolean recordVersion(String version) {
@@ -1027,6 +1059,29 @@ final public class JSDocInfoBuilder {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Returns whether current JSDoc is annotated with {@code @wizaction}.
+   */
+  public boolean isWizactionRecorded() {
+    return currentInfo.isWizaction();
+  }
+
+  /**
+   * Records that this method is to be exposed as a wizaction.
+   */
+  public boolean recordWizaction() {
+    if (!isWizactionRecorded()) {
+      currentInfo.setWizaction(true);
+      populated = true;
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Whether the current doc info has other type tags, like
    * {@code @param} or {@code @return} or {@code @type} or etc.
    */
@@ -1062,5 +1117,8 @@ final public class JSDocInfoBuilder {
     return currentInfo.isNoSideEffects() ||
         currentInfo.hasModifies();
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

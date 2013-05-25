@@ -231,8 +231,12 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
         .setDependencySorting(true)
         .setMoocherDropping(false)
         .setEntryPoints(closureEntryPoints);
+<<<<<<< HEAD
     }
     else if (manageClosureDependencies ||
+=======
+    } else if (manageClosureDependencies ||
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         closureEntryPoints.size() > 0) {
       return new DependencyOptions()
           .setDependencyPruning(true)
@@ -359,7 +363,11 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
     options.angularPass = config.angularPass;
   }
 
+<<<<<<< HEAD
   final protected A getCompiler() {
+=======
+  protected final A getCompiler() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return compiler;
   }
 
@@ -367,7 +375,11 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
    * Runs the Compiler and calls System.exit() with the exit status of the
    * compiler.
    */
+<<<<<<< HEAD
   final public void run() {
+=======
+  public final void run() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     int result = 0;
     int runs = 1;
     if (config.computePhaseOrdering) {
@@ -1570,7 +1582,11 @@ abstract class AbstractCommandLineRunner<A extends Compiler,
         int i = 1;
         for (List<String> loop : loopedPassesInBestRun) {
           jsOutput.append(
+<<<<<<< HEAD
               "\nLoop " + i + ":\n" + Joiner.on("\n").join(loop)+ "\n");
+=======
+              "\nLoop " + i + ":\n" + Joiner.on("\n").join(loop) + "\n");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           i++;
         }
       } catch (IOException e) {

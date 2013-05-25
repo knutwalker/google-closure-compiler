@@ -530,6 +530,12 @@ public abstract class ObjectType extends JSType implements StaticScope<JSType> {
     for (ObjectType current = this;
          current != null;
          current = current.getImplicitPrototype()) {
+<<<<<<< HEAD
+=======
+      if (current.isTemplatizedType()) {
+        current = current.toMaybeTemplatizedType().getReferencedType();
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (current.isEquivalentTo(prototype)) {
         return true;
       }

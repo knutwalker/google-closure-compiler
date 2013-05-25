@@ -16,7 +16,11 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.common.collect.ImmutableSet;
+=======
+import com.google.common.collect.ImmutableMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 
 /**
@@ -31,11 +35,31 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
 
   @Override
   protected CompilerPass getProcessor(final Compiler compiler) {
+<<<<<<< HEAD
     lastPass = new ReplaceIdGenerators(
         compiler,
         new ImmutableSet.Builder<String>()
             .add("goog.events.getUniqueId")
             .add("goog.place.getUniqueId")
+=======
+    RenamingMap xidTestMap = new RenamingMap() {
+      private final ImmutableMap<String, String> map = ImmutableMap.of(
+          "foo", ":foo:",
+          "bar", ":bar:");
+      @Override
+      public String get(String value) {
+        String replacement = map.get(value);
+        return replacement != null ? replacement : "unknown:" + value;
+      }
+    };
+
+    lastPass = new ReplaceIdGenerators(
+        compiler,
+        new ImmutableMap.Builder<String, RenamingMap>()
+            .put("goog.events.getUniqueId", ReplaceIdGenerators.UNIQUE)
+            .put("goog.place.getUniqueId", ReplaceIdGenerators.UNIQUE)
+            .put("xid", xidTestMap)
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             .build(),
         generatePseudoNames,
         previousMappings);
@@ -181,6 +205,31 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
         "foo1 = 'foo1$1';");
   }
 
+<<<<<<< HEAD
+=======
+  public void testObjectLit() {
+    test("/** @idGenerator */ goog.xid = function() {};" +
+        "things = goog.xid({foo1: 'test', 'foo bar': 'test'})",
+
+        "goog.xid = function() {};" +
+        "things = {'a': 'test', 'b': 'test'}",
+
+        "goog.xid = function() {};" +
+        "things = {'foo1$0': 'test', 'foo bar$1': 'test'}");
+  }
+
+  public void testObjectLit_empty() {
+    test("/** @idGenerator */ goog.xid = function() {};" +
+        "things = goog.xid({})",
+
+        "goog.xid = function() {};" +
+        "things = {}",
+
+        "goog.xid = function() {};" +
+        "things = {}");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testSimpleConsistent() {
     test("/** @consistentIdGenerator */ id = function() {};" +
          "foo.bar = id('foo_bar')",
@@ -255,7 +304,11 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
         "foo.bar = '125lGg'");
   }
 
+<<<<<<< HEAD
   public void testObjLit() {
+=======
+  public void testInObjLit() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     test("/** @consistentIdGenerator */ get.id = function() {};" +
          "foo.bar = {a: get.id('foo_bar')}",
 
@@ -273,6 +326,57 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
         "foo.bar = {a: '125lGg'}");
   }
 
+<<<<<<< HEAD
+=======
+  public void testInObjLit2() {
+    test("/** @idGenerator {mapped}*/ xid = function() {};" +
+         "foo.bar = {a: xid('foo')}",
+
+         "xid = function() {};" +
+         "foo.bar = {a: ':foo:'}",
+
+         "xid = function() {};" +
+         "foo.bar = {a: ':foo:'}");
+  }
+
+  public void testMapped() {
+    test("/** @idGenerator {mapped}*/ xid = function() {};" +
+        "foo.bar = xid('foo');",
+
+        "xid = function() {};" +
+        "foo.bar = ':foo:';",
+
+        "xid = function() {};" +
+        "foo.bar = ':foo:';");
+  }
+
+  public void testMappedMap() {
+    testMap("/** @idGenerator {mapped}*/ xid = function() {};" +
+        "foo.bar = xid('foo');" +
+        "foo.bar = xid('foo');",
+
+        "xid = function() {};" +
+        "foo.bar = ':foo:';" +
+        "foo.bar = ':foo:';",
+
+        "[xid]\n" +
+        "\n" +
+        ":foo::foo\n" +
+        "\n");
+  }
+
+  public void testMapped2() {
+    test("/** @idGenerator {mapped}*/ xid = function() {};" +
+        "foo.bar = function() { return xid('foo'); };",
+
+        "xid = function() {};" +
+        "foo.bar = function() { return ':foo:'; };",
+
+        "xid = function() {};" +
+        "foo.bar = function() { return ':foo:'; };");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testTwoGenerators() {
     test("/** @idGenerator */ var id1 = function() {};" +
          "/** @idGenerator */ var id2 = function() {};" +
@@ -365,7 +469,12 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
                            "var id = function() {}; "},
         ReplaceIdGenerators.CONFLICTING_GENERATOR_TYPE);
 
+<<<<<<< HEAD
     testSame(new String[] {"/** @stableIdGenerator \n @consistentIdGenerator \n*/" +
+=======
+    testSame(new String[] {"/** @stableIdGenerator \n " +
+                           "@consistentIdGenerator \n*/" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                            "var id = function() {}; "},
         ReplaceIdGenerators.CONFLICTING_GENERATOR_TYPE);
 
@@ -379,6 +488,17 @@ public class ReplaceIdGeneratorsTest extends CompilerTestCase {
         "if (x) {foo.bar = 'foo_bar$0'}");
   }
 
+<<<<<<< HEAD
+=======
+  public void testUnknownMapping() {
+    testSame("" +
+        "/** @idGenerator {mapped} */\n" +
+        "var id = function() {};\n" +
+        "function Foo() { id('foo'); }\n",
+        ReplaceIdGenerators.MISSING_NAME_MAP_FOR_GENERATOR);
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void testMap(String code, String expected, String expectedMap) {
     test(code, expected);
     assertEquals(expectedMap, lastPass.getSerializedIdMappings());

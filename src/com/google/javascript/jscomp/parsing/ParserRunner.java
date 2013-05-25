@@ -34,9 +34,16 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 public class ParserRunner {
 
   private static final String configResource =
+=======
+/** parser runner */
+public class ParserRunner {
+
+  private static final String CONFIG_RESOURCE =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       "com.google.javascript.jscomp.parsing.ParserConfig";
 
   private static Set<String> annotationNames = null;
@@ -84,7 +91,11 @@ public class ParserRunner {
       return;
     }
 
+<<<<<<< HEAD
     ResourceBundle config = ResourceBundle.getBundle(configResource);
+=======
+    ResourceBundle config = ResourceBundle.getBundle(CONFIG_RESOURCE);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     annotationNames = extractList(config.getString("jsdoc.annotations"));
     suppressionNames = extractList(config.getString("jsdoc.suppressions"));
     reservedVars = extractList(config.getString("compiler.reserved.vars"));

@@ -22,7 +22,10 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.google.javascript.jscomp.DefinitionsRemover.Definition;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.NameReferenceGraph.Name;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
 import com.google.javascript.jscomp.graph.DiGraph;
 import com.google.javascript.jscomp.graph.LinkedDirectedGraph;
@@ -59,26 +62,42 @@ import java.util.Map;
  * @author dcc@google.com (Devin Coughlin)
  */
 public class CallGraph implements CompilerPass {
+<<<<<<< HEAD
   private AbstractCompiler compiler;
+=======
+  private final AbstractCompiler compiler;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * Maps an AST node (with type Token.CALL or Token.NEW) to a Callsite object.
    */
+<<<<<<< HEAD
   private Map<Node, Callsite> callsitesByNode;
 
   /** Maps an AST node (with type Token.FUNCTION) to a Function object. */
   private Map<Node, Function> functionsByNode;
+=======
+  private final Map<Node, Callsite> callsitesByNode;
+
+  /** Maps an AST node (with type Token.FUNCTION) to a Function object. */
+  private final Map<Node, Function> functionsByNode;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * Will the call graph support looking up the callsites that could call a
    * given function?
    */
+<<<<<<< HEAD
   private boolean computeBackwardGraph;
+=======
+  private final boolean computeBackwardGraph;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * Will the call graph support looking up the functions that a given callsite
    * can call?
    */
+<<<<<<< HEAD
   private boolean computeForwardGraph;
 
   /**
@@ -86,6 +105,9 @@ public class CallGraph implements CompilerPass {
    * definition provider; otherwise, use the faster SimpleDefinitionProvider.
    */
   private boolean useNameReferenceGraph = false;
+=======
+  private final boolean computeForwardGraph;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /** Has the CallGraph already been constructed? */
   private boolean alreadyRun = false;
@@ -350,6 +372,7 @@ public class CallGraph implements CompilerPass {
    * functions that are actually called.
    */
   private void fillInFunctionInformation(DefinitionProvider provider) {
+<<<<<<< HEAD
     if (useNameReferenceGraph) {
       NameReferenceGraph referenceGraph = (NameReferenceGraph) provider;
 
@@ -375,6 +398,18 @@ public class CallGraph implements CompilerPass {
           for (UseSite useSite : finder.getUseSites(definition)) {
             updateFunctionForUse(function, useSite.node);
           }
+=======
+    SimpleDefinitionFinder finder = (SimpleDefinitionFinder) provider;
+
+    for (DefinitionSite definitionSite : finder.getDefinitionSites()) {
+      Definition definition = definitionSite.definition;
+
+      Function function = lookupFunctionForDefinition(definition);
+
+      if (function != null) {
+        for (UseSite useSite : finder.getUseSites(definition)) {
+          updateFunctionForUse(function, useSite.node);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
       }
     }
@@ -382,6 +417,7 @@ public class CallGraph implements CompilerPass {
 
   /**
    * Updates {@link Function} information (such as whether is is aliased
+<<<<<<< HEAD
    * or exposed to .apply or .call from a {@link NameReferenceGraph.Name}.
    *
    * Note: this method may be called multiple times per Function, each time
@@ -399,6 +435,8 @@ public class CallGraph implements CompilerPass {
 
   /**
    * Updates {@link Function} information (such as whether is is aliased
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * or exposed to .apply or .call based a site where the function is used.
    *
    * Note: this method may be called multiple times per Function, each time
@@ -538,17 +576,22 @@ public class CallGraph implements CompilerPass {
    * Constructs a DefinitionProvider that can be used to determine the
    * targets of callsites.
    *
+<<<<<<< HEAD
    * This construction is the main cost of building the callgraph, so we offer
    * the client a choice of NameReferenceGraph, which is slow and hopefully more
    * precise, and SimpleDefinitionFinder, which is fast and perhaps not as
    * precise.
    *
    * We use SimpleNameFinder as the default because in practice it does
+=======
+   * We use SimpleNameFinder because in practice it does
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * not appear to be less precise than NameReferenceGraph and is at least an
    * order of magnitude faster on large compiles.
    */
   private DefinitionProvider constructDefinitionProvider(Node externsRoot,
         Node jsRoot) {
+<<<<<<< HEAD
     if (useNameReferenceGraph) {
       // Name reference graph is very, very slow
       NameReferenceGraphConstruction graphConstruction
@@ -562,6 +605,11 @@ public class CallGraph implements CompilerPass {
       defFinder.process(externsRoot, jsRoot);
       return defFinder;
     }
+=======
+    SimpleDefinitionFinder defFinder = new SimpleDefinitionFinder(compiler);
+    defFinder.process(externsRoot, jsRoot);
+    return defFinder;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -579,6 +627,7 @@ public class CallGraph implements CompilerPass {
 
     Node targetExpression = callsite.getFirstChild();
 
+<<<<<<< HEAD
     // NameReferenceGraph throws an exception unless the node is
     // a GETPROP or a NAME
     if (!useNameReferenceGraph
@@ -591,6 +640,13 @@ public class CallGraph implements CompilerPass {
       if (definitions != null && !definitions.isEmpty()) {
         return definitions;
       }
+=======
+    Collection<Definition> definitions =
+        definitionProvider.getDefinitionsReferencedAt(targetExpression);
+
+    if (definitions != null && !definitions.isEmpty()) {
+      return definitions;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     return null;
@@ -603,7 +659,11 @@ public class CallGraph implements CompilerPass {
    */
   public class Function {
 
+<<<<<<< HEAD
     private Node astNode;
+=======
+    private final Node astNode;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     private boolean isAliased = false;
 
@@ -730,7 +790,11 @@ public class CallGraph implements CompilerPass {
    * Function is, and what its target Functions are.
    */
   public class Callsite {
+<<<<<<< HEAD
     private Node astNode;
+=======
+    private final Node astNode;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     private boolean hasUnknownTarget = false;
     private boolean hasExternTarget = false;

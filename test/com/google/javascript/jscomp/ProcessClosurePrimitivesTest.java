@@ -16,22 +16,39 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.rhino.Node;
 import com.google.javascript.jscomp.CheckLevel;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.BASE_CLASS_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.DUPLICATE_NAMESPACE_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.EXPECTED_OBJECTLIT_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.FUNCTION_NAMESPACE_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_ARGUMENT_ERROR;
+<<<<<<< HEAD
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_PROVIDE_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_STYLE_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.LATE_PROVIDE_ERROR;
+=======
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_CSS_RENAMING_MAP;
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_DEFINE_NAME_ERROR;
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_PROVIDE_ERROR;
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_STYLE_ERROR;
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.LATE_PROVIDE_ERROR;
+import static com.google.javascript.jscomp.ProcessClosurePrimitives.MISSING_DEFINE_ANNOTATION;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.MISSING_PROVIDE_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.NON_STRING_PASSED_TO_SET_CSS_NAME_MAPPING_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.NULL_ARGUMENT_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.TOO_MANY_ARGUMENTS_ERROR;
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.XMODULE_REQUIRE_ERROR;
+<<<<<<< HEAD
 import static com.google.javascript.jscomp.ProcessClosurePrimitives.INVALID_CSS_RENAMING_MAP;
+=======
+
+import com.google.javascript.rhino.Node;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * Tests for {@link ProcessClosurePrimitives}.
@@ -856,4 +873,22 @@ public class ProcessClosurePrimitivesTest extends CompilerTestCase {
   public void testProvideRequireSameFile() {
     test("goog.provide('x');\ngoog.require('x');", "var x = {};");
   }
+<<<<<<< HEAD
+=======
+
+  public void testDefineCases() {
+    String jsdoc = "/** @define {number} */\n";
+    test(jsdoc + "goog.define('name', 1);", jsdoc + "var name = 1");
+    test(jsdoc + "goog.define('ns.name', 1);", jsdoc + "ns.name = 1");
+  }
+
+  public void testDefineErrorCases() {
+    String jsdoc = "/** @define {number} */\n";
+    test("goog.define('name', 1);", "", MISSING_DEFINE_ANNOTATION);
+    test(jsdoc + "goog.define('name.2', 1);", "", INVALID_DEFINE_NAME_ERROR);
+    test(jsdoc + "goog.define();", "", NULL_ARGUMENT_ERROR);
+    test(jsdoc + "goog.define('value');", "", NULL_ARGUMENT_ERROR);
+    test(jsdoc + "goog.define(5);", "", INVALID_ARGUMENT_ERROR);
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

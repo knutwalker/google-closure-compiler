@@ -24,10 +24,17 @@
 
 /**
  * @constructor
+<<<<<<< HEAD
  * @param {string} matrix
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 function CSSMatrix(matrix) {}
+=======
+ * @param {string=} opt_matrix
+ * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
+ */
+function CSSMatrix(opt_matrix) {}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @type {number}
@@ -133,14 +140,23 @@ CSSMatrix.prototype.m44;
 CSSMatrix.prototype.setMatrixValue = function(string) {};
 
 /**
+<<<<<<< HEAD
  * @param {CSSMatrix} secondMatrix
  * @return {CSSMatrix}
+=======
+ * @param {!CSSMatrix} secondMatrix
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.multiply = function(secondMatrix) {};
 
 /**
+<<<<<<< HEAD
  * @return {CSSMatrix}
+=======
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.inverse = function() {};
@@ -149,7 +165,11 @@ CSSMatrix.prototype.inverse = function() {};
  * @param {number} x
  * @param {number} y
  * @param {number} z
+<<<<<<< HEAD
  * @return {CSSMatrix}
+=======
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.translate = function(x, y, z) {};
@@ -158,7 +178,11 @@ CSSMatrix.prototype.translate = function(x, y, z) {};
  * @param {number} scaleX
  * @param {number} scaleY
  * @param {number} scaleZ
+<<<<<<< HEAD
  * @return {CSSMatrix}
+=======
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.scale = function(scaleX, scaleY, scaleZ) {};
@@ -167,7 +191,11 @@ CSSMatrix.prototype.scale = function(scaleX, scaleY, scaleZ) {};
  * @param {number} rotX
  * @param {number} rotY
  * @param {number} rotZ
+<<<<<<< HEAD
  * @return {CSSMatrix}
+=======
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.rotate = function(rotX, rotY, rotZ) {};
@@ -177,13 +205,18 @@ CSSMatrix.prototype.rotate = function(rotX, rotY, rotZ) {};
  * @param {number} y
  * @param {number} z
  * @param {number} angle
+<<<<<<< HEAD
  * @return {CSSMatrix}
+=======
+ * @return {!CSSMatrix}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://www.w3.org/TR/css3-3d-transforms/#cssmatrix-interface
  */
 CSSMatrix.prototype.rotateAxisAngle = function(x, y, z, angle) {};
 
 /**
  * @constructor
+<<<<<<< HEAD
  * @param {string} matrix
  * @extends {CSSMatrix}
  * @see http://developer.apple.com/safari/library/documentation/AudioVideo/Reference/WebKitCSSMatrixClassReference/WebKitCSSMatrix/WebKitCSSMatrix.html#//apple_ref/javascript/instm/WebKitCSSMatrix/setMatrixValue
@@ -197,3 +230,18 @@ function WebKitCSSMatrix(matrix) {}
  * @see http://msdn.microsoft.com/en-us/library/windows/apps/hh453593.aspx
  */
 function MSCSSMatrix(matrix) {}
+=======
+ * @param {string=} opt_matrix
+ * @extends {CSSMatrix}
+ * @see http://developer.apple.com/safari/library/documentation/AudioVideo/Reference/WebKitCSSMatrixClassReference/WebKitCSSMatrix/WebKitCSSMatrix.html#//apple_ref/javascript/instm/WebKitCSSMatrix/setMatrixValue
+ */
+function WebKitCSSMatrix(opt_matrix) {}
+
+/**
+ * @constructor
+ * @param {string=} opt_matrix
+ * @extends {CSSMatrix}
+ * @see http://msdn.microsoft.com/en-us/library/windows/apps/hh453593.aspx
+ */
+function MSCSSMatrix(opt_matrix) {}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

@@ -18,6 +18,10 @@ package com.google.javascript.jscomp;
 import com.google.common.base.Preconditions;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.regex.Pattern;
 
 /**
@@ -121,7 +125,11 @@ class ExportTestFunctions implements CompilerPass {
     Node exportCallTarget = NodeUtil.newQualifiedNameNode(
         compiler.getCodingConvention(),
         exportSymbolFunction, node, testFunctionName);
+<<<<<<< HEAD
     Node call = IR.call( exportCallTarget);
+=======
+    Node call = IR.call(exportCallTarget);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     if (exportCallTarget.isName()) {
       call.putBooleanProp(Node.FREE_CALL, true);
     }

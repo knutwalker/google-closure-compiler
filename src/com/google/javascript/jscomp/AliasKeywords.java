@@ -172,7 +172,11 @@ class AliasKeywords implements CompilerPass {
       Node name = NodeUtil.newName(
           compiler.getCodingConvention(),
           getAliasName(), throwNode, getAliasName());
+<<<<<<< HEAD
       Node aliasCall = IR.call( name, throwNode.removeFirstChild());
+=======
+      Node aliasCall = IR.call(name, throwNode.removeFirstChild());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       aliasCall.putBooleanProp(Node.FREE_CALL, true);
       Node exprResult = IR.exprResult(aliasCall);
       parent.replaceChild(throwNode, exprResult);
@@ -214,12 +218,21 @@ class AliasKeywords implements CompilerPass {
    * throw. The function throws the object.
    */
   private static Node createAliasFunctionNode(String aliasName) {
+<<<<<<< HEAD
     final String PARAM_NAME = "jscomp_throw_param";
     return IR.function(
         IR.name(aliasName),
         IR.paramList(IR.name(PARAM_NAME)),
         IR.block(
             IR.throwNode(IR.name(PARAM_NAME))));
+=======
+    final String paramName = "jscomp_throw_param";
+    return IR.function(
+        IR.name(aliasName),
+        IR.paramList(IR.name(paramName)),
+        IR.block(
+            IR.throwNode(IR.name(paramName))));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /** Aliases literal keywords (e.g., null) with variable names. */

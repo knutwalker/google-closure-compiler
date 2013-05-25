@@ -46,6 +46,15 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
 
   private LifeCycleStage stage = LifeCycleStage.RAW;
 
+<<<<<<< HEAD
+=======
+  // For passes that traverse a list of functions rather than the AST.
+  // If false, the pass will analyze all functions, even those that didn't
+  // change since the last time it ran.
+  // Intended for use by the compiler only; not accessed by compiler users.
+  protected boolean analyzeChangedScopesOnly = true;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   // TODO(nicksantos): Decide if all of these are really necessary.
   // Many of them are just accessors that should be passed to the
   // CompilerPass's constructor.
@@ -113,6 +122,12 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
 
   /**
    * Report code changes.
+<<<<<<< HEAD
+=======
+   *
+   * Passes should call reportCodeChange when they alter the JS tree. This is
+   * verified by CompilerTestCase. This allows us to optimize to a fixed point.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    */
   public abstract void reportCodeChange();
 
@@ -207,6 +222,21 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
    */
   abstract void removeChangeHandler(CodeChangeHandler handler);
 
+<<<<<<< HEAD
+=======
+  /** Let the PhaseOptimizer know which scope a pass is currently analyzing */
+  abstract void setScope(Node n);
+
+  /** Returns the root of the source tree, ignoring externs */
+  abstract Node getJsRoot();
+
+  /** True iff a function changed since the last time a pass was run */
+  abstract boolean hasScopeChanged(Node n);
+
+  /** Passes that do cross-scope modifications use this (eg, InlineVariables) */
+  abstract void reportChangeToEnclosingScope(Node n);
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * Returns true if compiling in IDE mode.
    */
@@ -242,7 +272,11 @@ public abstract class AbstractCompiler implements SourceExcerptProvider {
   /**
    * Gets the error manager.
    */
+<<<<<<< HEAD
   abstract public ErrorManager getErrorManager();
+=======
+  public abstract ErrorManager getErrorManager();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * Set the current life-cycle state.

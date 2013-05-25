@@ -16,9 +16,12 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Sets the level for a particular DiagnosticGroup.
  * @author nicksantos@google.com (Nick Santos)
@@ -26,8 +29,13 @@ import com.google.javascript.jscomp.CheckLevel;
 public class DiagnosticGroupWarningsGuard extends WarningsGuard {
   private static final long serialVersionUID = 1L;
 
+<<<<<<< HEAD
   final DiagnosticGroup group;
   final CheckLevel level;
+=======
+  private final DiagnosticGroup group;
+  private final CheckLevel level;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   public DiagnosticGroupWarningsGuard(
       DiagnosticGroup group, CheckLevel level) {
@@ -54,7 +62,10 @@ public class DiagnosticGroupWarningsGuard extends WarningsGuard {
         }
       }
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return false;
   }
 

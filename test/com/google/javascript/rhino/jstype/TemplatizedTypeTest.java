@@ -110,7 +110,13 @@ public class TemplatizedTypeTest extends BaseJSTypeTestCase {
 
   public void testCustomTemplatizedType() throws Exception {
     FunctionType ctor = registry.createConstructorType(
+<<<<<<< HEAD
         "Foo", null, null, null, ImmutableList.of("T", "U"));
+=======
+        "Foo", null, null, null, ImmutableList.of(
+            registry.createTemplateType("T"),
+            registry.createTemplateType("U")));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     ObjectType baseType = ctor.getInstanceType();
 
     JSType templatizedType1 = registry.createTemplatizedType(
@@ -132,15 +138,26 @@ public class TemplatizedTypeTest extends BaseJSTypeTestCase {
     assertFalse(templatizedType3.isEquivalentTo(baseType));
     assertTrue(templatizedType4.isEquivalentTo(baseType));
 
+<<<<<<< HEAD
     assertFalse(baseType.isSubtype(templatizedType1));
     assertFalse(baseType.isSubtype(templatizedType2));
     assertFalse(baseType.isSubtype(templatizedType3));
+=======
+    assertTrue(baseType.isSubtype(templatizedType1));
+    assertTrue(baseType.isSubtype(templatizedType2));
+    assertTrue(baseType.isSubtype(templatizedType3));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertTrue(baseType.isSubtype(templatizedType4));
 
     assertFalse(templatizedType1.isSubtype(templatizedType2));
     assertFalse(templatizedType2.isSubtype(templatizedType1));
 
+<<<<<<< HEAD
     assertFalse(templatizedType2.isSubtype(templatizedType3));
     assertFalse(templatizedType3.isSubtype(templatizedType2));
+=======
+    assertTrue(templatizedType2.isSubtype(templatizedType3));
+    assertTrue(templatizedType3.isSubtype(templatizedType2));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 }

@@ -66,7 +66,11 @@ public class Parser
     private int syntaxErrorCount;
 
     private List<Comment> scannedComments;
+<<<<<<< HEAD
     private Comment currentJsDocComment;
+=======
+    private List<Comment> jsdocs;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     protected int nestingOfFunction;
     private LabeledStatement currentLabel;
@@ -235,6 +239,10 @@ public class Parser
     private void recordComment(int lineno, String comment) {
         if (scannedComments == null) {
             scannedComments = new ArrayList<Comment>();
+<<<<<<< HEAD
+=======
+            jsdocs = new ArrayList<Comment>();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         Comment commentNode = new Comment(ts.tokenBeg,
                                           ts.getTokenLength(),
@@ -242,12 +250,17 @@ public class Parser
                                           comment);
         if (ts.commentType == Token.CommentType.JSDOC &&
             compilerEnv.isRecordingLocalJsDocComments()) {
+<<<<<<< HEAD
             currentJsDocComment = commentNode;
+=======
+            jsdocs.add(commentNode);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         commentNode.setLineno(lineno);
         scannedComments.add(commentNode);
     }
 
+<<<<<<< HEAD
     private Comment getAndResetJsDoc() {
         Comment saved = currentJsDocComment;
         currentJsDocComment = null;
@@ -255,6 +268,8 @@ public class Parser
     }
 
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     private int getNumberOfEols(String comment) {
       int lines = 0;
       for (int i = comment.length()-1; i >= 0; i--) {
@@ -473,7 +488,13 @@ public class Parser
         }
         this.ts = new TokenStream(this, null, sourceString, lineno);
         try {
+<<<<<<< HEAD
             return parse();
+=======
+            AstRoot r = parse();
+            new AttachJsDocs().attachComments(r, jsdocs);
+            return r;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         } catch (IOException iox) {
             // Should never happen
             throw new IllegalStateException();
@@ -497,7 +518,13 @@ public class Parser
         try {
             this.sourceURI = sourceURI;
             ts = new TokenStream(this, sourceReader, null, lineno);
+<<<<<<< HEAD
             return parse();
+=======
+            AstRoot r = parse();
+            new AttachJsDocs().attachComments(r, jsdocs);
+            return r;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         } finally {
             parseFinished = true;
         }
@@ -651,7 +678,10 @@ public class Parser
         }
 
         int end = ts.tokenEnd;
+<<<<<<< HEAD
         getAndResetJsDoc();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         if (!isExpressionClosure && mustMatchToken(Token.RC, "msg.no.brace.after.body"))
             end = ts.tokenEnd;
         pn.setLength(end - pos);
@@ -696,12 +726,16 @@ public class Parser
                 destructuring.put(pname, expr);
             } else {
                 if (mustMatchToken(Token.NAME, "msg.no.parm")) {
+<<<<<<< HEAD
                     Name paramNameNode = createNameNode();
                     Comment jsdocNodeForName = getAndResetJsDoc();
                     if (jsdocNodeForName != null) {
                       paramNameNode.setJsDocNode(jsdocNodeForName);
                     }
                     fnNode.addParam(paramNameNode);
+=======
+                    fnNode.addParam(createNameNode());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                     String paramName = ts.getString();
                     defineSymbol(Token.LP, paramName);
                     if (this.inUseStrictDirective) {
@@ -790,8 +824,11 @@ public class Parser
         if (lpPos != -1)
             fnNode.setLp(lpPos - functionSourceStart);
 
+<<<<<<< HEAD
         fnNode.setJsDocNode(getAndResetJsDoc());
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         PerFunctionVariables savedVars = new PerFunctionVariables(fnNode);
         try {
             parseFunctionParams(fnNode);
@@ -1357,9 +1394,12 @@ public class Parser
         if (currentToken != Token.TRY) codeBug();
         consumeToken();
 
+<<<<<<< HEAD
         // Pull out JSDoc info and reset it before recursing.
         Comment jsdocNode = getAndResetJsDoc();
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         int tryPos = ts.tokenBeg, lineno = ts.lineno, finallyPos = -1;
         if (peekToken() != Token.LC) {
             reportError("msg.no.brace.try");
@@ -1384,10 +1424,13 @@ public class Parser
                 mustMatchToken(Token.NAME, "msg.bad.catchcond");
 
                 Name varName = createNameNode();
+<<<<<<< HEAD
                 Comment jsdocNodeForName = getAndResetJsDoc();
                 if (jsdocNodeForName != null) {
                   varName.setJsDocNode(jsdocNodeForName);
                 }
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                 String varNameString = varName.getIdentifier();
                 if (inUseStrictDirective) {
                     if ("eval".equals(varNameString) ||
@@ -1447,11 +1490,14 @@ public class Parser
             pn.setFinallyPosition(finallyPos - tryPos);
         }
         pn.setLineno(lineno);
+<<<<<<< HEAD
 
         if (jsdocNode != null) {
             pn.setJsDocNode(jsdocNode);
         }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         return pn;
     }
 
@@ -1574,8 +1620,11 @@ public class Parser
         if (currentToken != Token.WITH) codeBug();
         consumeToken();
 
+<<<<<<< HEAD
         Comment withComment = getAndResetJsDoc();
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         int lineno = ts.lineno, pos = ts.tokenBeg, lp = -1, rp = -1;
         if (mustMatchToken(Token.LP, "msg.no.paren.with"))
             lp = ts.tokenBeg;
@@ -1588,7 +1637,10 @@ public class Parser
         AstNode body = statement();
 
         WithStatement pn = new WithStatement(pos, getNodeEnd(body) - pos);
+<<<<<<< HEAD
         pn.setJsDocNode(withComment);
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         pn.setExpression(obj);
         pn.setStatement(body);
         pn.setParens(lp, rp);
@@ -1834,10 +1886,13 @@ public class Parser
         VariableDeclaration pn = new VariableDeclaration(pos);
         pn.setType(declType);
         pn.setLineno(ts.lineno);
+<<<<<<< HEAD
         Comment varjsdocNode = getAndResetJsDoc();
         if (varjsdocNode != null) {
             pn.setJsDocNode(varjsdocNode);
         }
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         // Example:
         // var foo = {a: 1, b: 2}, bar = [3, 4];
         // var {b: s2, a: s1} = foo, x = 6, y, [s3, s4] = bar;
@@ -1870,9 +1925,12 @@ public class Parser
             }
 
             int lineno = ts.lineno;
+<<<<<<< HEAD
 
             Comment jsdocNode = getAndResetJsDoc();
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             AstNode init = null;
             if (matchToken(Token.ASSIGN)) {
                 init = assignExpr();
@@ -1890,7 +1948,10 @@ public class Parser
             }
             vi.setInitializer(init);
             vi.setType(declType);
+<<<<<<< HEAD
             vi.setJsDocNode(jsdocNode);
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             vi.setLineno(lineno);
             pn.addVariable(vi);
 
@@ -2042,6 +2103,7 @@ public class Parser
         tt = peekToken();
         if (Token.FIRST_ASSIGN <= tt && tt <= Token.LAST_ASSIGN) {
             consumeToken();
+<<<<<<< HEAD
 
             // Pull out JSDoc info and reset it before recursing.
             Comment jsdocNode = getAndResetJsDoc();
@@ -2060,6 +2122,11 @@ public class Parser
             if (currentJsDocComment != null) {
                 pn.setJsDocNode(getAndResetJsDoc());
             }
+=======
+            markDestructuring(pn);
+            int opPos = ts.tokenBeg;
+            pn = new Assignment(tt, pn, assignExpr(), opPos);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
         return pn;
     }
@@ -2276,6 +2343,10 @@ public class Parser
           case Token.TYPEOF:
               consumeToken();
               node = new UnaryExpression(tt, ts.tokenBeg, unaryExpr());
+<<<<<<< HEAD
+=======
+              node.setLineno(line);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
               return node;
 
           case Token.ADD:
@@ -2852,13 +2923,17 @@ public class Parser
         boolean wasInForInit = inForInit;
         inForInit = false;
         try {
+<<<<<<< HEAD
             Comment jsdocNode = getAndResetJsDoc();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             int lineno = ts.lineno;
             int begin = ts.tokenBeg;
             AstNode e = expr();
             if (peekToken() == Token.FOR) {
                 return generatorExpression(e, begin);
             }
+<<<<<<< HEAD
             ParenthesizedExpression pn = new ParenthesizedExpression(e);
             if (jsdocNode == null) {
                 jsdocNode = getAndResetJsDoc();
@@ -2868,6 +2943,11 @@ public class Parser
             }
             mustMatchToken(Token.RP, "msg.no.paren");
             pn.setLength(ts.tokenEnd - pn.getPosition());
+=======
+            mustMatchToken(Token.RP, "msg.no.paren");
+            ParenthesizedExpression pn = new ParenthesizedExpression(
+                begin, ts.tokenEnd - begin, e);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             pn.setLineno(lineno);
             return pn;
         } finally {
@@ -3160,14 +3240,20 @@ public class Parser
             getterNames = new HashSet<String>();
             setterNames = new HashSet<String>();
         }
+<<<<<<< HEAD
         Comment objJsdocNode = getAndResetJsDoc();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
       commaLoop:
         for (;;) {
             String propertyName = null;
             int entryKind = PROP_ENTRY;
             int tt = peekToken();
+<<<<<<< HEAD
             Comment jsdocNode = getAndResetJsDoc();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             switch(tt) {
               case Token.NAME:
                   Name name = createNameNode();
@@ -3201,11 +3287,17 @@ public class Parser
                           propertyName = ts.getString();
                           ObjectProperty objectProp = getterSetterProperty(
                                   ppos, pname, isGet);
+<<<<<<< HEAD
                           pname.setJsDocNode(jsdocNode);
                           elems.add(objectProp);
                       }
                   } else {
                       name.setJsDocNode(jsdocNode);
+=======
+                          elems.add(objectProp);
+                      }
+                  } else {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                       elems.add(plainProperty(name, tt));
                   }
                   break;
@@ -3221,7 +3313,10 @@ public class Parser
                       propertyName = null;
                   } else {
                       propertyName = ts.getString();
+<<<<<<< HEAD
                       pname.setJsDocNode(jsdocNode);
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                       elems.add(plainProperty(pname, tt));
                   }
                   break;
@@ -3252,10 +3347,13 @@ public class Parser
                 }
             }
 
+<<<<<<< HEAD
             // Eat any dangling jsdoc in the property.
             getAndResetJsDoc();
             jsdocNode = null;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             if (matchToken(Token.COMMA)) {
                 afterComma = ts.tokenEnd;
             } else {
@@ -3265,9 +3363,12 @@ public class Parser
 
         mustMatchToken(Token.RC, "msg.no.brace.prop");
         ObjectLiteral pn = new ObjectLiteral(pos, ts.tokenEnd - pos);
+<<<<<<< HEAD
         if (objJsdocNode != null) {
             pn.setJsDocNode(objJsdocNode);
         }
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         pn.setElements(elems);
         pn.setLineno(lineno);
         return pn;

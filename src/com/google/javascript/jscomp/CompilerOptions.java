@@ -17,11 +17,18 @@
 package com.google.javascript.jscomp;
 
 import com.google.common.base.Preconditions;
+<<<<<<< HEAD
+=======
+import com.google.common.collect.ImmutableMap;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+<<<<<<< HEAD
 import com.google.common.collect.Sets;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.SourcePosition;
@@ -44,7 +51,13 @@ public class CompilerOptions implements Serializable, Cloneable {
   @SuppressWarnings("unused")
   private boolean manageClosureDependencies = false;
 
+<<<<<<< HEAD
   // A common enum for compiler passes that can run either globally or locally.
+=======
+  /**
+   * A common enum for compiler passes that can run either globally or locally.
+   */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public enum Reach {
     ALL,
     LOCAL_ONLY,
@@ -173,6 +186,7 @@ public class CompilerOptions implements Serializable, Cloneable {
     reportMissingOverride = level;
   }
 
+<<<<<<< HEAD
   CheckLevel reportUnknownTypes;
 
   /** Flags a warning for every node whose type could not be determined. */
@@ -180,6 +194,8 @@ public class CompilerOptions implements Serializable, Cloneable {
     reportUnknownTypes = level;
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Checks for missing goog.require() calls **/
   public CheckLevel checkRequires;
 
@@ -258,6 +274,12 @@ public class CompilerOptions implements Serializable, Cloneable {
   // Optimizations
   //--------------------------------
 
+<<<<<<< HEAD
+=======
+  boolean aggressiveRenaming;
+  boolean alternateRenaming; // triggers RenameVars2.
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Folds constants (e.g. (2 + 3) to 5) */
   public boolean foldConstants;
 
@@ -498,6 +520,15 @@ public class CompilerOptions implements Serializable, Cloneable {
   String debugFunctionSideEffectsPath;
 
   /**
+<<<<<<< HEAD
+=======
+   * Rename private properties to disambiguate between unrelated fields based on
+   * the coding convention.
+   */
+  boolean disambiguatePrivateProperties;
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Rename properties to disambiguate between unrelated fields based on
    * type information.
    */
@@ -635,6 +666,12 @@ public class CompilerOptions implements Serializable, Cloneable {
   /** Move top-level function declarations to the top */
   public boolean moveFunctionDeclarations;
 
+<<<<<<< HEAD
+=======
+  /** Instrument / Intercept memory allocations. */
+  private boolean instrumentMemoryAllocations;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Instrumentation template to use with #recordFunctionInformation */
   public String instrumentationTemplate;
 
@@ -666,7 +703,11 @@ public class CompilerOptions implements Serializable, Cloneable {
   boolean replaceIdGenerators = true;  // true by default for legacy reasons.
 
   /** Id generators to replace. */
+<<<<<<< HEAD
   Set<String> idGenerators;
+=======
+  ImmutableMap<String, RenamingMap> idGenerators;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   /**
    * A previous map of ids (serialized to a string by a previous compile).
@@ -870,7 +911,10 @@ public class CompilerOptions implements Serializable, Cloneable {
     checkTypes = false;
     tightenTypes = false;
     reportMissingOverride = CheckLevel.OFF;
+<<<<<<< HEAD
     reportUnknownTypes = CheckLevel.OFF;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     checkRequires = CheckLevel.OFF;
     checkProvides = CheckLevel.OFF;
     checkGlobalNamesLevel = CheckLevel.OFF;
@@ -886,6 +930,11 @@ public class CompilerOptions implements Serializable, Cloneable {
     extraAnnotationNames = null;
 
     // Optimizations
+<<<<<<< HEAD
+=======
+    aggressiveRenaming = false;
+    alternateRenaming = false;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     foldConstants = false;
     coalesceVariableNames = false;
     deadAssignmentElimination = false;
@@ -963,19 +1012,33 @@ public class CompilerOptions implements Serializable, Cloneable {
     tweakProcessing = TweakProcessing.OFF;
     tweakReplacements = Maps.newHashMap();
     moveFunctionDeclarations = false;
+<<<<<<< HEAD
     instrumentationTemplate = null;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     appNameStr = "";
     recordFunctionInformation = false;
     generateExports = false;
     cssRenamingMap = null;
     cssRenamingWhitelist = null;
     processObjectPropertyString = false;
+<<<<<<< HEAD
     idGenerators = Collections.emptySet();
+=======
+    idGenerators = ImmutableMap.of();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     replaceStringsFunctionDescriptions = Collections.emptyList();
     replaceStringsPlaceholderToken = "";
     replaceStringsReservedStrings = Collections.emptySet();
     propertyInvalidationErrors = Maps.newHashMap();
 
+<<<<<<< HEAD
+=======
+    // Instrumentation
+    instrumentationTemplate = null;
+    instrumentMemoryAllocations = false;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     // Output
     printInputDelimiter = false;
     prettyPrint = false;
@@ -1214,7 +1277,29 @@ public class CompilerOptions implements Serializable, Cloneable {
    * Sets the id generators to replace.
    */
   public void setIdGenerators(Set<String> idGenerators) {
+<<<<<<< HEAD
     this.idGenerators = Sets.newHashSet(idGenerators);
+=======
+    ImmutableMap.Builder<String, RenamingMap> builder = ImmutableMap.builder();
+    for (String name : idGenerators) {
+       builder.put(name, UNIQUE_ID_GENERATOR);
+    }
+    this.idGenerators = builder.build();
+  }
+
+  /**
+   * A renaming map instance to use to signal the use of the "inconsistent"
+   * id generator type.
+   */
+  public static final RenamingMap UNIQUE_ID_GENERATOR =
+      ReplaceIdGenerators.UNIQUE;
+
+  /**
+   * Sets the id generators to replace.
+   */
+  public void setIdGenerators(Map<String, RenamingMap> idGenerators) {
+    this.idGenerators = ImmutableMap.copyOf(idGenerators);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -1648,6 +1733,17 @@ public class CompilerOptions implements Serializable, Cloneable {
     this.checkMissingGetCssNameBlacklist = blackList;
   }
 
+<<<<<<< HEAD
+=======
+  public void setAggressiveRenaming(boolean aggressive) {
+    this.aggressiveRenaming = aggressive;
+  }
+
+  public void setAlternateRenaming(boolean altnerate) {
+    this.alternateRenaming = altnerate;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void setFoldConstants(boolean foldConstants) {
     this.foldConstants = foldConstants;
   }
@@ -1829,6 +1925,24 @@ public class CompilerOptions implements Serializable, Cloneable {
     this.debugFunctionSideEffectsPath = debugFunctionSideEffectsPath;
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * @return Whether disambiguate private properties is enabled.
+   */
+  public boolean isDisambiguatePrivateProperties() {
+    return disambiguatePrivateProperties;
+  }
+
+  /**
+   * @param value Whether to enable private property disambiguation based on
+   * the coding convention.
+   */
+  public void setDisambiguatePrivateProperties(boolean value) {
+    this.disambiguatePrivateProperties = value;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void setDisambiguateProperties(boolean disambiguateProperties) {
     this.disambiguateProperties = disambiguateProperties;
   }
@@ -1958,6 +2072,7 @@ public class CompilerOptions implements Serializable, Cloneable {
     this.cssRenamingWhitelist = whitelist;
   }
 
+<<<<<<< HEAD
   public void setReplaceStringsFunctionDescriptions(List<String> replaceStringsFunctionDescriptions) {
     this.replaceStringsFunctionDescriptions = replaceStringsFunctionDescriptions;
   }
@@ -1968,6 +2083,24 @@ public class CompilerOptions implements Serializable, Cloneable {
 
   public void setReplaceStringsReservedStrings(Set<String> replaceStringsReservedStrings) {
     this.replaceStringsReservedStrings = replaceStringsReservedStrings;
+=======
+  public void setReplaceStringsFunctionDescriptions(
+      List<String> replaceStringsFunctionDescriptions) {
+    this.replaceStringsFunctionDescriptions =
+        replaceStringsFunctionDescriptions;
+  }
+
+  public void setReplaceStringsPlaceholderToken(
+      String replaceStringsPlaceholderToken) {
+    this.replaceStringsPlaceholderToken =
+        replaceStringsPlaceholderToken;
+  }
+
+  public void setReplaceStringsReservedStrings(
+      Set<String> replaceStringsReservedStrings) {
+    this.replaceStringsReservedStrings =
+        replaceStringsReservedStrings;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void setReplaceStringsInputMap(VariableMap serializedMap) {
@@ -2030,7 +2163,12 @@ public class CompilerOptions implements Serializable, Cloneable {
     this.sourceMapFormat = sourceMapFormat;
   }
 
+<<<<<<< HEAD
   public void setSourceMapLocationMappings(List<SourceMap.LocationMapping> sourceMapLocationMappings) {
+=======
+  public void setSourceMapLocationMappings(
+      List<SourceMap.LocationMapping> sourceMapLocationMappings) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     this.sourceMapLocationMappings = sourceMapLocationMappings;
   }
 
@@ -2056,6 +2194,24 @@ public class CompilerOptions implements Serializable, Cloneable {
     this.commonJSModulePathPrefix = commonJSModulePathPrefix;
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * @return Whether memory allocations are instrumented.
+   */
+  public boolean getInstrumentMemoryAllocations() {
+    return instrumentMemoryAllocations;
+  }
+
+  /**
+   * Sets the option to instrument memory allocations.
+   */
+  public void setInstrumentMemoryAllocations(
+      boolean instrumentMemoryAllocations) {
+    this.instrumentMemoryAllocations = instrumentMemoryAllocations;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   //////////////////////////////////////////////////////////////////////////////
   // Enums
@@ -2115,6 +2271,10 @@ public class CompilerOptions implements Serializable, Cloneable {
     EVERY_PASS
   }
 
+<<<<<<< HEAD
+=======
+  /** How much tracing we want to do */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static enum TracerMode {
     ALL,  // Collect all timing and size metrics.
     RAW_SIZE, // Collect all timing and size metrics, except gzipped size.
@@ -2126,6 +2286,10 @@ public class CompilerOptions implements Serializable, Cloneable {
     }
   }
 
+<<<<<<< HEAD
+=======
+  /** Option for the ProcessTweaks pass */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static enum TweakProcessing {
     OFF,  // Do not run the ProcessTweaks pass.
     CHECK, // Run the pass, but do not strip out the calls.

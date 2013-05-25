@@ -19,7 +19,10 @@ package com.google.javascript.jscomp;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import junit.framework.TestCase;
 
 import java.util.List;
@@ -510,6 +513,24 @@ public class ExternExportsPassTest extends TestCase {
                     "var foobar = function() {\n};\n");
   }
 
+<<<<<<< HEAD
+=======
+  public void testExportParamWithSymbolDefinedInFunction() throws Exception {
+    compileAndCheck(
+        "var id = function() {return 'id'};\n" +
+        "var ft = function() {\n" +
+        "  var id;\n" +
+        "  return 1;\n" +
+        "};\n" +
+        "goog.exportSymbol('id', id);\n",
+        "/**\n" +
+        " * @return {?}\n" +
+        " */\n" +
+        "var id = function() {\n" +
+        "};\n");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void compileAndCheck(String js, String expected) {
     Result result = compileAndExportExterns(js);
 
@@ -551,8 +572,13 @@ public class ExternExportsPassTest extends TestCase {
     CompilerOptions options = new CompilerOptions();
     options.externExportsPath = "externs.js";
 
+<<<<<<< HEAD
     // Turn on IDE mode to get rid of optimizations.
     options.ideMode = true;
+=======
+    // Turn off IDE mode.
+    options.ideMode = false;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     /* Check types so we can make sure our exported externs have
      * type information.

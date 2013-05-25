@@ -72,11 +72,19 @@ jQuery.prototype.add = function(arg1, context) {};
 jQuery.prototype.addClass = function(arg1) {};
 
 /**
+<<<<<<< HEAD
  * @param {(string|Element|jQuery|function(number))} arg1
  * @param {(string|Element|Array.<Element>|jQuery)=} content
  * @return {!jQuery}
  */
 jQuery.prototype.after = function(arg1, content) {};
+=======
+ * @param {(string|Element|jQuery|function(this:Element,number))} arg1
+ * @param {...(string|Element|jQuery)} var_args
+ * @return {!jQuery}
+ */
+jQuery.prototype.after = function(arg1, var_args) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {(string|Object.<string,*>)} arg1
@@ -254,11 +262,19 @@ jQuery.prototype.andSelf = function() {};
 jQuery.prototype.animate = function(properties, arg2, easing, complete) {};
 
 /**
+<<<<<<< HEAD
  * @param {(string|Element|jQuery|function(number,string))} arg1
  * @param {(string|Element|Array.<Element>|jQuery)=} content
  * @return {!jQuery}
  */
 jQuery.prototype.append = function(arg1, content) {};
+=======
+ * @param {(string|Element|jQuery|function(this:Element,number,string))} arg1
+ * @param {...(string|Element|jQuery)} var_args
+ * @return {!jQuery}
+ */
+jQuery.prototype.append = function(arg1, var_args) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {(jQuerySelector|Element|jQuery)} target
@@ -268,17 +284,29 @@ jQuery.prototype.appendTo = function(target) {};
 
 /**
  * @param {(string|Object.<string,*>)} arg1
+<<<<<<< HEAD
  * @param {(string|number|function(number,string))=} arg2
+=======
+ * @param {(string|number|boolean|function(number,string))=} arg2
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {(string|!jQuery)}
  */
 jQuery.prototype.attr = function(arg1, arg2) {};
 
 /**
+<<<<<<< HEAD
  * @param {(string|Element|jQuery|function())} arg1
  * @param {(string|Element|Array.<Element>|jQuery)=} content
  * @return {!jQuery}
  */
 jQuery.prototype.before = function(arg1, content) {};
+=======
+ * @param {(string|Element|jQuery|function(this:Element,number))} arg1
+ * @param {...(string|Element|jQuery)} var_args
+ * @return {!jQuery}
+ */
+jQuery.prototype.before = function(arg1, var_args) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {(string|Object.<string, function(!jQuery.event=)>)} arg1
@@ -1690,11 +1718,19 @@ jQuery.post = function(url, data, success, dataType) {};
 $.post = function(url, data, success, dataType) {};
 
 /**
+<<<<<<< HEAD
  * @param {(string|Element|jQuery|function(number,string))} arg1
  * @param {(string|Element|jQuery)=} content
  * @return {!jQuery}
  */
 jQuery.prototype.prepend = function(arg1, content) {};
+=======
+ * @param {(string|Element|jQuery|function(this:Element,number,string))} arg1
+ * @param {...(string|Element|jQuery)} var_args
+ * @return {!jQuery}
+ */
+jQuery.prototype.prepend = function(arg1, var_args) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {(jQuerySelector|Element|jQuery)} target
@@ -1779,7 +1815,11 @@ jQuery.Promise.prototype.then =
 /**
  * @param {(string|Object.<string,*>)} arg1
  * @param {(string|number|boolean|function(number,String))=} arg2
+<<<<<<< HEAD
  * @return {(string|!jQuery)}
+=======
+ * @return {(string|boolean|!jQuery)}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 jQuery.prototype.prop = function(arg1, arg2) {};
 

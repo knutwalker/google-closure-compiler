@@ -56,7 +56,11 @@ import com.google.common.collect.Multimap;
 import com.google.javascript.rhino.ErrorReporter;
 import com.google.javascript.rhino.JSDocInfo;
 import com.google.javascript.rhino.Node;
+<<<<<<< HEAD
 import com.google.javascript.rhino.ScriptRuntime;
+=======
+import com.google.javascript.rhino.SimpleErrorReporter;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.rhino.Token;
 import com.google.javascript.rhino.jstype.RecordTypeBuilder.RecordProperty;
 
@@ -78,6 +82,7 @@ public class JSTypeRegistry implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
+<<<<<<< HEAD
    * The template variable corresponding to the property key type of the built-
    * in Javascript object.
    */
@@ -89,6 +94,23 @@ public class JSTypeRegistry implements Serializable {
    */
   public static final String OBJECT_ELEMENT_TEMPLATE = "Object#Element";
 
+=======
+   * The name associated with the template variable corresponding to the
+   * property key type of the built-in Javascript object.
+   */
+  public static final String OBJECT_INDEX_TEMPLATE = "Object#Key";
+
+  private TemplateType objectIndexTemplateKey;
+
+  /**
+   * The name associated with the template variable corresponding to the
+   * property value type for Javascript Objects and Arrays.
+   */
+  public static final String OBJECT_ELEMENT_TEMPLATE = "Object#Element";
+
+  private TemplateType objectElementTemplateKey;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * The UnionTypeBuilder caps the maximum number of alternate types it
    * remembers and then defaults to "?" (unknown type). By default this max
@@ -220,7 +242,11 @@ public class JSTypeRegistry implements Serializable {
       ErrorReporter reporter, boolean tolerateUndefinedValues) {
     this.reporter = reporter;
     this.emptyTemplateTypeMap = new TemplateTypeMap(
+<<<<<<< HEAD
         this, ImmutableList.<String>of(), ImmutableList.<JSType>of());
+=======
+        this, ImmutableList.<TemplateType>of(), ImmutableList.<JSType>of());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     nativeTypes = new JSType[JSTypeNative.values().length];
     namesToTypes = new HashMap<String, JSType>();
     resetForTypeCheck();
@@ -228,6 +254,26 @@ public class JSTypeRegistry implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * @return The template variable corresponding to the property value type for
+   * Javascript Objects and Arrays.
+   */
+  public TemplateType getObjectElementKey() {
+    return this.objectElementTemplateKey;
+  }
+
+  /**
+   * @return The template variable corresponding to the
+   * property key type of the built-in Javascript object.
+   */
+  public TemplateType getObjectIndexKey() {
+    Preconditions.checkNotNull(objectIndexTemplateKey);
+    return objectIndexTemplateKey;
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Set the current resolving mode of the type registry.
    * @see ResolveMode
    */
@@ -260,6 +306,12 @@ public class JSTypeRegistry implements Serializable {
   }
 
   private void initializeBuiltInTypes() {
+<<<<<<< HEAD
+=======
+    objectIndexTemplateKey = new TemplateType(this, OBJECT_INDEX_TEMPLATE);
+    objectElementTemplateKey = new TemplateType(this, OBJECT_ELEMENT_TEMPLATE);
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     // These locals shouldn't be all caps.
     BooleanType BOOLEAN_TYPE = new BooleanType(this);
     registerNativeType(JSTypeNative.BOOLEAN_TYPE, BOOLEAN_TYPE);
@@ -299,7 +351,11 @@ public class JSTypeRegistry implements Serializable {
             createArrowType(createOptionalParameters(ALL_TYPE), UNKNOWN_TYPE),
             null,
             createTemplateTypeMap(ImmutableList.of(
+<<<<<<< HEAD
                 OBJECT_INDEX_TEMPLATE, OBJECT_ELEMENT_TEMPLATE), null),
+=======
+                objectIndexTemplateKey, objectElementTemplateKey), null),
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             true, true);
 
     OBJECT_FUNCTION_TYPE.setPrototype(TOP_LEVEL_PROTOTYPE, null);
@@ -339,7 +395,11 @@ public class JSTypeRegistry implements Serializable {
           createArrowType(createParametersWithVarArgs(ALL_TYPE), null),
           null,
           createTemplateTypeMap(ImmutableList.of(
+<<<<<<< HEAD
               OBJECT_ELEMENT_TEMPLATE), null),
+=======
+              objectElementTemplateKey), null),
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           true, true);
     ARRAY_FUNCTION_TYPE.getInternalArrowType().returnType =
         ARRAY_FUNCTION_TYPE.getInstanceType();
@@ -937,7 +997,25 @@ public class JSTypeRegistry implements Serializable {
    */
   public JSType getType(StaticScope<JSType> scope, String jsTypeName,
       String sourceName, int lineno, int charno) {
+<<<<<<< HEAD
     JSType type = getType(jsTypeName);
+=======
+    // Resolve template type names
+    JSType type = null;
+    JSType thisType = null;
+    if (scope != null && scope.getTypeOfThis() != null) {
+      thisType = scope.getTypeOfThis().toObjectType();
+    }
+    if (thisType != null) {
+      type = thisType.getTemplateTypeMap().getTemplateTypeKeyByName(jsTypeName);
+      if (type != null) {
+        Preconditions.checkState(type.isTemplateType(), "expected:" + type);
+        return type;
+      }
+    }
+
+    type = getType(jsTypeName);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     if (type == null) {
       // TODO(user): Each instance should support named type creation using
       // interning.
@@ -1441,23 +1519,56 @@ public class JSTypeRegistry implements Serializable {
    *     to indicate that the parameter types are unknown.
    * @param returnType the function's return type or {@code null} to indicate
    *     that the return type is unknown.
+<<<<<<< HEAD
    * @param templateKeys the templatized type keys for the class.
    */
   public FunctionType createConstructorType(String name, Node source,
       Node parameters, JSType returnType, ImmutableList<String> templateKeys) {
+=======
+   * @param templateKeys the templatized types for the class.
+   */
+  public FunctionType createConstructorType(String name, Node source,
+      Node parameters, JSType returnType, ImmutableList<TemplateType> templateKeys) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return new FunctionType(this, name, source,
         createArrowType(parameters, returnType), null,
         createTemplateTypeMap(templateKeys, null), true, false);
   }
 
+<<<<<<< HEAD
+=======
+  ImmutableList<TemplateType> createTemplateMapKeys(ImmutableList<String> keys) {
+    ImmutableList.Builder<TemplateType> builder = ImmutableList.builder();
+    if (keys != null) {
+      for (String key : keys) {
+        builder.add(new TemplateType(this, key));
+      }
+    }
+    return builder.build();
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * Creates an interface function type.
    * @param name the function's name
    * @param source the node defining this function. Its type
    *     ({@link Node#getType()}) must be {@link Token#FUNCTION}.
+<<<<<<< HEAD
    */
   public FunctionType createInterfaceType(String name, Node source) {
     return FunctionType.forInterface(this, name, source);
+=======
+   * @param templateKeys the templatized types for the interface.
+   */
+  public FunctionType createInterfaceType(String name, Node source,
+      ImmutableList<TemplateType> templateKeys) {
+    return FunctionType.forInterface(this, name, source,
+        createTemplateTypeMap(templateKeys, null));
+  }
+
+  public TemplateType createTemplateType(String name) {
+    return new TemplateType(this, name);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -1465,10 +1576,17 @@ public class JSTypeRegistry implements Serializable {
    * template value types.
    */
   public TemplateTypeMap createTemplateTypeMap(
+<<<<<<< HEAD
       ImmutableList<String> templateKeys,
       ImmutableList<JSType> templateValues) {
     templateKeys = templateKeys == null ?
         ImmutableList.<String>of() : templateKeys;
+=======
+      ImmutableList<TemplateType> templateKeys,
+      ImmutableList<JSType> templateValues) {
+    templateKeys = templateKeys == null ?
+        ImmutableList.<TemplateType>of() : templateKeys;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     templateValues = templateValues == null ?
         ImmutableList.<JSType>of() : templateValues;
 
@@ -1497,6 +1615,30 @@ public class JSTypeRegistry implements Serializable {
    * can currently be templatized; extend the logic in this function when
    * more types can be templatized.
    * @param baseType the type to be templatized.
+<<<<<<< HEAD
+=======
+   * @param templatizedTypes a map from TemplateType to corresponding JSType
+   *     value. Any unfilled TemplateTypes on the baseType that are *not*
+   *     contained in this map will have UNKNOWN_TYPE used as their value.
+   */
+  public TemplatizedType createTemplatizedType(
+      ObjectType baseType, Map<TemplateType, JSType> templatizedTypes) {
+    ImmutableList.Builder<JSType> builder = ImmutableList.builder();
+    TemplateTypeMap baseTemplateTypeMap = baseType.getTemplateTypeMap();
+    for (TemplateType key : baseTemplateTypeMap.getUnfilledTemplateKeys()) {
+      JSType templatizedType = templatizedTypes.containsKey(key) ?
+          templatizedTypes.get(key) : getNativeType(UNKNOWN_TYPE);
+      builder.add(templatizedType);
+    }
+    return createTemplatizedType(baseType, builder.build());
+  }
+
+  /**
+   * Creates a templatized instance of the specified type.  Only ObjectTypes
+   * can currently be templatized; extend the logic in this function when
+   * more types can be templatized.
+   * @param baseType the type to be templatized.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * @param templatizedTypes a list of the template JSTypes. Will be matched by
    *     list order to the template keys on the base type.
    */
@@ -1674,7 +1816,11 @@ public class JSTypeRegistry implements Serializable {
                   .restrictByNotNullOrUndefined());
           if (thisType == null) {
             reporter.warning(
+<<<<<<< HEAD
                 ScriptRuntime.getMessage0(
+=======
+                SimpleErrorReporter.getMessage0(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                     current.getType() == Token.THIS ?
                     "msg.jsdoc.function.thisnotobject" :
                     "msg.jsdoc.function.newnotobject"),
@@ -1706,7 +1852,12 @@ public class JSTypeRegistry implements Serializable {
                 boolean addSuccess = paramBuilder.addOptionalParams(type);
                 if (!addSuccess) {
                   reporter.warning(
+<<<<<<< HEAD
                       ScriptRuntime.getMessage0("msg.jsdoc.function.varargs"),
+=======
+                      SimpleErrorReporter.getMessage0(
+                          "msg.jsdoc.function.varargs"),
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
                       sourceName, arg.getLineno(), arg.getCharno());
                 }
               } else {
@@ -1794,10 +1945,17 @@ public class JSTypeRegistry implements Serializable {
   /**
    * Sets the template type name.
    */
+<<<<<<< HEAD
   public void setTemplateTypeNames(List<String> names) {
     Preconditions.checkNotNull(names);
     for (String name : names) {
       templateTypes.put(name, new TemplateType(this, name));
+=======
+  public void setTemplateTypeNames(List<TemplateType> keys) {
+    Preconditions.checkNotNull(keys);
+    for (TemplateType key : keys) {
+      templateTypes.put(key.getReferenceName(), key);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 

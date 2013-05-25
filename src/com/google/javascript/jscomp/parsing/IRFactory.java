@@ -130,7 +130,11 @@ class IRFactory {
 
   // Use a template node for properties set on all nodes to minimize the
   // memory footprint associated with these.
+<<<<<<< HEAD
   private Node templateNode;
+=======
+  private final Node templateNode;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   // TODO(johnlenz): Consider creating a template pool for ORIGINALNAME_PROP.
 
@@ -300,6 +304,7 @@ class IRFactory {
           break;
         // Function declarations are valid
         case com.google.javascript.rhino.head.Token.FUNCTION:
+<<<<<<< HEAD
           FunctionNode fnNode = (FunctionNode)node;
           valid = fnNode.getFunctionType() == FunctionNode.FUNCTION_STATEMENT;
           break;
@@ -308,6 +313,20 @@ class IRFactory {
           valid = node.getParent() instanceof ObjectProperty
               || node.getParent() instanceof CatchClause
               || node.getParent() instanceof FunctionNode;
+=======
+          FunctionNode fnNode = (FunctionNode) node;
+          valid = fnNode.getFunctionType() == FunctionNode.FUNCTION_STATEMENT;
+          break;
+        // Object literal properties, catch declarations and variable
+        // initializers are valid.
+        case com.google.javascript.rhino.head.Token.NAME:
+          AstNode parent = node.getParent();
+          valid = parent instanceof ObjectProperty
+              || parent instanceof CatchClause
+              || parent instanceof FunctionNode
+              || (parent instanceof VariableInitializer &&
+                  node == ((VariableInitializer) parent).getTarget());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           break;
         // Object literal properties are valid
         case com.google.javascript.rhino.head.Token.GET:
@@ -321,7 +340,11 @@ class IRFactory {
         case com.google.javascript.rhino.head.Token.ASSIGN:
           if (node instanceof Assignment) {
             valid = isExprStmt(node.getParent())
+<<<<<<< HEAD
                 && isPropAccess(((Assignment)node).getLeft());
+=======
+                && isPropAccess(((Assignment) node).getLeft());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           }
           break;
 
@@ -330,6 +353,13 @@ class IRFactory {
         case com.google.javascript.rhino.head.Token.GETELEM:
           valid = isExprStmt(node.getParent());
           break;
+<<<<<<< HEAD
+=======
+
+        case com.google.javascript.rhino.head.Token.CALL:
+          valid = info.isDefine();
+          break;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       if (!valid) {
         errorReporter.warning(MISPLACED_TYPE_ANNOTATION,
@@ -363,14 +393,44 @@ class IRFactory {
   private Node maybeInjectCastNode(AstNode node, JSDocInfo info, Node irNode) {
     if (node.getType() == com.google.javascript.rhino.head.Token.LP
         && node instanceof ParenthesizedExpression
+<<<<<<< HEAD
         && info.hasType()
         // TODO(johnlenz): for now, attach object literal type directly.
         && !irNode.isObjectLit()) {
+=======
+        && info.hasType()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       irNode = newNode(Token.CAST, irNode);
     }
     return irNode;
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Parameter NAMEs are special, because they can have inline type docs
+   * attached.
+   *
+   * function f(/** string &#42;/ x) {}
+   * annotates 'x' as a string.
+   *
+   * @see <a href="http://code.google.com/p/jsdoc-toolkit/wiki/InlineDocs">
+   *   Using Inline Doc Comments</a>
+   */
+  private Node transformParameter(AstNode node) {
+    Node irNode = justTransform(node);
+    Comment comment = node.getJsDocNode();
+    if (comment != null) {
+      JSDocInfo info = parseInlineTypeDoc(comment, irNode);
+      if (info != null) {
+        irNode.setJSDocInfo(info);
+      }
+    }
+    setSourceInfo(irNode, node);
+    return irNode;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private Node transformNameAsString(Name node) {
     Node irNode = transformDispatcher.processName(node, true);
     JSDocInfo jsDocInfo = handleJsDoc(node, irNode);
@@ -448,6 +508,31 @@ class IRFactory {
     return jsdocParser;
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Parses inline type info.
+   */
+  private JSDocInfo parseInlineTypeDoc(Comment node, Node irNode) {
+    String comment = node.getValue();
+    int lineno = node.getLineno();
+    int position = node.getAbsolutePosition();
+
+    // The JsDocInfoParser expects the comment without the initial '/**'.
+    int numOpeningChars = 3;
+    JsDocInfoParser parser =
+      new JsDocInfoParser(
+          new JsDocTokenStream(comment.substring(numOpeningChars),
+                               lineno,
+                               position2charno(position) + numOpeningChars),
+          node,
+          irNode,
+          config,
+          errorReporter);
+    return parser.parseInlineTypeDoc();
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   // Set the length on the node if we're in IDE mode.
   private void maybeSetLengthFrom(Node node, AstNode source) {
     if (config.isIdeMode) {
@@ -474,7 +559,11 @@ class IRFactory {
         com.google.javascript.rhino.head.Node n) {
       Node node = newNode(transformTokenType(n.getType()));
       for (com.google.javascript.rhino.head.Node child : n) {
+<<<<<<< HEAD
         node.addChildToBack(transform((AstNode)child));
+=======
+        node.addChildToBack(transform((AstNode) child));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       return node;
     }
@@ -491,9 +580,15 @@ class IRFactory {
     private Node transformAsString(AstNode n) {
       Node ret;
       if (n instanceof Name) {
+<<<<<<< HEAD
         ret = transformNameAsString((Name)n);
       } else if (n instanceof NumberLiteral) {
         ret = transformNumberAsString((NumberLiteral)n);
+=======
+        ret = transformNameAsString((Name) n);
+      } else if (n instanceof NumberLiteral) {
+        ret = transformNumberAsString((NumberLiteral) n);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         ret.putBooleanProp(Node.QUOTED_PROP, true);
       } else {
         ret = transform(n);
@@ -534,7 +629,11 @@ class IRFactory {
     Node processAstRoot(AstRoot rootNode) {
       Node node = newNode(Token.SCRIPT);
       for (com.google.javascript.rhino.head.Node child : rootNode) {
+<<<<<<< HEAD
         node.addChildToBack(transform((AstNode)child));
+=======
+        node.addChildToBack(transform((AstNode) child));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       parseDirectives(node);
       return node;
@@ -567,8 +666,14 @@ class IRFactory {
     }
 
     private boolean isDirective(Node n) {
+<<<<<<< HEAD
       if (n == null) return false;
 
+=======
+      if (n == null) {
+        return false;
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       int nType = n.getType();
       return nType == Token.EXPR_RESULT &&
           n.getFirstChild().isString() &&
@@ -758,7 +863,11 @@ class IRFactory {
 
       lp.setCharno(position2charno(lparenCharno));
       for (AstNode param : functionNode.getParams()) {
+<<<<<<< HEAD
         Node paramNode = transform(param);
+=======
+        Node paramNode = transformParameter(param);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         // When in ideMode Rhino can generate a param list with only a single
         // ErrorNode. This is transformed into an EMPTY node. Drop this node in
         // ideMode to keep the AST in a valid state.

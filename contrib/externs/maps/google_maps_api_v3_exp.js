@@ -15,7 +15,11 @@
  */
 
 /**
+<<<<<<< HEAD
  * @fileoverview Externs for the Google Maps v3.11 API.
+=======
+ * @fileoverview Externs for the Google Maps v3.13 API.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html
  * @externs
  */
@@ -1173,6 +1177,14 @@ google.maps.GeocoderResult.prototype.geometry;
 /**
  * @type {Array.<string>}
  */
+<<<<<<< HEAD
+=======
+google.maps.GeocoderResult.prototype.postcode_localities;
+
+/**
+ * @type {Array.<string>}
+ */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 google.maps.GeocoderResult.prototype.types;
 
 /**
@@ -2673,6 +2685,14 @@ google.maps.MarkerOptions.prototype.animation;
 google.maps.MarkerOptions.prototype.clickable;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {boolean}
+ */
+google.maps.MarkerOptions.prototype.crossOnDrag;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @type {string}
  */
 google.maps.MarkerOptions.prototype.cursor;
@@ -4283,6 +4303,7 @@ google.maps.adsense.AdUnit.prototype.getTitleColor = function() {};
 google.maps.adsense.AdUnit.prototype.getUrlColor = function() {};
 
 /**
+<<<<<<< HEAD
  * @return {string}
  */
 google.maps.adsense.AdUnit.prototype.setBackgroundColor = function() {};
@@ -4291,6 +4312,18 @@ google.maps.adsense.AdUnit.prototype.setBackgroundColor = function() {};
  * @return {string}
  */
 google.maps.adsense.AdUnit.prototype.setBorderColor = function() {};
+=======
+ * @param {string} backgroundColor
+ * @return {undefined}
+ */
+google.maps.adsense.AdUnit.prototype.setBackgroundColor = function(backgroundColor) {};
+
+/**
+ * @param {string} borderColor
+ * @return {undefined}
+ */
+google.maps.adsense.AdUnit.prototype.setBorderColor = function(borderColor) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @param {string} channelNumber
@@ -4317,6 +4350,7 @@ google.maps.adsense.AdUnit.prototype.setMap = function(map) {};
 google.maps.adsense.AdUnit.prototype.setPosition = function(position) {};
 
 /**
+<<<<<<< HEAD
  * @return {string}
  */
 google.maps.adsense.AdUnit.prototype.setTextColor = function() {};
@@ -4330,6 +4364,24 @@ google.maps.adsense.AdUnit.prototype.setTitleColor = function() {};
  * @return {string}
  */
 google.maps.adsense.AdUnit.prototype.setUrlColor = function() {};
+=======
+ * @param {string} textColor
+ * @return {undefined}
+ */
+google.maps.adsense.AdUnit.prototype.setTextColor = function(textColor) {};
+
+/**
+ * @param {string} titleColor
+ * @return {undefined}
+ */
+google.maps.adsense.AdUnit.prototype.setTitleColor = function(titleColor) {};
+
+/**
+ * @param {string} urlColor
+ * @return {undefined}
+ */
+google.maps.adsense.AdUnit.prototype.setUrlColor = function(urlColor) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @interface
@@ -5236,11 +5288,32 @@ google.maps.places.PlaceSearchRequest.prototype.keyword;
 google.maps.places.PlaceSearchRequest.prototype.location;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {number}
+ */
+google.maps.places.PlaceSearchRequest.prototype.maxPriceLevel;
+
+/**
+ * @type {number}
+ */
+google.maps.places.PlaceSearchRequest.prototype.minPriceLevel;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @type {string}
  */
 google.maps.places.PlaceSearchRequest.prototype.name;
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {boolean}
+ */
+google.maps.places.PlaceSearchRequest.prototype.openNow;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @type {number}
  */
 google.maps.places.PlaceSearchRequest.prototype.radius;
@@ -5457,6 +5530,14 @@ google.maps.places.SearchBox.prototype.setBounds = function(bounds) {};
 google.maps.places.SearchBoxOptions = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {google.maps.LatLngBounds}
+ */
+google.maps.places.SearchBoxOptions.prototype.bounds;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @interface
  */
 google.maps.places.TextSearchRequest = function() {};
@@ -5822,6 +5903,14 @@ google.maps.visualization.MapsEngineLayer.prototype.setOptions = function(option
 google.maps.visualization.MapsEngineLayerOptions = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @type {string}
+ */
+google.maps.visualization.MapsEngineLayerOptions.prototype.accessToken;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @type {boolean}
  */
 google.maps.visualization.MapsEngineLayerOptions.prototype.clickable;

@@ -56,8 +56,13 @@ import com.google.javascript.rhino.testing.TestErrorReporter;
 import junit.framework.TestCase;
 
 public class JSDocInfoTest extends TestCase {
+<<<<<<< HEAD
   private TestErrorReporter errorReporter = new TestErrorReporter(null, null);
   private JSTypeRegistry registry = new JSTypeRegistry(errorReporter);
+=======
+  private final TestErrorReporter errorReporter = new TestErrorReporter(null, null);
+  private final JSTypeRegistry registry = new JSTypeRegistry(errorReporter);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private JSType getNativeType(JSTypeNative typeId) {
     return registry.getNativeType(typeId);

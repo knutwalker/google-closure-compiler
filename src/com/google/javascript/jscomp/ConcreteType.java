@@ -165,7 +165,11 @@ abstract class ConcreteType implements LatticeElement {
       this.emptyList = emptyList;
     }
 
+<<<<<<< HEAD
     abstract protected C filter(ConcreteType type);
+=======
+    protected abstract C filter(ConcreteType type);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /** Returns all function types in this set. */

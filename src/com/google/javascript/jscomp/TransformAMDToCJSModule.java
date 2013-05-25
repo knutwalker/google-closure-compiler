@@ -15,13 +15,21 @@
  */
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import java.util.Iterator;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Iterators;
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
 
+<<<<<<< HEAD
+=======
+import java.util.Iterator;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Rewrites an AMD module https://github.com/amdjs/amdjs-api/wiki/AMD to a
  * CommonJS module. See {@link ProcessCommonJSModules} for follow up processing
@@ -30,22 +38,38 @@ import com.google.javascript.rhino.Node;
 class TransformAMDToCJSModule implements CompilerPass {
 
   @VisibleForTesting
+<<<<<<< HEAD
   final static DiagnosticType UNSUPPORTED_DEFINE_SIGNATURE_ERROR =
+=======
+  static final DiagnosticType UNSUPPORTED_DEFINE_SIGNATURE_ERROR =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       DiagnosticType.error(
           "UNSUPPORTED_DEFINE_SIGNATURE",
           "Only define(function() ...), define(OBJECT_LITERAL) and define("
               + "['dep', 'dep1'], function(d0, d2, [exports, module]) ...) forms "
               + "are currently supported.");
+<<<<<<< HEAD
   final static DiagnosticType NON_TOP_LEVEL_STATEMENT_DEFINE_ERROR =
       DiagnosticType.error(
             "NON_TOP_LEVEL_STATEMENT_DEFINE",
             "The define function must be called as a top-level statement.");
   final static DiagnosticType REQUIREJS_PLUGINS_NOT_SUPPORTED_WARNING =
+=======
+  static final DiagnosticType NON_TOP_LEVEL_STATEMENT_DEFINE_ERROR =
+      DiagnosticType.error(
+            "NON_TOP_LEVEL_STATEMENT_DEFINE",
+            "The define function must be called as a top-level statement.");
+  static final DiagnosticType REQUIREJS_PLUGINS_NOT_SUPPORTED_WARNING =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     DiagnosticType.warning(
           "REQUIREJS_PLUGINS_NOT_SUPPORTED",
           "Plugins in define requirements are not supported: {0}");
 
+<<<<<<< HEAD
   final static String VAR_RENAME_SUFFIX = "__alias";
+=======
+  static final String VAR_RENAME_SUFFIX = "__alias";
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 
   private final AbstractCompiler compiler;

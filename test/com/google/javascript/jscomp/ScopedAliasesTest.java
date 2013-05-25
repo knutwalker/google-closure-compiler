@@ -440,6 +440,33 @@ public class ScopedAliasesTest extends CompilerTestCase {
          "var y = {}; goog.dom = y;");
   }
 
+<<<<<<< HEAD
+=======
+  public void testCtorAlias() {
+    test("var x = {y: {}};" +
+         "goog.scope(function() {" +
+         "  var y = x.y;" +
+         "  y.ClassA = function() { this.b = new ClassB(); };" +
+         "  y.ClassB = function() {};" +
+         "  var ClassB = y.ClassB;" +
+         "});",
+         "var x = {y: {}};" +
+         "x.y.ClassA = function() { this.b = new x.y.ClassB(); };" +
+         "x.y.ClassB = function() { };");
+  }
+
+  public void testAliasCycle() {
+    test("var x = {y: {}};" +
+         "goog.scope(function() {" +
+         "  var y = z.x;" +
+         "  var z = y.x;" +
+         "  y.ClassA = function() {};" +
+         "  z.ClassB = function() {};" +
+         "});", null,
+         ScopedAliases.GOOG_SCOPE_ALIAS_CYCLE);
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testScopedReturn() {
     testScopedFailure("return;", ScopedAliases.GOOG_SCOPE_USES_RETURN);
     testScopedFailure("var x = goog.dom; return;",

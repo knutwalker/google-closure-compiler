@@ -77,6 +77,7 @@ public class DiagnosticGroups {
   // to parser/ParserConfig.properties
   static final String DIAGNOSTIC_GROUP_NAMES =
       "accessControls, ambiguousFunctionDecl, checkRegExp, " +
+<<<<<<< HEAD
       "checkTypes, checkVars, const, constantProperty, deprecated, " +
       "duplicateMessage, " +
       "es5Strict, externsValidation, fileoverviewTags, globalThis, " +
@@ -84,6 +85,15 @@ public class DiagnosticGroups {
       "missingProperties, " +
       "nonStandardJsDocs, suspiciousCode, strictModuleDepCheck, " +
       "typeInvalidation, " +
+=======
+      "checkStructDictInheritance, checkTypes, checkVars, const, " +
+      "constantProperty, deprecated, duplicateMessage, " +
+      "es5Strict, externsValidation, fileoverviewTags, globalThis, " +
+      "internetExplorerChecks, invalidCasts, misplacedTypeAnnotation, " +
+      "missingProperties, missingReturn," +
+      "nonStandardJsDocs, reportUnknownTypes, suspiciousCode, " +
+      "strictModuleDepCheck, typeInvalidation, " +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       "undefinedNames, undefinedVars, unknownDefines, uselessCode, " +
       "visibility";
 
@@ -108,19 +118,28 @@ public class DiagnosticGroups {
           CheckAccessControls.PRIVATE_OVERRIDE,
           CheckAccessControls.VISIBILITY_MISMATCH);
 
+<<<<<<< HEAD
   public static final DiagnosticGroup CONSTANT_PROPERTY =
       DiagnosticGroups.registerGroup("constantProperty",
           CheckAccessControls.CONST_PROPERTY_DELETED,
           CheckAccessControls.CONST_PROPERTY_REASSIGNED_VALUE);
+=======
+  public static final DiagnosticGroup ACCESS_CONTROLS =
+      DiagnosticGroups.registerGroup("accessControls",
+          DEPRECATED, VISIBILITY);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   public static final DiagnosticGroup NON_STANDARD_JSDOC =
       DiagnosticGroups.registerGroup("nonStandardJsDocs",
           RhinoErrorReporter.BAD_JSDOC_ANNOTATION);
 
+<<<<<<< HEAD
   public static final DiagnosticGroup ACCESS_CONTROLS =
       DiagnosticGroups.registerGroup("accessControls",
           DEPRECATED, VISIBILITY);
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static final DiagnosticGroup INVALID_CASTS =
       DiagnosticGroups.registerGroup("invalidCasts",
           TypeValidator.INVALID_CAST);
@@ -159,7 +178,15 @@ public class DiagnosticGroups {
 
   public static final DiagnosticGroup MISSING_PROPERTIES =
       DiagnosticGroups.registerGroup("missingProperties",
+<<<<<<< HEAD
           TypeCheck.INEXISTENT_PROPERTY);
+=======
+          TypeCheck.INEXISTENT_PROPERTY_WITH_SUGGESTION);
+
+  public static final DiagnosticGroup MISSING_RETURN =
+      DiagnosticGroups.registerGroup("missingReturn",
+          CheckMissingReturn.MISSING_RETURN_STATEMENT);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   public static final DiagnosticGroup INTERNET_EXPLORER_CHECKS =
       DiagnosticGroups.registerGroup("internetExplorerChecks",
@@ -187,8 +214,17 @@ public class DiagnosticGroups {
           TypeValidator.ALL_DIAGNOSTICS,
           TypeCheck.ALL_DIAGNOSTICS);
 
+<<<<<<< HEAD
   public static final DiagnosticGroup CHECK_STRUCT_DICT_INHERITENCE =
       DiagnosticGroups.registerGroup("checkStructDictInheritence",
+=======
+  public static final DiagnosticGroup REPORT_UNKNOWN_TYPES =
+      DiagnosticGroups.registerGroup("reportUnknownTypes",
+          TypeCheck.UNKNOWN_EXPR_TYPE);
+
+  public static final DiagnosticGroup CHECK_STRUCT_DICT_INHERITANCE =
+      DiagnosticGroups.registerGroup("checkStructDictInheritance",
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           TypeCheck.CONFLICTING_SHAPE_TYPE);
 
   public static final DiagnosticGroup CHECK_VARIABLES =
@@ -207,6 +243,14 @@ public class DiagnosticGroups {
           CheckAccessControls.CONST_PROPERTY_REASSIGNED_VALUE,
           ConstCheck.CONST_REASSIGNED_VALUE_ERROR);
 
+<<<<<<< HEAD
+=======
+  public static final DiagnosticGroup CONSTANT_PROPERTY =
+      DiagnosticGroups.registerGroup("constantProperty",
+          CheckAccessControls.CONST_PROPERTY_DELETED,
+          CheckAccessControls.CONST_PROPERTY_REASSIGNED_VALUE);
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static final DiagnosticGroup TYPE_INVALIDATION =
       DiagnosticGroups.registerGroup("typeInvalidation",
           DisambiguateProperties.Warnings.INVALIDATION,

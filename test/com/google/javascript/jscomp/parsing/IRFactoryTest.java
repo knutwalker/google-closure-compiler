@@ -93,7 +93,11 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
   public void testObjectLiteral6() {
     testNewParser("({1: true})",
       "SCRIPT 1 [source_file: FileName.js] [length: 11]\n" +
+<<<<<<< HEAD
       "    EXPR_RESULT 1 [source_file: FileName.js] [length: 10]\n" +
+=======
+      "    EXPR_RESULT 1 [source_file: FileName.js] [length: 11]\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       "        OBJECTLIT 1 [source_file: FileName.js] [length: 9]\n" +
       "            STRING_KEY 1 1 [quoted: 1] [source_file: FileName.js] [length: 1]\n" +
       "                TRUE 1 [source_file: FileName.js] [length: 4]\n");
@@ -104,7 +108,11 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
 
     testNewParser("({get 1() {}})",
         "SCRIPT 1 [source_file: FileName.js] [length: 14]\n" +
+<<<<<<< HEAD
         "    EXPR_RESULT 1 [source_file: FileName.js] [length: 13]\n" +
+=======
+        "    EXPR_RESULT 1 [source_file: FileName.js] [length: 14]\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "        OBJECTLIT 1 [source_file: FileName.js] [length: 12]\n" +
         "            GETTER_DEF 1 1 [quoted: 1] [source_file: FileName.js] [length: 1]\n" +
         "                FUNCTION  1 [source_file: FileName.js] [length: 6]\n" +
@@ -118,7 +126,11 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
 
     testNewParser("({set 1(a) {}})",
         "SCRIPT 1 [source_file: FileName.js] [length: 15]\n" +
+<<<<<<< HEAD
         "    EXPR_RESULT 1 [source_file: FileName.js] [length: 14]\n" +
+=======
+        "    EXPR_RESULT 1 [source_file: FileName.js] [length: 15]\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "        OBJECTLIT 1 [source_file: FileName.js] [length: 13]\n" +
         "            SETTER_DEF 1 1 [quoted: 1] [source_file: FileName.js] [length: 1]\n" +
         "                FUNCTION  1 [source_file: FileName.js] [length: 7]\n" +
@@ -198,7 +210,11 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
     mode = LanguageMode.ECMASCRIPT5;
     testNewParser("({get a() {}})",
         "SCRIPT 1 [source_file: FileName.js] [length: 14]\n" +
+<<<<<<< HEAD
         "    EXPR_RESULT 1 [source_file: FileName.js] [length: 13]\n" +
+=======
+        "    EXPR_RESULT 1 [source_file: FileName.js] [length: 14]\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "        OBJECTLIT 1 [source_file: FileName.js] [length: 12]\n" +
         "            GETTER_DEF a 1 [source_file: FileName.js] [length: 1]\n" +
         "                FUNCTION  1 [source_file: FileName.js] [length: 6]\n" +
@@ -211,7 +227,11 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
     mode = LanguageMode.ECMASCRIPT5;
     testNewParser("({set a(x) {}})",
         "SCRIPT 1 [source_file: FileName.js] [length: 15]\n" +
+<<<<<<< HEAD
         "    EXPR_RESULT 1 [source_file: FileName.js] [length: 14]\n" +
+=======
+        "    EXPR_RESULT 1 [source_file: FileName.js] [length: 15]\n" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "        OBJECTLIT 1 [source_file: FileName.js] [length: 13]\n" +
         "            SETTER_DEF a 1 [source_file: FileName.js] [length: 1]\n" +
         "                FUNCTION  1 [source_file: FileName.js] [length: 7]\n" +
@@ -792,8 +812,13 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
     Node bTest = aTest.getNext();
 
     assertNodePosition(1, 0, ifStmt);
+<<<<<<< HEAD
     assertNodePosition(2, 7, orTest);
     assertNodePosition(2, 7, andTest);
+=======
+    assertNodePosition(2, 5, orTest);
+    assertNodePosition(2, 6, andTest);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     assertNodePosition(2, 7, aTest);
     assertNodePosition(4, 3, bTest);
     assertNodePosition(5, 2, cTest);
@@ -827,8 +852,13 @@ public class IRFactoryTest extends BaseJSTypeTestCase {
 
     assertNodePosition(1, 0, ifStmt);
 
+<<<<<<< HEAD
     assertNodePosition(2, 8, eqTest);
     assertNodePosition(7, 8, notEqTest);
+=======
+    assertNodePosition(2, 7, eqTest);
+    assertNodePosition(7, 7, notEqTest);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     assertNodePosition(2, 8, bitOrTest);
     assertNodePosition(5, 8, bitAndTest);

@@ -142,9 +142,14 @@ public enum CompilationLevel {
     options.collapseObjectLiterals = true;
     options.protectHiddenSideEffects = true;
 
+<<<<<<< HEAD
     // All the advance optimizations.
     options.removeClosureAsserts = true;
     options.aliasKeywords = true;
+=======
+    // All the advanced optimizations.
+    options.removeClosureAsserts = true;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     options.reserveRawExports = true;
     options.setRenamingPolicy(
         VariableRenamingPolicy.ALL, PropertyRenamingPolicy.ALL_UNQUOTED);

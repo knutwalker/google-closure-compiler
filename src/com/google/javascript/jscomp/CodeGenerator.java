@@ -38,7 +38,11 @@ class CodeGenerator {
   private static final String GT_ESCAPED = "\\x3e";
 
   // A memoizer for formatting strings as JS strings.
+<<<<<<< HEAD
   private final Map<String, String> ESCAPED_JS_STRINGS = Maps.newHashMap();
+=======
+  private final Map<String, String> escapedJsStrings = Maps.newHashMap();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private static final char[] HEX_CHARS
       = { '0', '1', '2', '3', '4', '5', '6', '7',
@@ -238,7 +242,12 @@ class CodeGenerator {
 
       case Token.COMMA:
         Preconditions.checkState(childCount == 2);
+<<<<<<< HEAD
         unrollBinaryOperator(n, Token.COMMA, ",", context, Context.OTHER, 0, 0);
+=======
+        unrollBinaryOperator(n, Token.COMMA, ",", context,
+            getContextForNoInOperator(context), 0, 0);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         break;
 
       case Token.NUMBER:
@@ -782,13 +791,23 @@ class CodeGenerator {
 
   static boolean isSimpleNumber(String s) {
     int len = s.length();
+<<<<<<< HEAD
+=======
+    if (len == 0) {
+      return false;
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     for (int index = 0; index < len; index++) {
       char c = s.charAt(index);
       if (c < '0' || c > '9') {
         return false;
       }
     }
+<<<<<<< HEAD
     return len > 0 && s.charAt(0) != '0';
+=======
+    return len == 1 || s.charAt(0) != '0';
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   static double getSimpleNumber(String s) {
@@ -931,7 +950,12 @@ class CodeGenerator {
         addExpr(n, isArrayOrFunctionArgument ? 1 : 0, lhsContext);
       } else {
         cc.listSeparator();
+<<<<<<< HEAD
         addExpr(n, isArrayOrFunctionArgument ? 1 : 0, Context.OTHER);
+=======
+        addExpr(n, isArrayOrFunctionArgument ? 1 : 0,
+            getContextForNoInOperator(lhsContext));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
     }
   }
@@ -978,10 +1002,17 @@ class CodeGenerator {
     if (useSlashV) {
       add(jsString(n.getString(), useSlashV));
     } else {
+<<<<<<< HEAD
       String cached = ESCAPED_JS_STRINGS.get(s);
       if (cached == null) {
         cached = jsString(n.getString(), useSlashV);
         ESCAPED_JS_STRINGS.put(s, cached);
+=======
+      String cached = escapedJsStrings.get(s);
+      if (cached == null) {
+        cached = jsString(n.getString(), useSlashV);
+        escapedJsStrings.put(s, cached);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       add(cached);
     }
@@ -1118,6 +1149,7 @@ class CodeGenerator {
           // Break </script into <\/script
           // As above, this is just to prevent developers from doing this
           // accidentally.
+<<<<<<< HEAD
           final String END_SCRIPT = "/script";
 
           // Break <!-- into <\!--
@@ -1128,6 +1160,18 @@ class CodeGenerator {
             sb.append(LT_ESCAPED);
           } else if (s.regionMatches(false, i + 1, START_COMMENT, 0,
                                      START_COMMENT.length())) {
+=======
+          final String endScript = "/script";
+
+          // Break <!-- into <\!--
+          final String startComment = "!--";
+
+          if (s.regionMatches(true, i + 1, endScript, 0,
+                              endScript.length())) {
+            sb.append(LT_ESCAPED);
+          } else if (s.regionMatches(false, i + 1, startComment, 0,
+                                     startComment.length())) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             sb.append(LT_ESCAPED);
           } else {
             sb.append(c);
@@ -1193,7 +1237,11 @@ class CodeGenerator {
     Node c = n.getFirstChild();
     for (; c != null && i < maxCount; c = c.getNext()) {
       if (c.isBlock()) {
+<<<<<<< HEAD
         i += getNonEmptyChildCount(c, maxCount-i);
+=======
+        i += getNonEmptyChildCount(c, maxCount - i);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       } else if (!c.isEmpty()) {
         i++;
       }

@@ -70,6 +70,12 @@ class MinimizeExitPoints
         break;
 
       case Token.FUNCTION:
+<<<<<<< HEAD
+=======
+        // FYI: the function will be analyzed w/out a call to
+        // NodeTraversal/pushScope. Bypassing pushScope could cause a bug if
+        // there is code that relies on NodeTraversal knowing the correct scope.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         tryMinimizeExits(n.getLastChild(), Token.RETURN, null);
         break;
     }
@@ -107,8 +113,13 @@ class MinimizeExitPoints
 
     // Just an 'exit'.
     if (matchingExitNode(n, exitType, labelName)) {
+<<<<<<< HEAD
       NodeUtil.removeChild(n.getParent(), n);
       compiler.reportCodeChange();
+=======
+      compiler.reportChangeToEnclosingScope(n);
+      NodeUtil.removeChild(n.getParent(), n);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       return;
     }
 
@@ -134,10 +145,17 @@ class MinimizeExitPoints
         Node catchCodeBlock = catchNode.getLastChild();
         tryMinimizeExits(catchCodeBlock, exitType, labelName);
       }
+<<<<<<< HEAD
       if (NodeUtil.hasFinally(n)) {
         Node finallyBlock = n.getLastChild();
         tryMinimizeExits(finallyBlock, exitType, labelName);
       }
+=======
+      /* Don't try to minimize the exits of finally blocks, as this
+       * can cause problems if it changes the completion type of the finally
+       * block. See ECMA 262 Sections 8.9 & 12.14
+       */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     // Just a 'label'.
@@ -254,7 +272,11 @@ class MinimizeExitPoints
 
       // Move all the if node's following siblings.
       moveAllFollowing(ifNode, ifNode.getParent(), newDestBlock);
+<<<<<<< HEAD
       compiler.reportCodeChange();
+=======
+      compiler.reportChangeToEnclosingScope(ifNode);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
   }
 

@@ -574,6 +574,16 @@ public class FlowSensitiveInlineVariablesTest extends CompilerTestCase  {
         "return x;");
   }
 
+<<<<<<< HEAD
+=======
+  public void testVarAssinInsideHookIssue965() {
+    noInline("var i = 0; return 1 ? (i = 5) : 0, i;");
+    noInline("var i = 0; return (1 ? (i = 5) : 0) ? i : 0;");
+    noInline("var i = 0; return (1 ? (i = 5) : 0) || i;");
+    noInline("var i = 0; return (1 ? (i = 5) : 0) * i;");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private void noInline(String input) {
     inline(input, input);
   }

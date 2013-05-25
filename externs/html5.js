@@ -35,6 +35,7 @@
 
 /**
  * @see https://developer.mozilla.org/En/Using_native_JSON
+<<<<<<< HEAD
  */
 Window.prototype.JSON = {};
 
@@ -59,6 +60,11 @@ Window.prototype.JSON.parse = function(text, opt_reviver) {};
  */
 Window.prototype.JSON.stringify =
     function(value, opt_replacer, opt_space) {};
+=======
+ * @type {!JSONType}
+ */
+Window.prototype.JSON;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @constructor
@@ -414,6 +420,20 @@ CanvasRenderingContext2D.prototype.setFillColor;
  */
 CanvasRenderingContext2D.prototype.setStrokeColor;
 
+<<<<<<< HEAD
+=======
+/**
+ * @return {Array.<number>}
+ */
+CanvasRenderingContext2D.prototype.getLineDash;
+
+/**
+ * @param {Array.<number>} segments
+ * @return {undefined}
+ */
+CanvasRenderingContext2D.prototype.setLineDash;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /** @type {string} */
 CanvasRenderingContext2D.prototype.fillColor;
 
@@ -1469,9 +1489,21 @@ MessageEvent.prototype.initMessageEventNS = function(namespaceURI, typeArg,
     portsArg) {};
 
 /**
+<<<<<<< HEAD
  * HTML5 DataTransfer class
  * @see http://dev.w3.org/html5/spec/dnd.html#the-dragevent-and-datatransfer-interfaces
  * @constructor
+=======
+ * HTML5 DataTransfer class.
+ *
+ * We say that this extends ClipboardData, because Event.prototype.clipboardData
+ * is a DataTransfer on WebKit but a ClipboardData on IE. The interfaces are so
+ * similar that it's easier to merge them.
+ *
+ * @see http://dev.w3.org/html5/spec/dnd.html#the-dragevent-and-datatransfer-interfaces
+ * @constructor
+ * @extends {ClipboardData}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 function DataTransfer() {}
 
@@ -1489,18 +1521,30 @@ DataTransfer.prototype.files;
 
 /**
  * @param {string=} opt_format Format for which to remove data.
+<<<<<<< HEAD
+=======
+ * @override
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 DataTransfer.prototype.clearData = function(opt_format) {};
 
 /**
  * @param {string} format Format for which to set data.
  * @param {string} data Data to add.
+<<<<<<< HEAD
+=======
+ * @override
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 DataTransfer.prototype.setData = function(format, data) {};
 
 /**
  * @param {string} format Format for which to set data.
  * @return {string} Data for the given format.
+<<<<<<< HEAD
+=======
+ * @override
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 DataTransfer.prototype.getData = function(format) { return ''; };
 
@@ -2782,3 +2826,19 @@ Window.prototype.WebKitMutationObserver;
  * @type {function(new:MutationObserver, function(Array.<MutationRecord>))}
  */
 Window.prototype.MozMutationObserver;
+<<<<<<< HEAD
+=======
+
+
+/**
+ * @see http://www.w3.org/TR/page-visibility/
+ * @type {string}
+ */
+Document.prototype.visibilityState;
+
+/**
+ * @see http://www.w3.org/TR/page-visibility/
+ * @type {boolean}
+ */
+Document.prototype.hidden;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

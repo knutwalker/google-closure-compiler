@@ -23,7 +23,10 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Extracts messages and message comments from JS code.
  *

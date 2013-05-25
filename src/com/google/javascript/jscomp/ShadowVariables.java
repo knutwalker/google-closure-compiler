@@ -284,7 +284,11 @@ class ShadowVariables implements CompilerPass {
       for (Node n : references) {
         n.setString(toShadow.oldName);
         Node cur = n;
+<<<<<<< HEAD
         while(cur != s.getRootNode()) {
+=======
+        while (cur != s.getRootNode()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           cur = cur.getParent();
           if (cur.isFunction()) {
             scopeUpRefMap.put(cur, toShadow.oldName);

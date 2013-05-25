@@ -16,9 +16,12 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 import com.google.javascript.jscomp.CompilerOptions;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Convert the warnings level to an Options object.
  *
@@ -122,6 +125,15 @@ public enum WarningLevel {
         DiagnosticGroups.DEPRECATED, CheckLevel.WARNING);
     options.setWarningLevel(
         DiagnosticGroups.ES5_STRICT, CheckLevel.WARNING);
+<<<<<<< HEAD
+=======
+    options.setWarningLevel(
+        DiagnosticGroups.VISIBILITY, CheckLevel.WARNING);
+    options.setWarningLevel(
+        DiagnosticGroups.CONST, CheckLevel.WARNING);
+    options.setWarningLevel(
+        DiagnosticGroups.CHECK_REGEXP, CheckLevel.WARNING);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // Kindly tell the user that they have JsDocs that we don't understand.
     options.setWarningLevel(DiagnosticGroups.NON_STANDARD_JSDOC,

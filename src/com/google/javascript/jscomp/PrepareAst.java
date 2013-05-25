@@ -95,8 +95,12 @@ class PrepareAst implements CompilerPass {
         && !n.isLabel()
         && !n.isSwitch()) {
       for (Node c = n.getFirstChild(); c != null; c = c.getNext()) {
+<<<<<<< HEAD
         if (NodeUtil.isControlStructureCodeBlock(n,c) &&
             !c.isBlock()) {
+=======
+        if (NodeUtil.isControlStructureCodeBlock(n, c) && !c.isBlock()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           Node newBlock = IR.block().srcref(n);
           n.replaceChild(c, newBlock);
           if (!c.isEmpty()) {
@@ -161,6 +165,15 @@ class PrepareAst implements CompilerPass {
       // Keep track of of the "this" context of a call.  A call without an
       // explicit "this" is a free call.
       Node first = n.getFirstChild();
+<<<<<<< HEAD
+=======
+
+      // ignore cast nodes.
+      while (first.isCast()) {
+        first = first.getFirstChild();
+      }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (!NodeUtil.isGet(first)) {
         n.putBooleanProp(Node.FREE_CALL, true);
       }

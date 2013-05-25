@@ -62,15 +62,27 @@ class RemoveUnusedClassProperties
           Preconditions.checkState(assign != null
               && NodeUtil.isAssignmentOp(assign)
               && assign.getFirstChild() == n);
+<<<<<<< HEAD
+=======
+          compiler.reportChangeToEnclosingScope(assign);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           // 'this.x = y' to 'y'
           assign.getParent().replaceChild(assign,
               assign.getLastChild().detachFromParent());
         } else if (parent.isInc() || parent.isDec()) {
+<<<<<<< HEAD
           parent.getParent().replaceChild(parent, IR.number(0));
         } else {
           throw new IllegalStateException("unexpected: "+ parent);
         }
         compiler.reportCodeChange();
+=======
+          compiler.reportChangeToEnclosingScope(parent);
+          parent.getParent().replaceChild(parent, IR.number(0));
+        } else {
+          throw new IllegalStateException("unexpected: " + parent);
+        }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
     }
   }

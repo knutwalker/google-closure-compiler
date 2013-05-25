@@ -114,6 +114,7 @@ var netscape;
  */
 var sun;
 
+<<<<<<< HEAD
 // Magic variable for Norton Identity Protection's Chrome extension.  This
 // program will overwrite whatever's stored in the variable 'o' with random
 // values, so we want to avoid it.
@@ -125,12 +126,24 @@ var o;
 // stored in the variable '$j' with a function.
 var $j;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * @see https://developer.mozilla.org/en/DOM/window.alert
  */
 function alert(x) {}
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number|undefined|null} immediateID
+ * @see https://developer.mozilla.org/en-US/docs/DOM/window.clearImmediate
+ * @see http://msdn.microsoft.com/en-us/library/ie/hh924825(v=vs.85).aspx
+ */
+function clearImmediate(immediateID) {}
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number|undefined?} intervalID
  * @see https://developer.mozilla.org/en/DOM/window.clearInterval
  */
@@ -161,6 +174,17 @@ function dump(x) {}
 function prompt(message, opt_value) {}
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {function()} callback
+ * @return {number}
+ * @see https://developer.mozilla.org/en-US/docs/DOM/window.setImmediate
+ * @see http://msdn.microsoft.com/en-us/library/ie/hh773176(v=vs.85).aspx
+ */
+function setImmediate(callback) {}
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {Function|string} callback
  * @param {number} delay
  * @return {number}

@@ -15,6 +15,7 @@
  */
 package com.google.javascript.jscomp.graph;
 
+<<<<<<< HEAD
 import javax.annotation.Nullable;
 import com.google.common.base.Objects;
 import static com.google.common.base.Preconditions.checkArgument;
@@ -23,6 +24,15 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 
 import static com.google.common.collect.Iterators.filter;
+=======
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.collect.Iterators.filter;
+
+import com.google.common.base.Objects;
+import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.collect.Maps;
 
 import java.io.Serializable;
@@ -33,6 +43,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+<<<<<<< HEAD
+=======
+import javax.annotation.Nullable;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * A Union-Find implementation.
  *

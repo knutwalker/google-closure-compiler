@@ -38,6 +38,14 @@ import java.util.regex.Pattern;
  */
 public class IntegrationTest extends IntegrationTestCase {
 
+<<<<<<< HEAD
+=======
+  @Override public void setUp() {
+    super.setUp();
+    RescopeGlobalSymbols.assumeCrossModuleNames = true;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private static final String CLOSURE_BOILERPLATE =
       "/** @define {boolean} */ var COMPILED = false; var goog = {};" +
       "goog.exportSymbol = function() {};";
@@ -268,6 +276,36 @@ public class IntegrationTest extends IntegrationTestCase {
          "/** @export */ function f() {} goog.exportSymbol('f', f);");
   }
 
+<<<<<<< HEAD
+=======
+  public void testInstrumentMemoryAllocationPassOff() {
+    testSame(createCompilerOptions(),
+        "var obj = new Object(); " +
+        "var o = {}; " +
+        "var a = []; " +
+        "var f = function() {};" +
+        "var s = 'a' + 'b'");
+  }
+
+  public void testInstrumentMemoryAllocationPassOn() {
+    CompilerOptions options = createCompilerOptions();
+    options.setInstrumentMemoryAllocations(true);
+    test(options,
+        "var obj = new Object(); " +
+        "var o = {}; " +
+        "var a = []; " +
+        "var f = function() {};" +
+        "var s = 'a' + 'b'",
+
+        InstrumentMemoryAllocPass.JS_INSTRUMENT_ALLOCATION_CODE +
+        "var obj=__alloc(new Object(),\"i0:1\",4,\"new Unknown\");" +
+        "var o=__alloc({},\"i0:1\",5,\"Object\");" +
+        "var a=__alloc([],\"i0:1\",6,\"Array\");" +
+        "var f=__alloc(function() {},\"i0:1\",7,\"Function\");" +
+        "var s=\"a\"+\"b\";");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testAngularPassOff() {
     testSame(createCompilerOptions(),
         "/** @ngInject */ function f() {} " +
@@ -284,8 +322,13 @@ public class IntegrationTest extends IntegrationTestCase {
         "/** @ngInject */ var b = function f(a, b, c) {} ",
 
         "function f() {} " +
+<<<<<<< HEAD
         "function g(a) {} g.$inject=['a'];" +
         "var b = function f(a, b, c) {}; b.$inject=['a', 'b', 'c']");
+=======
+        "function g(a) {} g['$inject']=['a'];" +
+        "var b = function f(a, b, c) {}; b['$inject']=['a', 'b', 'c']");
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testExportTestFunctionsOff() {
@@ -435,6 +478,32 @@ public class IntegrationTest extends IntegrationTestCase {
         lastCompiler.getPassConfig().getIntermediateState().cssNames);
   }
 
+<<<<<<< HEAD
+=======
+  public void testReplaceIdGeneratorsTest() {
+    CompilerOptions options = createCompilerOptions();
+    options.replaceIdGenerators = true;
+
+    options.setIdGenerators(ImmutableMap.<String, RenamingMap>of(
+        "xid", new RenamingMap() {
+      @Override
+      public String get(String value) {
+        return ":" + value + ":";
+      }
+    }));
+
+    test(options, "/** @idGenerator {mapped} */"
+         + "var xid = function() {};\n"
+         + "function f() {\n"
+         + "  return xid('foo');\n"
+         + "}",
+         "var xid = function() {};\n"
+         + "function f() {\n"
+         + "  return ':foo:';\n"
+         + "}");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testRemoveClosureAsserts() {
     CompilerOptions options = createCompilerOptions();
     options.closurePass = true;
@@ -507,7 +576,11 @@ public class IntegrationTest extends IntegrationTestCase {
     CompilerOptions options = createCompilerOptions();
     testSame(options, code);
 
+<<<<<<< HEAD
     options.idGenerators = Sets.newHashSet("f");
+=======
+    options.setIdGenerators(Sets.newHashSet("f"));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     test(options, code, "function f() {} 'a';");
   }
 
@@ -555,6 +628,35 @@ public class IntegrationTest extends IntegrationTestCase {
     test(options, code, CLOSURE_COMPILED + " var x$bar = 3;");
   }
 
+<<<<<<< HEAD
+=======
+  public void testGoogDefine1() {
+    String code = CLOSURE_BOILERPLATE +
+        "/** @define {boolean} */ goog.define('FLAG', true);";
+
+    CompilerOptions options = createCompilerOptions();
+
+    options.closurePass = true;
+    options.collapseProperties = true;
+    options.setDefineToBooleanLiteral("FLAG", false);
+
+    test(options, code, CLOSURE_COMPILED + " var FLAG = false;");
+  }
+
+  public void testGoogDefine2() {
+    String code = CLOSURE_BOILERPLATE +
+        "goog.provide('ns');" +
+        "/** @define {boolean} */ goog.define('ns.FLAG', true);";
+
+    CompilerOptions options = createCompilerOptions();
+
+    options.closurePass = true;
+    options.collapseProperties = true;
+    options.setDefineToBooleanLiteral("ns.FLAG", false);
+    test(options, code, CLOSURE_COMPILED + "var ns$FLAG = false;");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testCollapseProperties1() {
     String code =
         "var x = {}; x.FOO = 5; x.bar = 3;";
@@ -1207,18 +1309,53 @@ public class IntegrationTest extends IntegrationTestCase {
       code += "f.prototype.devir" + i + " = function() {};";
 
       char letter = (char) ('d' + i);
+<<<<<<< HEAD
+=======
+
+      // skip i,j,o (reserved)
+      if (letter >= 'i') {
+        letter++;
+      }
+      if (letter >= 'j') {
+        letter++;
+      }
+      if (letter >= 'o') {
+        letter++;
+      }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       expected += "a.argz = function() {arguments};";
       expected += "function " + letter + "(c){}";
     }
 
     code += "var F = new f(); F.argz();";
+<<<<<<< HEAD
     expected += "var n = new b(); n.argz();";
+=======
+    expected += "var q = new b(); q.argz();";
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     for (int i = 0; i < 10; i++) {
       code += "F.devir" + i + "();";
 
       char letter = (char) ('d' + i);
+<<<<<<< HEAD
       expected += letter + "(n);";
+=======
+
+      // skip i,j,o (reserved)
+      if (letter >= 'i') {
+        letter++;
+      }
+      if (letter >= 'j') {
+        letter++;
+      }
+      if (letter >= 'o') {
+        letter++;
+      }
+
+      expected += letter + "(q);";
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
     test(options, code, expected);
   }
@@ -2365,6 +2502,35 @@ public class IntegrationTest extends IntegrationTestCase {
     test(options, code, ConstCheck.CONST_REASSIGNED_VALUE_ERROR);
   }
 
+<<<<<<< HEAD
+=======
+  public void testBiasedLabelRenaming() {
+    CompilerOptions options = createCompilerOptions();
+    options.setAggressiveRenaming(true);
+    options.setLabelRenaming(true);
+    String code = "function a() {lbl: while(1) {while(1) {break lbl}}}";
+    String result = "function a() {f: for(;1;) for(;1;)break f}";
+    test(options, code, result);
+  }
+
+  public void testIssue937() {
+    CompilerOptions options = createCompilerOptions();
+    CompilationLevel level = CompilationLevel.SIMPLE_OPTIMIZATIONS;
+    level.setOptionsForCompilationLevel(options);
+    WarningLevel warnings = WarningLevel.DEFAULT;
+    warnings.setOptionsForWarningLevel(options);
+
+    String code = "" +
+        "console.log(" +
+            "/** @type {function():!string} */ ((new x())['abc'])());";
+    String result = "" +
+        "console.log((new x()).abc());";
+    test(options, code, result);
+  }
+
+
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testIssue787() {
     CompilerOptions options = createCompilerOptions();
     CompilationLevel level = CompilationLevel.SIMPLE_OPTIMIZATIONS;
@@ -2420,7 +2586,11 @@ public class IntegrationTest extends IntegrationTestCase {
     WarningLevel warnings = WarningLevel.VERBOSE;
     warnings.setOptionsForWarningLevel(options);
 
+<<<<<<< HEAD
     int numAdds = 4750;
+=======
+    int numAdds = 4500;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     StringBuilder original = new StringBuilder("var x = 0");
     for (int i = 0; i < numAdds; i++) {
       original.append(" + 1");
@@ -2452,16 +2622,38 @@ public class IntegrationTest extends IntegrationTestCase {
         "\n#Changing runs: [0-9]+" +
         "\n#Loopable runs: [0-9]+" +
         "\n#Changing loopable runs: [0-9]+" +
+<<<<<<< HEAD
         "\nReduction\\(bytes\\): [0-9]+" +
         "\nGzReduction\\(bytes\\): [0-9]+" +
         "\nSize\\(bytes\\): [0-9]+" +
         "\nGzSize\\(bytes\\): [0-9]+" +
+=======
+        "\nEstimated Reduction\\(bytes\\): [0-9]+" +
+        "\nEstimated GzReduction\\(bytes\\): [0-9]+" +
+        "\nEstimated Size\\(bytes\\): [0-9]+" +
+        "\nEstimated GzSize\\(bytes\\): [0-9]+" +
+        "\nTotal Size\\(bytes\\): -?[0-9]+" +
+        "\nTotal GzSize\\(bytes\\): -?[0-9]+" +
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         "\n\nLog:\n" +
         "pass,runtime,runs,changingRuns,reduction,gzReduction,size,gzSize.*",
         Pattern.DOTALL);
     assertTrue(p.matcher(output.toString()).matches());
   }
 
+<<<<<<< HEAD
+=======
+  // isEquivalentTo returns false for alpha-equivalent nodes
+  public void testIsEquivalentTo() {
+    String[] input1 = {"function f(z) { return z; }"};
+    String[] input2 = {"function f(y) { return y; }"};
+    CompilerOptions options = new CompilerOptions();
+    Node out1 = parse(input1, options, false);
+    Node out2 = parse(input2, options, false);
+    assertFalse(out1.isEquivalentTo(out2));
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /** Creates a CompilerOptions object with google coding conventions. */
   @Override
   protected CompilerOptions createCompilerOptions() {

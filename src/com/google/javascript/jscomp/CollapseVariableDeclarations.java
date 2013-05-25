@@ -140,6 +140,7 @@ class CollapseVariableDeclarations implements CompilerPass {
       }
 
       // Only care about var nodes
+<<<<<<< HEAD
       if (!n.isVar() && !canBeRedeclared(n, t.getScope())) return;
 
       // If we've already looked at this node, skip it
@@ -148,6 +149,22 @@ class CollapseVariableDeclarations implements CompilerPass {
       // Adjacent VAR children of an IF node are the if and else parts and can't
       // be collapsed
       if (parent.isIf()) return;
+=======
+      if (!n.isVar() && !canBeRedeclared(n, t.getScope())) {
+        return;
+      }
+
+      // If we've already looked at this node, skip it
+      if (nodesToCollapse.contains(n)) {
+        return;
+      }
+
+      // Adjacent VAR children of an IF node are the if and else parts and can't
+      // be collapsed
+      if (parent.isIf()) {
+        return;
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
       Node varNode = n;
 
@@ -225,7 +242,11 @@ class CollapseVariableDeclarations implements CompilerPass {
         collapse.parent.removeChildAfter(var);
 
         if (n.isVar()) {
+<<<<<<< HEAD
           while(n.hasChildren()) {
+=======
+          while (n.hasChildren()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
             var.addChildToBack(n.removeFirstChild());
           }
         } else {

@@ -74,7 +74,12 @@ enum Annotation {
   THROWS,
   TYPE,
   TYPEDEF,
+<<<<<<< HEAD
   VERSION;
+=======
+  VERSION,
+  WIZACTION;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   static final Map<String, Annotation> recognizedAnnotations =
       new ImmutableMap.Builder<String, Annotation>().
@@ -133,5 +138,9 @@ enum Annotation {
       put("type", Annotation.TYPE).
       put("typedef", Annotation.TYPEDEF).
       put("version", Annotation.VERSION).
+<<<<<<< HEAD
+=======
+      put("wizaction", Annotation.WIZACTION).
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       build();
 }

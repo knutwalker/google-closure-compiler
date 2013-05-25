@@ -104,6 +104,10 @@ public class JSDocInfo implements Serializable {
     Set<String> modifies = null;
     String lendsName = null;
     boolean ngInject = false;
+<<<<<<< HEAD
+=======
+    boolean wizaction = false;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   private static final class LazilyInitializedDocumentation {
@@ -288,6 +292,14 @@ public class JSDocInfo implements Serializable {
    */
   private boolean includeDocumentation = false;
 
+<<<<<<< HEAD
+=======
+  /**
+   * Position of the original comment.
+   */
+  private int originalCommentPosition;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   // We use a bit map to represent whether or not the JSDoc contains
   // one of the "boolean" annotation types (annotations like @constructor,
   // for which the presence of the annotation alone is significant).
@@ -319,6 +331,10 @@ public class JSDocInfo implements Serializable {
   private static final int MASK_STRUCT        = 0x00200000; // @struct
   private static final int MASK_DICT          = 0x00400000; // @dict
   private static final int MASK_STALBEIDGEN   = 0x00800000; // @stableIdGenerator
+<<<<<<< HEAD
+=======
+  private static final int MASK_MAPPEDIDGEN   = 0x01000000; // @idGenerator {mapped}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   // 3 bit type field stored in the top 3 bits of the most significant
   // nibble.
@@ -347,6 +363,13 @@ public class JSDocInfo implements Serializable {
     setFlag(value, MASK_STALBEIDGEN);
   }
 
+<<<<<<< HEAD
+=======
+  void setMappedIdGenerator(boolean value) {
+    setFlag(value, MASK_MAPPEDIDGEN);
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   void setConstant(boolean value) {
     setFlag(value, MASK_CONSTANT);
   }
@@ -456,6 +479,16 @@ public class JSDocInfo implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * @return whether the {@code @stableIdGenerator} is present on this {@link JSDocInfo}.
+   */
+  public boolean isMappedIdGenerator() {
+    return getFlag(MASK_MAPPEDIDGEN);
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Returns whether the {@code @const} annotation is present on this
    * {@link JSDocInfo}.
    */
@@ -1239,6 +1272,21 @@ public class JSDocInfo implements Serializable {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Returns whether JSDoc is annotated with {@code @wizaction} annotation.
+   */
+  public boolean isWizaction() {
+    return (info == null) ? false : info.wizaction;
+  }
+
+  void setWizaction(boolean wizaction) {
+    lazyInitInfo();
+    info.wizaction = wizaction;
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Gets the description specified by the {@code @license} annotation.
    */
   public String getLicense() {
@@ -1554,4 +1602,15 @@ public class JSDocInfo implements Serializable {
     }
     documentation.sourceComment = sourceComment;
   }
+<<<<<<< HEAD
+=======
+
+  public int getOriginalCommentPosition() {
+    return originalCommentPosition;
+  }
+
+  void setOriginalCommentPosition(int position) {
+    originalCommentPosition = position;
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

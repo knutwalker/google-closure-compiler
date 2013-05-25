@@ -18,9 +18,12 @@ package com.google.javascript.jscomp.graph;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
+<<<<<<< HEAD
 import com.google.javascript.jscomp.graph.Annotation;
 import com.google.javascript.jscomp.graph.GraphNode;
 import com.google.javascript.jscomp.graph.SubGraph;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -85,6 +88,10 @@ public abstract class GraphColoring<N, E> {
     return graph;
   }
 
+<<<<<<< HEAD
+=======
+  /** The color of a node */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static class Color implements Annotation {
     int value = 0;
 

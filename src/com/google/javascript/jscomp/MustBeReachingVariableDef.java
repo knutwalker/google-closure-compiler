@@ -84,6 +84,19 @@ final class MustBeReachingVariableDef extends
       // same depends set.
       return otherDef.node == node;
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public String toString() {
+      return "Definition@" + node.toString();
+    }
+
+    @Override
+    public int hashCode() {
+      return node.hashCode();
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   /**
@@ -119,7 +132,11 @@ final class MustBeReachingVariableDef extends
 
     public MustDef(Iterator<Var> vars) {
       this();
+<<<<<<< HEAD
       while(vars.hasNext()) {
+=======
+      while (vars.hasNext()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         Var var = vars.next();
         // Every variable in the scope is defined once in the beginning of the
         // function: all the declared variables are undefined, all functions
@@ -142,6 +159,14 @@ final class MustBeReachingVariableDef extends
       return (other instanceof MustDef) &&
           ((MustDef) other).reachingDef.equals(this.reachingDef);
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public int hashCode() {
+      return reachingDef.hashCode();
+    }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   private static class MustDefJoin extends JoinOp.BinaryJoinOp<MustDef> {
@@ -322,7 +347,11 @@ final class MustBeReachingVariableDef extends
    * @param node The CFG node where the definition should be record to.
    *     {@code null} if this is a conditional define.
    */
+<<<<<<< HEAD
   private void addToDefIfLocal( String name, @Nullable Node node,
+=======
+  private void addToDefIfLocal(String name, @Nullable Node node,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       @Nullable Node rValue, MustDef def) {
     Var var = jsScope.getVar(name);
 
@@ -366,7 +395,11 @@ final class MustBeReachingVariableDef extends
     }
 
     // Also, assume we no longer know anything that depends on a parameter.
+<<<<<<< HEAD
     for (Entry<Var, Definition> pair: output.reachingDef.entrySet()) {
+=======
+    for (Entry<Var, Definition> pair : output.reachingDef.entrySet()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       Definition value = pair.getValue();
       if (value == null) {
         continue;

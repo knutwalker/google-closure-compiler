@@ -559,7 +559,11 @@ public class TightenTypesTest extends CompilerTestCase {
 
   public void testImplicitPropCall() {
     testSame("/** @constructor */ function Window() {};\n"
+<<<<<<< HEAD
              + "/** @param {function()} f \n@param {number} */\n"
+=======
+             + "/** @param {function()} f \n@param {number} d */\n"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
              + "Window.prototype.setTimeout = function(f, d) {};",
              "function foo() {};\n"
              + "(new Window).setTimeout(foo, 20);", null);
@@ -642,7 +646,11 @@ public class TightenTypesTest extends CompilerTestCase {
   public void testRestrictToCast() {
     testSame("/** @constructor */ function Foo() {};\n"
              + "var a = [];\n"
+<<<<<<< HEAD
              + "var foo = (/** @type {Foo} */ a[0]);\n"
+=======
+             + "var foo = /** @type {Foo} */ (a[0]);\n"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
              + "var u = a[0];\n"
              + "new Foo");
 
@@ -654,7 +662,11 @@ public class TightenTypesTest extends CompilerTestCase {
     testSame("/** @constructor \n @implements Int */ function Foo() {};\n"
              + "/** @interface */ function Int() {};\n"
              + "var a = [];\n"
+<<<<<<< HEAD
              + "var foo = (/** @type {Int} */ a[0]);\n"
+=======
+             + "var foo = /** @type {Int} */ (a[0]);\n"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
              + "new Foo");
 
     assertType("Foo", getType("foo"));

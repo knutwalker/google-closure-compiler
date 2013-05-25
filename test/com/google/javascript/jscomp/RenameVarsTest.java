@@ -20,7 +20,12 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.javascript.rhino.Node;
 
+<<<<<<< HEAD
 import java.util.*;
+=======
+import java.util.HashSet;
+import java.util.Map;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 
 /**
@@ -40,6 +45,10 @@ public class RenameVarsTest extends CompilerTestCase {
   private boolean generatePseudoNames = false;
   private boolean shouldShadow = false;
   private boolean withNormalize = false;
+<<<<<<< HEAD
+=======
+  private NameGenerator nameGenerator = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   @Override
   protected CodingConvention getCodingConvention() {
@@ -59,7 +68,11 @@ public class RenameVarsTest extends CompilerTestCase {
       pass =  renameVars = new RenameVars(compiler, prefix,
           localRenamingOnly, preserveFunctionExpressionNames,
           generatePseudoNames, shouldShadow,
+<<<<<<< HEAD
           previouslyUsedMap, null, null);
+=======
+          previouslyUsedMap, null, null, nameGenerator);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     if (withNormalize) {
@@ -88,6 +101,10 @@ public class RenameVarsTest extends CompilerTestCase {
     preserveFunctionExpressionNames = false;
     generatePseudoNames = false;
     shouldShadow = false;
+<<<<<<< HEAD
+=======
+    nameGenerator = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // TODO(johnlenz): Enable Normalize during these tests.
   }
@@ -537,6 +554,15 @@ public class RenameVarsTest extends CompilerTestCase {
             "var d = function($super,a){};");
   }
 
+<<<<<<< HEAD
+=======
+  public void testBias() {
+    nameGenerator = new NameGenerator(new HashSet<String>(0), "", null);
+    nameGenerator.favors("AAAAAAAAHH");
+    test("var x, y", "var A, H");
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testPseudoNames() {
     generatePseudoNames = false;
     // See http://code.google.com/p/closure-compiler/issues/detail?id=32
@@ -608,14 +634,22 @@ public class RenameVarsTest extends CompilerTestCase {
       closurePass.process(externs, root);
       renameVars = new RenameVars(compiler, prefix,
           false, false, false, false, previouslyUsedMap, null,
+<<<<<<< HEAD
           closurePass.getExportedVariableNames());
+=======
+          closurePass.getExportedVariableNames(), null);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       renameVars.process(externs, root);
     }
   }
 
   private class NormalizePassWrapper implements CompilerPass {
     private final Compiler compiler;
+<<<<<<< HEAD
     private CompilerPass wrappedPass;
+=======
+    private final CompilerPass wrappedPass;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     private NormalizePassWrapper(Compiler compiler,
         CompilerPass wrappedPass) {

@@ -21,7 +21,11 @@
  * @see http://www.w3.org/TR/webaudio/
  *
  * @externs
+<<<<<<< HEAD
 */
+=======
+ */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @constructor
@@ -68,31 +72,79 @@ AudioContext.prototype.decodeAudioData = function(audioData, successCallback,
 AudioContext.prototype.createBufferSource = function() {};
 
 /**
+<<<<<<< HEAD
  * @param {number} bufferSize
  * @param {number} numberOfInputs
  * @param {number} numberOfOuputs
  * @return {JavaScriptAudioNode}
+=======
+ * To be deprecated. Use createScriptProcessor instead.
+ * @param {number} bufferSize
+ * @param {number} numberOfInputs
+ * @param {number} numberOfOuputs
+ * @return {ScriptProcessorNode}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 AudioContext.prototype.createJavaScriptNode = function(bufferSize,
     numberOfInputs, numberOfOuputs) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number} bufferSize
+ * @param {number=} numberOfInputChannels_opt
+ * @param {number=} numberOfOutputChannels_opt
+ * @return {ScriptProcessorNode}
+ */
+AudioContext.prototype.createScriptProcessor = function(bufferSize,
+    numberOfInputChannels_opt, numberOfOutputChannels_opt) {};
+
+/**
+ * @return {OscillatorNode}
+ */
+AudioContext.prototype.createOscillator = function() {};
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {RealtimeAnalyserNode}
  */
 AudioContext.prototype.createAnalyser = function() {};
 
 /**
+<<<<<<< HEAD
  * @return {AudioGainNode}
+=======
+ * To be deprecated. Use createGain instead.
+ * @return {GainNode}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 AudioContext.prototype.createGainNode = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @return {GainNode}
+ */
+AudioContext.prototype.createGain = function() {};
+
+/**
+ * To be deprecated. Use createDelay instead.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number=} maxDelayTime
  * @return {DelayNode}
  */
 AudioContext.prototype.createDelayNode = function(maxDelayTime) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number=} maxDelayTime
+ * @return {DelayNode}
+ */
+AudioContext.prototype.createDelay = function(maxDelayTime) {};
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {BiquadFilterNode}
  */
 AudioContext.prototype.createBiquadFilter = function() {};
@@ -129,6 +181,32 @@ AudioContext.prototype.createDynamicsCompressor = function() {};
 AudioContext.prototype.createMediaElementSource = function(mediaElement) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number} numberOfChannels
+ * @param {number} length
+ * @param {number} sampleRate
+ * @constructor
+ * @extends {AudioContext}
+ */
+var OfflineAudioContext = function(numberOfChannels, length, sampleRate) {};
+
+OfflineAudioContext.prototype.startRendering = function() {};
+
+/** @type {function(OfflineAudioCompletionEvent)} */
+OfflineAudioContext.prototype.oncomplete;
+
+/**
+ * @constructor
+ * @extends {Event}
+ */
+var OfflineAudioCompletionEvent = function() {};
+
+/** @type {AudioBuffer} */
+OfflineAudioCompletionEvent.prototype.renderedBuffer;
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @constructor
  */
 var AudioNode = function() {};
@@ -240,10 +318,17 @@ var AudioGain = function() {};
  * @constructor
  * @extends {AudioNode}
  */
+<<<<<<< HEAD
 var AudioGainNode = function() {};
 
 /** @type {AudioGain} */
 AudioGainNode.prototype.gain;
+=======
+var GainNode = function() {};
+
+/** @type {AudioGain} */
+GainNode.prototype.gain;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @constructor
@@ -286,6 +371,36 @@ AudioBuffer.prototype.getChannelData = function(channel) {};
  */
 var AudioBufferSourceNode = function() {};
 
+<<<<<<< HEAD
+=======
+/**
+ * @const
+ * @type {number}
+ */
+AudioBufferSourceNode.prototype.UNSCHEDULED_STATE; /* = 0 */
+
+/**
+ * @const
+ * @type {number}
+ */
+AudioBufferSourceNode.prototype.SCHEDULED_STATE; /* = 1 */
+
+/**
+ * @const
+ * @type {number}
+ */
+AudioBufferSourceNode.prototype.PLAYING_STATE; /* = 2 */
+
+/**
+ * @const
+ * @type {number}
+ */
+AudioBufferSourceNode.prototype.FINISHED_STATE; /* = 3 */
+
+/** @type {number} */
+AudioBufferSourceNode.prototype.playbackState;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /** @type {AudioBuffer} */
 AudioBufferSourceNode.prototype.buffer;
 
@@ -298,6 +413,28 @@ AudioBufferSourceNode.prototype.playbackRate;
 /** @type {boolean} */
 AudioBufferSourceNode.prototype.loop;
 
+<<<<<<< HEAD
+=======
+/** @type {number} */
+AudioBufferSourceNode.prototype.loopStart;
+
+/** @type {number} */
+AudioBufferSourceNode.prototype.loopEnd;
+
+/**
+ * @param {number} when
+ * @param {number=} opt_offset
+ * @param {number=} opt_duration
+ */
+AudioBufferSourceNode.prototype.start = function(when, opt_offset,
+    opt_duration) {};
+
+/**
+ * @param {number} when
+ */
+AudioBufferSourceNode.prototype.stop = function(when) {};
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * @param {number} when
  */
@@ -339,12 +476,34 @@ JavaScriptAudioNode.prototype.bufferSize;
 
 /**
  * @constructor
+<<<<<<< HEAD
+=======
+ * @extends {AudioNode}
+ */
+var ScriptProcessorNode = function() {};
+
+/** @type {EventListener} */
+ScriptProcessorNode.prototype.onaudioprocess;
+
+/**
+ * @const
+ * @type {number}
+ */
+ScriptProcessorNode.prototype.bufferSize;
+
+/**
+ * @constructor
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @extends {Event}
  * @private
  */
 var AudioProcessingEvent = function() {};
 
+<<<<<<< HEAD
 /** @type {JavaScriptAudioNode} */
+=======
+/** @type {ScriptProcessorNode} */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 AudioProcessingEvent.prototype.node;
 
 /** @type {number} */
@@ -647,6 +806,41 @@ BiquadFilterNode.prototype.getFrequencyResponse = function(frequencyHz,
 
 /**
  * @constructor
+<<<<<<< HEAD
+=======
+ */
+var WaveTable = function() {};
+
+/**
+ * @constructor
+ * @extends {AudioNode}
+ */
+var OscillatorNode = function() {};
+
+/** @type {string} */
+OscillatorNode.prototype.type;
+
+/** @type {number} */
+OscillatorNode.prototype.playbackState;
+
+/** @type {AudioParam} */
+OscillatorNode.prototype.frequency;
+
+/** @type {AudioParam} */
+OscillatorNode.prototype.detune;
+
+/** @type {function(number)} */
+OscillatorNode.prototype.start;
+
+/** @type {function(number)} */
+OscillatorNode.prototype.stop;
+
+/** @type {function(WaveTable)} */
+OscillatorNode.prototype.setWaveTable;
+
+/**
+ * @constructor
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @extends {AudioNode}
  */
 var WaveShaperNode = function() {};
@@ -665,6 +859,19 @@ WaveShaperNode.prototype.curve;
 var webkitAudioContext = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number} numberOfChannels
+ * @param {number} length
+ * @param {number} sampleRate
+ * @constructor
+ * @extends {OfflineAudioContext}
+ */
+var webkitOfflineAudioContext =
+    function(numberOfChannels, length, sampleRate) {};
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @constructor
  * @extends {AudioPannerNode}
  */
@@ -698,3 +905,7 @@ Audio.prototype.mozWriteAudio = function(buffer) {};
  * @return {number}
  */
 Audio.prototype.mozCurrentSampleOffset = function() {};
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

@@ -41,7 +41,13 @@ import com.google.javascript.rhino.jstype.FunctionType;
 import com.google.javascript.rhino.jstype.JSType;
 import com.google.javascript.rhino.jstype.JSTypeRegistry;
 import com.google.javascript.rhino.jstype.ObjectType;
+<<<<<<< HEAD
 
+=======
+import com.google.javascript.rhino.jstype.TemplateType;
+
+import java.util.HashSet;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -88,7 +94,14 @@ final class FunctionTypeBuilder {
   private boolean makesDicts = false;
   private boolean isInterface = false;
   private Node parametersNode = null;
+<<<<<<< HEAD
   private ImmutableList<String> templateTypeNames = ImmutableList.of();
+=======
+  private ImmutableList<TemplateType> templateTypeNames = ImmutableList.of();
+  // TODO(johnlenz): verify we want both template and class template lists instead of a unified
+  // list.
+  private ImmutableList<TemplateType> classTemplateTypeNames = ImmutableList.of();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   static final DiagnosticType EXTENDS_WITHOUT_TYPEDEF = DiagnosticType.warning(
       "JSC_EXTENDS_WITHOUT_TYPEDEF",
@@ -143,6 +156,15 @@ final class FunctionTypeBuilder {
           "@this type of a function must be an object\n" +
           "Actual type: {0}");
 
+<<<<<<< HEAD
+=======
+  static final DiagnosticType SAME_INTERFACE_MULTIPLE_IMPLEMENTS =
+      DiagnosticType.warning(
+          "JSC_SAME_INTERFACE_MULTIPLE_IMPLEMENTS",
+          "Cannot @implement the same interface more than once\n" +
+          "Repeated interface: {0}");
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private class ExtendedTypeValidator implements Predicate<JSType> {
     @Override
     public boolean apply(JSType type) {
@@ -324,6 +346,23 @@ final class FunctionTypeBuilder {
         reportWarning(CONSTRUCTOR_REQUIRED, "@dict", formatFnName());
       }
 
+<<<<<<< HEAD
+=======
+      // Class template types, which can be used in the scope of a constructor
+      // definition.
+      ImmutableList<String> typeParameters = info.getTemplateTypeNames();
+      if (!typeParameters.isEmpty()) {
+        if (isConstructor || isInterface) {
+          ImmutableList.Builder<TemplateType> builder = ImmutableList.builder();
+          for (String typeParameter : typeParameters) {
+            builder.add(typeRegistry.createTemplateType(typeParameter));
+          }
+          classTemplateTypeNames = builder.build();
+          typeRegistry.setTemplateTypeNames(classTemplateTypeNames);
+        }
+      }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       // base type
       if (info.hasBaseType()) {
         if (isConstructor) {
@@ -342,10 +381,33 @@ final class FunctionTypeBuilder {
       if (info.getImplementedInterfaceCount() > 0) {
         if (isConstructor) {
           implementedInterfaces = Lists.newArrayList();
+<<<<<<< HEAD
           for (JSTypeExpression t : info.getImplementedInterfaces()) {
             JSType maybeInterType = t.evaluate(scope, typeRegistry);
             if (maybeInterType != null &&
                 maybeInterType.setValidator(new ImplementedTypeValidator())) {
+=======
+          Set<JSType> baseInterfaces = new HashSet<JSType>();
+          for (JSTypeExpression t : info.getImplementedInterfaces()) {
+            JSType maybeInterType = t.evaluate(scope, typeRegistry);
+
+            if (maybeInterType != null &&
+                maybeInterType.setValidator(new ImplementedTypeValidator())) {
+              // Disallow implementing the same base (not templatized) interface
+              // type more than once.
+              JSType baseInterface = maybeInterType;
+              if (baseInterface.toMaybeTemplatizedType() != null) {
+                baseInterface =
+                    baseInterface.toMaybeTemplatizedType().getReferencedType();
+              }
+              if (baseInterfaces.contains(baseInterface)) {
+                reportWarning(SAME_INTERFACE_MULTIPLE_IMPLEMENTS,
+                              baseInterface.toString());
+              } else {
+                baseInterfaces.add(baseInterface);
+              }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
               implementedInterfaces.add((ObjectType) maybeInterType);
             }
           }
@@ -463,6 +525,12 @@ final class FunctionTypeBuilder {
       if (info != null && info.hasParameterType(argumentName)) {
         parameterType =
             info.getParameterType(argumentName).evaluate(scope, typeRegistry);
+<<<<<<< HEAD
+=======
+      } else if (arg.getJSDocInfo() != null && arg.getJSDocInfo().hasType()) {
+        parameterType =
+            arg.getJSDocInfo().getType().evaluate(scope, typeRegistry);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       } else if (oldParameterType != null &&
           oldParameterType.getJSType() != null) {
         parameterType = oldParameterType.getJSType();
@@ -530,10 +598,39 @@ final class FunctionTypeBuilder {
   /**
    * Infer the template type from the doc info.
    */
+<<<<<<< HEAD
   FunctionTypeBuilder inferTemplateTypeName(@Nullable JSDocInfo info) {
     if (info != null) {
       templateTypeNames = info.getTemplateTypeNames();
       typeRegistry.setTemplateTypeNames(templateTypeNames);
+=======
+  FunctionTypeBuilder inferTemplateTypeName(
+      @Nullable JSDocInfo info, JSType ownerType) {
+    if (info != null &&  !info.getTemplateTypeNames().isEmpty()) {
+      ImmutableList.Builder<TemplateType> builder = ImmutableList.builder();
+      for (String key : info.getTemplateTypeNames()) {
+        builder.add(typeRegistry.createTemplateType(key));
+      }
+      templateTypeNames = builder.build();
+    } else {
+      templateTypeNames = ImmutableList.of();
+    }
+
+    ImmutableList<TemplateType> keys = templateTypeNames;
+    if (ownerType != null) {
+      ImmutableList<TemplateType> ownerTypeKeys =
+          ownerType.getTemplateTypeMap().getTemplateKeys();
+      if (!ownerTypeKeys.isEmpty()) {
+        ImmutableList.Builder<TemplateType> builder = ImmutableList.builder();
+        builder.addAll(templateTypeNames);
+        builder.addAll(ownerTypeKeys);
+        keys = builder.build();
+      }
+    }
+
+    if (!keys.isEmpty()) {
+      typeRegistry.setTemplateTypeNames(keys);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
     return this;
   }
@@ -617,7 +714,11 @@ final class FunctionTypeBuilder {
       fnType = getOrCreateConstructor();
     } else if (isInterface) {
       fnType = typeRegistry.createInterfaceType(
+<<<<<<< HEAD
           fnName, contents.getSourceNode());
+=======
+          fnName, contents.getSourceNode(), classTemplateTypeNames);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (getScopeDeclaredIn().isGlobal() && !fnName.isEmpty()) {
         typeRegistry.declareType(fnName, fnType.getInstanceType());
       }
@@ -668,7 +769,12 @@ final class FunctionTypeBuilder {
    */
   private FunctionType getOrCreateConstructor() {
     FunctionType fnType = typeRegistry.createConstructorType(
+<<<<<<< HEAD
         fnName, contents.getSourceNode(), parametersNode, returnType, null);
+=======
+        fnName, contents.getSourceNode(), parametersNode, returnType,
+        classTemplateTypeNames);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     JSType existingType = typeRegistry.getType(fnName);
 
     if (makesStructs) {

@@ -168,7 +168,11 @@ public class VariableMap {
 
   private static int findIndexOfChar(String value, char stopChar) {
     int len = value.length();
+<<<<<<< HEAD
     for (int i=0; i<len; i++) {
+=======
+    for (int i = 0; i < len; i++) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       char c = value.charAt(i);
       if (c == '\\' && ++i < len) {
         c = value.charAt(i);
@@ -182,7 +186,11 @@ public class VariableMap {
   private static String unescape(CharSequence value) {
     StringBuilder sb = new StringBuilder();
     int len = value.length();
+<<<<<<< HEAD
     for (int i=0; i<len; i++) {
+=======
+    for (int i = 0; i < len; i++) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       char c = value.charAt(i);
       if (c == '\\' && ++i < len) {
         c = value.charAt(i);

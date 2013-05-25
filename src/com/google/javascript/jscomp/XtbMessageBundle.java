@@ -92,7 +92,11 @@ public class XtbMessageBundle implements MessageBundle {
     factory.setFeature(
         "http://xml.org/sax/features/external-general-entities", false);
     factory.setFeature(
+<<<<<<< HEAD
         "http://xml.org/sax/features/external-parameter-entities",false);
+=======
+        "http://xml.org/sax/features/external-parameter-entities", false);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     factory.setFeature(
         "http://apache.org/xml/features/nonvalidating/load-external-dtd",
         false);

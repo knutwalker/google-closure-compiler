@@ -16,12 +16,20 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import java.util.Set;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.javascript.rhino.Node;
 
+<<<<<<< HEAD
+=======
+import java.util.Set;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * This describes the jQuery specific JavaScript coding conventions.
  */
@@ -41,7 +49,11 @@ public class JqueryCodingConvention extends CodingConventions.Proxy {
     return "window";
   }
 
+<<<<<<< HEAD
   private final static Set<String> propertyTestFunctions = ImmutableSet.of(
+=======
+  private static final Set<String> propertyTestFunctions = ImmutableSet.of(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       "jQuery.isPlainObject", "jQuery.isFunction", "jQuery.isNumeric",
       "jQuery.isEmptyObject");
 
@@ -52,7 +64,11 @@ public class JqueryCodingConvention extends CodingConventions.Proxy {
         call.getFirstChild().getQualifiedName());
   }
 
+<<<<<<< HEAD
   private final static Set<String> prototypeAliases = ImmutableSet.of(
+=======
+  private static final Set<String> prototypeAliases = ImmutableSet.of(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       "jQuery.fn", "jQuerySub.fn");
 
   @Override

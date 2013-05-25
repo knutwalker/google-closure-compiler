@@ -16,6 +16,11 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
+=======
+import java.util.HashSet;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Tests for {@link RenameVars}.
  * @see RenameVarsTest
@@ -25,10 +30,25 @@ public class RenameLocalVarsTest extends CompilerTestCase {
 
   private String prefix = DEFAULT_PREFIX;
 
+<<<<<<< HEAD
   @Override
   protected CompilerPass getProcessor(Compiler compiler) {
     return new RenameVars(
         compiler, prefix, true, false, false, false, null, null, null);
+=======
+  private NameGenerator nameGenerator = null;
+
+  @Override
+  protected CompilerPass getProcessor(Compiler compiler) {
+    return new RenameVars(
+        compiler, prefix, true, false, false, false,
+        null, null, null, nameGenerator);
+  }
+
+  @Override
+  protected void setUp() {
+    nameGenerator = null;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public void testRenameSimple() {
@@ -114,4 +134,20 @@ public class RenameLocalVarsTest extends CompilerTestCase {
          "} Bar();");
     prefix = DEFAULT_PREFIX;
   }
+<<<<<<< HEAD
+=======
+
+  public void testBias() {
+    nameGenerator = new NameGenerator(new HashSet<String>(0), "", null);
+    nameGenerator.favors("AAAAAAAAHH");
+    test("function foo(x,y){}", "function foo(A,H){}");
+  }
+
+  public void testBias2() {
+    nameGenerator = new NameGenerator(new HashSet<String>(0), "", null);
+    nameGenerator.favors("AAAAAAAAHH");
+    test("function foo(x,y){ var z = z + z + z}",
+         "function foo(H,a){ var A = A + A + A}");
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

@@ -48,6 +48,10 @@ Event.prototype.clientX;
 Event.prototype.clientY;
 
 /**
+<<<<<<< HEAD
+=======
+ * A ClipboardData on IE, but a DataTransfer on WebKit.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://msdn.microsoft.com/en-us/library/ms535220.aspx
  * @type {(ClipboardData|undefined)}
  */

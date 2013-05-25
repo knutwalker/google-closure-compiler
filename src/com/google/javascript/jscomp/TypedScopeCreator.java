@@ -73,6 +73,12 @@ import com.google.javascript.rhino.jstype.JSTypeNative;
 import com.google.javascript.rhino.jstype.JSTypeRegistry;
 import com.google.javascript.rhino.jstype.ObjectType;
 import com.google.javascript.rhino.jstype.Property;
+<<<<<<< HEAD
+=======
+import com.google.javascript.rhino.jstype.TemplateType;
+import com.google.javascript.rhino.jstype.TemplateTypeMap;
+import com.google.javascript.rhino.jstype.TemplateTypeMapReplacer;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.Iterator;
 import java.util.List;
@@ -229,7 +235,10 @@ final class TypedScopeCreator implements ScopeCreator {
     }
 
     scopeBuilder.resolveStubDeclarations();
+<<<<<<< HEAD
     scopeBuilder.resolveTypes();
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // Gather the properties in each function that we found in the
     // global scope, if that function has a @this type that we can
@@ -251,6 +260,11 @@ final class TypedScopeCreator implements ScopeCreator {
           typeRegistry, newScope, delegateProxyPrototypes,
           delegateCallingConventions);
     }
+<<<<<<< HEAD
+=======
+
+    newScope.setTypeResolver(scopeBuilder);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     return newScope;
   }
 
@@ -404,7 +418,11 @@ final class TypedScopeCreator implements ScopeCreator {
   }
 
   private abstract class AbstractScopeBuilder
+<<<<<<< HEAD
       implements NodeTraversal.Callback {
+=======
+      implements NodeTraversal.Callback, Scope.TypeResolver {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     /**
      * The scope that we're building.
@@ -458,7 +476,12 @@ final class TypedScopeCreator implements ScopeCreator {
       deferredSetTypes.add(new DeferredSetType(node, type));
     }
 
+<<<<<<< HEAD
     void resolveTypes() {
+=======
+    @Override
+    public void resolveTypes() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       // Resolve types and attach them to nodes.
       for (DeferredSetType deferred : deferredSetTypes) {
         deferred.resolve(scope);
@@ -704,7 +727,36 @@ final class TypedScopeCreator implements ScopeCreator {
       JSType jsType = null;
       if (info != null) {
         if (info.hasType()) {
+<<<<<<< HEAD
           jsType = info.getType().evaluate(scope, typeRegistry);
+=======
+
+          ImmutableList<TemplateType> ownerTypeKeys = ImmutableList.of();
+          Node ownerNode = NodeUtil.getBestLValueOwner(node);
+          String ownerName = NodeUtil.getBestLValueName(ownerNode);
+          ObjectType ownerType = null;
+          if (ownerName != null) {
+            Var ownerVar = scope.getVar(ownerName);
+            if (ownerVar != null) {
+              ownerType = getPrototypeOwnerType(
+                  ObjectType.cast(ownerVar.getType()));
+              if (ownerType != null) {
+                ownerTypeKeys =
+                    ownerType.getTemplateTypeMap().getTemplateKeys();
+              }
+            }
+          }
+
+          if (!ownerTypeKeys.isEmpty()) {
+            typeRegistry.setTemplateTypeNames(ownerTypeKeys);
+          }
+
+          jsType = info.getType().evaluate(scope, typeRegistry);
+
+          if (!ownerTypeKeys.isEmpty()) {
+            typeRegistry.clearTemplateTypeNames();
+          }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         } else if (FunctionTypeBuilder.isFunctionTypeDeclaration(info)) {
           String fnName = node.getQualifiedName();
           jsType = createFunctionTypeFromNodes(
@@ -901,9 +953,24 @@ final class TypedScopeCreator implements ScopeCreator {
             }
           }
 
+<<<<<<< HEAD
           FunctionType overriddenType = null;
           if (ownerType != null && propName != null) {
             overriddenType = findOverriddenFunction(ownerType, propName);
+=======
+          ObjectType prototypeOwner = getPrototypeOwnerType(ownerType);
+          TemplateTypeMap prototypeOwnerTypeMap = null;
+          if (prototypeOwner != null &&
+              prototypeOwner.getTypeOfThis() != null) {
+              prototypeOwnerTypeMap =
+                  prototypeOwner.getTypeOfThis().getTemplateTypeMap();
+          }
+
+          FunctionType overriddenType = null;
+          if (ownerType != null && propName != null) {
+            overriddenType = findOverriddenFunction(
+                ownerType, propName, prototypeOwnerTypeMap);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           }
 
           FunctionTypeBuilder builder =
@@ -911,7 +978,11 @@ final class TypedScopeCreator implements ScopeCreator {
                   scope)
               .setContents(getFunctionAnalysisResults(fnRoot))
               .inferFromOverriddenFunction(overriddenType, parametersNode)
+<<<<<<< HEAD
               .inferTemplateTypeName(info)
+=======
+              .inferTemplateTypeName(info, prototypeOwner)
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
               .inferReturnType(info)
               .inferInheritance(info);
 
@@ -949,16 +1020,36 @@ final class TypedScopeCreator implements ScopeCreator {
       return functionType;
     }
 
+<<<<<<< HEAD
+=======
+    private ObjectType getPrototypeOwnerType(ObjectType ownerType) {
+      if (ownerType != null && ownerType.isFunctionPrototypeType()) {
+        return ownerType.getOwnerFunction();
+      }
+      return null;
+    }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     /**
      * Find the function that's being overridden on this type, if any.
      */
     private FunctionType findOverriddenFunction(
+<<<<<<< HEAD
         ObjectType ownerType, String propName) {
+=======
+        ObjectType ownerType, String propName, TemplateTypeMap typeMap) {
+      FunctionType result = null;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       // First, check to see if the property is implemented
       // on a superclass.
       JSType propType = ownerType.getPropertyType(propName);
       if (propType != null && propType.isFunctionType()) {
+<<<<<<< HEAD
         return propType.toMaybeFunctionType();
+=======
+        result =  propType.toMaybeFunctionType();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       } else {
         // If it's not, then check to see if it's implemented
         // on an implemented interface.
@@ -966,12 +1057,27 @@ final class TypedScopeCreator implements ScopeCreator {
                  ownerType.getCtorImplementedInterfaces()) {
           propType = iface.getPropertyType(propName);
           if (propType != null && propType.isFunctionType()) {
+<<<<<<< HEAD
             return propType.toMaybeFunctionType();
+=======
+            result = propType.toMaybeFunctionType();
+            break;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           }
         }
       }
 
+<<<<<<< HEAD
       return null;
+=======
+      if (result != null && typeMap != null && !typeMap.isEmpty()) {
+        result = result.visit(
+            new TemplateTypeMapReplacer(typeRegistry, typeMap))
+            .toMaybeFunctionType();
+      }
+
+      return result;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     /**
@@ -1755,7 +1861,26 @@ final class TypedScopeCreator implements ScopeCreator {
         }
 
         member.getFirstChild().setJSType(thisType);
+<<<<<<< HEAD
         JSType jsType = getDeclaredType(info, member, value);
+=======
+
+        // TODO(johnlenz): We are evaluating these values in the wrong scope:
+        // https://code.google.com/p/closure-compiler/issues/detail?id=926
+        JSType thisObjectType = thisType.toObjectType();
+        if (thisObjectType != null) {
+          ImmutableList<TemplateType> keys =
+              thisObjectType.getTemplateTypeMap().getTemplateKeys();
+          typeRegistry.setTemplateTypeNames(keys);
+        }
+
+        JSType jsType = getDeclaredType(info, member, value);
+
+        if (thisObjectType != null) {
+          typeRegistry.clearTemplateTypeNames();
+        }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         Node name = member.getLastChild();
         if (jsType != null &&
             (name.isName() || name.isString()) &&
@@ -1908,8 +2033,14 @@ final class TypedScopeCreator implements ScopeCreator {
      * @param parent The parent of n
      */
     @Override public void visit(NodeTraversal t, Node n, Node parent) {
+<<<<<<< HEAD
       if (n == scope.getRootNode()) return;
 
+=======
+      if (n == scope.getRootNode()) {
+        return;
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       if (n.isParamList() && parent == scope.getRootNode()) {
         handleFunctionInputs(parent);
         return;

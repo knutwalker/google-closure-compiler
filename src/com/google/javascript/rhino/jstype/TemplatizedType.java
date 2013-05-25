@@ -52,15 +52,24 @@ public final class TemplatizedType extends ProxyObjectType {
   private static final long serialVersionUID = 1L;
 
   final ImmutableList<JSType> templateTypes;
+<<<<<<< HEAD
+=======
+  final TemplateTypeMapReplacer replacer;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   TemplatizedType(
       JSTypeRegistry registry, ObjectType objectType,
       ImmutableList<JSType> templateTypes) {
+<<<<<<< HEAD
     super(registry, objectType, objectType.getTemplateTypeMap().extendValues(
+=======
+    super(registry, objectType, objectType.getTemplateTypeMap().addValues(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         templateTypes));
 
     // Cache which template keys were filled, and what JSTypes they were filled
     // with.
+<<<<<<< HEAD
     ImmutableList<String> filledTemplateKeys =
         objectType.getTemplateTypeMap().getUnfilledTemplateKeys();
     ImmutableList.Builder<JSType> builder = ImmutableList.builder();
@@ -68,6 +77,17 @@ public final class TemplatizedType extends ProxyObjectType {
       builder.add(getTemplateTypeMap().getTemplateType(filledTemplateKey));
     }
     this.templateTypes = builder.build();
+=======
+    ImmutableList<TemplateType> filledTemplateKeys =
+        objectType.getTemplateTypeMap().getUnfilledTemplateKeys();
+    ImmutableList.Builder<JSType> builder = ImmutableList.builder();
+    for (TemplateType filledTemplateKey : filledTemplateKeys) {
+      builder.add(getTemplateTypeMap().getTemplateType(filledTemplateKey));
+    }
+    this.templateTypes = builder.build();
+
+    replacer = new TemplateTypeMapReplacer(registry, getTemplateTypeMap());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   @Override
@@ -100,7 +120,17 @@ public final class TemplatizedType extends ProxyObjectType {
     return templateTypes;
   }
 
+<<<<<<< HEAD
   //@Override
+=======
+  @Override
+  public JSType getPropertyType(String propertyName) {
+    JSType result = super.getPropertyType(propertyName);
+    return result == null ? null : result.visit(replacer);
+  }
+
+  @Override
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public boolean isSubtype(JSType that) {
     return isSubtypeHelper(this, that);
   }

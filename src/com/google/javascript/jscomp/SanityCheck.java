@@ -111,8 +111,12 @@ class SanityCheck implements CompilerPass {
    */
   private void sanityCheckNormalization(Node externs, Node root) {
     // Verify nothing has inappropriately denormalize the AST.
+<<<<<<< HEAD
     CodeChangeHandler handler =
         new CodeChangeHandler.ForbiddenChange();
+=======
+    CodeChangeHandler handler = new ForbiddenChange();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     compiler.addChangeHandler(handler);
 
     // TODO(johnlenz): Change these normalization checks Preconditions and

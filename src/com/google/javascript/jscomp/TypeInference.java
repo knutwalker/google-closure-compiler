@@ -26,8 +26,11 @@ import static com.google.javascript.rhino.jstype.JSTypeNative.NUMBER_VALUE_OR_OB
 import static com.google.javascript.rhino.jstype.JSTypeNative.STRING_TYPE;
 import static com.google.javascript.rhino.jstype.JSTypeNative.UNKNOWN_TYPE;
 import static com.google.javascript.rhino.jstype.JSTypeNative.VOID_TYPE;
+<<<<<<< HEAD
 import static com.google.javascript.rhino.jstype.JSTypeRegistry.OBJECT_ELEMENT_TEMPLATE;
 import static com.google.javascript.rhino.jstype.JSTypeRegistry.OBJECT_INDEX_TEMPLATE;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -48,9 +51,16 @@ import com.google.javascript.rhino.jstype.JSTypeNative;
 import com.google.javascript.rhino.jstype.JSTypeRegistry;
 import com.google.javascript.rhino.jstype.ModificationVisitor;
 import com.google.javascript.rhino.jstype.ObjectType;
+<<<<<<< HEAD
 import com.google.javascript.rhino.jstype.TemplateTypeMap;
 import com.google.javascript.rhino.jstype.StaticSlot;
 import com.google.javascript.rhino.jstype.TemplateType;
+=======
+import com.google.javascript.rhino.jstype.StaticSlot;
+import com.google.javascript.rhino.jstype.TemplateType;
+import com.google.javascript.rhino.jstype.TemplateTypeMap;
+import com.google.javascript.rhino.jstype.TemplateTypeMapReplacer;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.javascript.rhino.jstype.UnionType;
 
 import java.util.Collections;
@@ -223,7 +233,12 @@ class TypeInference
               JSType iterKeyType = getNativeType(STRING_TYPE);
               ObjectType objType = getJSType(obj).dereference();
               JSType objIndexType = objType == null ?
+<<<<<<< HEAD
                   null : objType.getTemplateTypeMap().getTemplateType(OBJECT_INDEX_TEMPLATE);
+=======
+                  null : objType.getTemplateTypeMap().getTemplateType(
+                      registry.getObjectIndexKey());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
               if (objIndexType != null && !objIndexType.isUnknownType()) {
                 JSType narrowedKeyType =
                     iterKeyType.getGreatestSubtype(objIndexType);
@@ -449,6 +464,7 @@ class TypeInference
 
       case Token.CAST:
         scope = traverseChildren(n, scope);
+<<<<<<< HEAD
         break;
     }
 
@@ -468,6 +484,13 @@ class TypeInference
 
         n.setJSType(castType);
       }
+=======
+        JSDocInfo info = n.getJSDocInfo();
+        if (info != null && info.hasType()) {
+          n.setJSType(info.getType().evaluate(syntacticScope, registry));
+        }
+        break;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     return scope;
@@ -1101,7 +1124,11 @@ class TypeInference
         // template types amongst their templatized types.
         TemplateTypeMap paramTypeMap = paramType.getTemplateTypeMap();
         TemplateTypeMap argTypeMap = argObjectType.getTemplateTypeMap();
+<<<<<<< HEAD
         for (String key : paramTypeMap.getTemplateKeys()) {
+=======
+        for (TemplateType key : paramTypeMap.getTemplateKeys()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           maybeResolveTemplatedType(
               paramTypeMap.getTemplateType(key),
               argTypeMap.getTemplateType(key),
@@ -1224,8 +1251,23 @@ class TypeInference
           ct = (FunctionType) constructorType;
         }
         if (ct != null && ct.isConstructor()) {
+<<<<<<< HEAD
           type = ct.getInstanceType();
           backwardsInferenceFromCallSite(n, ct);
+=======
+          backwardsInferenceFromCallSite(n, ct);
+
+          // If necessary, create a TemplatizedType wrapper around the instance
+          // type, based on the types of the constructor parameters.
+          ObjectType instanceType = ct.getInstanceType();
+          Map<TemplateType, JSType> inferredTypes =
+              inferTemplateTypesFromParameters(ct, n);
+          if (inferredTypes.isEmpty()) {
+            type = instanceType;
+          } else {
+            type = registry.createTemplatizedType(instanceType, inferredTypes);
+          }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
       }
     }
@@ -1248,8 +1290,13 @@ class TypeInference
     scope = traverseChildren(n, scope);
     JSType type = getJSType(n.getFirstChild()).restrictByNotNullOrUndefined();
     TemplateTypeMap typeMap = type.getTemplateTypeMap();
+<<<<<<< HEAD
     if (typeMap.hasTemplateType(OBJECT_ELEMENT_TEMPLATE)) {
       n.setJSType(typeMap.getTemplateType(OBJECT_ELEMENT_TEMPLATE));
+=======
+    if (typeMap.hasTemplateType(registry.getObjectElementKey())) {
+      n.setJSType(typeMap.getTemplateType(registry.getObjectElementKey()));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
     return dereferencePointer(n.getFirstChild(), scope);
   }
@@ -1335,6 +1382,20 @@ class TypeInference
       }
     }
 
+<<<<<<< HEAD
+=======
+    if (propertyType != null && objType != null) {
+      JSType restrictedObjType = objType.restrictByNotNullOrUndefined();
+      if (restrictedObjType.isTemplatizedType()
+          && propertyType.hasAnyTemplateTypes()) {
+        TemplateTypeMap typeMap = restrictedObjType.getTemplateTypeMap();
+        TemplateTypeMapReplacer replacer = new TemplateTypeMapReplacer(
+            registry, typeMap);
+        propertyType = propertyType.visit(replacer);
+      }
+    }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     if ((propertyType == null || propertyType.isUnknownType())
         && qualifiedName != null) {
       // If we find this node in the registry, then we can infer its type.

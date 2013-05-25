@@ -20,6 +20,7 @@
  * @externs
  */
 
+<<<<<<< HEAD
 // This cannot go into the COMMON externs because it conflicts with the pure
 // JavaScript implementations of the API.
 
@@ -43,3 +44,6 @@ JSON.parse = function(jsonStr, opt_reviver) {};
  * @nosideeffects
  */
 JSON.stringify = function(jsonObj, opt_replacer, opt_space) {};
+=======
+// TODO(nicksantos): This has been moved to es5.js. Remove this file.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

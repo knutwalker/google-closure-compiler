@@ -25,6 +25,7 @@
  *     $cookies
  *     $cookieStore
  *     $document
+<<<<<<< HEAD
  *     $exceptionHandler
  *     $filter
  *     $filterProvider
@@ -32,6 +33,11 @@
  *     $interpolate
  *     $locale
  *     $parse
+=======
+ *     $httpBackend
+ *     $interpolate
+ *     $locale
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *     $resource
  *     $rootElement
  *     $rootScope
@@ -73,16 +79,27 @@ var angular = {};
 angular.bind = function(self, fn, args) {};
 
 /**
+<<<<<<< HEAD
  * @param {Element} element
+=======
+ * @param {Element|HTMLDocument} element
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {Array.<string|Function>=} opt_modules
  * @return {function()}
  */
 angular.bootstrap = function(element, opt_modules) {};
 
 /**
+<<<<<<< HEAD
  * @param {*} source
  * @param {(Object|Array)=} opt_dest
  * @return {*}
+=======
+ * @param {T} source
+ * @param {(Object|Array)=} opt_dest
+ * @return {T}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 angular.copy = function(source, opt_dest) {};
 
@@ -115,8 +132,14 @@ angular.extend = function(dest, srcs) {};
 angular.forEach = function(obj, iterator, opt_context) {};
 
 /**
+<<<<<<< HEAD
  * @param {string} json
  * @return {Object|Array|Date|string|number}
+=======
+ * @param {string|T} json
+ * @return {Object|Array|Date|T}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 angular.fromJson = function(json) {};
 
@@ -197,7 +220,11 @@ angular.mock = {};
 /**
  * @param {string} name
  * @param {Array.<string>=} opt_requires
+<<<<<<< HEAD
  * @param {Function=} opt_configFn
+=======
+ * @param {(Function|Array.<string|Function>)=} opt_configFn
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {angular.Module}
  */
 angular.module = function(name, opt_requires, opt_configFn) {};
@@ -486,8 +513,13 @@ angular.JQLite.wrap = function(element) {};
  *   filter:
  *       function(string, (Function|Array.<string|Function>)):angular.Module,
  *   name: string,
+<<<<<<< HEAD
  *   provider:
  *       function(string, (Function|Array.<string|Function>)):angular.Module,
+=======
+ *   provider: function(string,
+ *       (Object|Function|Array.<string|Function>)):angular.Module,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *   requires: Array.<string>,
  *   run: function((Function|Array.<string|Function>)):angular.Module,
  *   service:
@@ -579,23 +611,41 @@ angular.noop = function() {};
 
 /**
  * @typedef {{
+<<<<<<< HEAD
+=======
+ *   $$phase: string,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *   $apply: function((string|function(angular.Scope))=):*,
  *   $broadcast: function(string, ...[*]),
  *   $destroy: function(),
  *   $digest: function(),
  *   $emit: function(string, ...[*]),
+<<<<<<< HEAD
  *   $eval: function((string|function())=, Object=):*,
+=======
+ *   $eval: function((string|function(angular.Scope))=, Object=):*,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *   $evalAsync: function((string|function())=),
  *   $id: string,
  *   $new: function(boolean=):angular.Scope,
  *   $on: function(string, function(angular.Scope.Event, ...[?])):function(),
  *   $parent: angular.Scope,
+<<<<<<< HEAD
+=======
+ *   $root: angular.Scope,
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *   $watch: function(
  *       (string|Function), (string|Function)=, boolean=):function()
  *   }}
  */
 angular.Scope;
 
+<<<<<<< HEAD
+=======
+/** @type {string} */
+angular.Scope.$$phase;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * @param {(string|function(angular.Scope))=} opt_exp
  * @return {*}
@@ -649,6 +699,12 @@ angular.Scope.$on = function(name, listener) {};
 /** @type {angular.Scope} */
 angular.Scope.$parent;
 
+<<<<<<< HEAD
+=======
+/** @type {!angular.Scope} */
+angular.Scope.$root;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * @param {string|Function} exp
  * @param {(string|Function)=} opt_listener
@@ -801,6 +857,44 @@ angular.$cacheFactory.Cache;
 angular.$cacheFactory.Cache.Info;
 
 /******************************************************************************
+<<<<<<< HEAD
+=======
+ * $exceptionHandler Service
+ *****************************************************************************/
+
+/**
+ * @typedef {function(Error, string=)}
+ */
+angular.$exceptionHandler;
+
+/******************************************************************************
+ * $filter Service
+ *****************************************************************************/
+
+/**
+ * @typedef {function(string): !Function}
+ */
+angular.$filter;
+
+/******************************************************************************
+ * $filterProvider Service
+ *****************************************************************************/
+
+/**
+ * @typedef {{
+ *   register: function(string, (Function|Array.<string|Function>))
+ *   }}
+ */
+angular.$filterProvider;
+
+/**
+ * @param {string} name
+ * @param {(Function|Array.<string|Function>)} fn
+ */
+angular.$filterProvider.register = function(name, fn) {};
+
+/******************************************************************************
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * $http Service
  *****************************************************************************/
 
@@ -833,6 +927,12 @@ angular.$http;
  *   transformRequest:
  *       (function((string|Object), Object):(string|Object)|
  *       Array.<function((string|Object), Object):(string|Object)>|undefined),
+<<<<<<< HEAD
+=======
+ *   transformResponse:
+ *       (function((string|Object), Object):(string|Object)|
+ *       Array.<function((string|Object), Object):(string|Object)>|undefined),
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  *   url: (string|undefined),
  *   withCredentials: (boolean|undefined)
  *   }}
@@ -1205,6 +1305,73 @@ angular.NgModelController.prototype.$viewChangeListeners;
 angular.NgModelController.prototype.$viewValue;
 
 /******************************************************************************
+<<<<<<< HEAD
+=======
+ * FormController
+ *****************************************************************************/
+
+/**
+ * @constructor
+ */
+angular.FormController = function() {};
+
+/**
+ * @type {boolean}
+ */
+angular.FormController.prototype.$dirty;
+
+/**
+ * @type {!Object.<boolean>}
+ */
+angular.FormController.prototype.$error;
+
+/**
+ * @type {boolean}
+ */
+angular.FormController.prototype.$invalid;
+
+/**
+ * @type {boolean}
+ */
+angular.FormController.prototype.$pristine;
+
+/**
+ * @type {boolean}
+ */
+angular.FormController.prototype.$valid;
+
+/******************************************************************************
+ * $parse Service
+ *****************************************************************************/
+
+/**
+ * @typedef {function(string):!angular.$parse.Expression}
+ */
+angular.$parse;
+
+/**
+ * @typedef {function((!angular.Scope|!Object)):*}
+ */
+angular.$parse.Expression;
+
+/**
+ * Augment the angular.$parse.Expression type definition by reopening the type
+ * via an artificial angular.$parse instance.
+ *
+ * This allows us to define methods on function objects which is something
+ * that can't be expressed via typical type annotations.
+ *
+ * @type {angular.$parse.Expression}
+ */
+angular.$parse_;
+
+/**
+ * @type {function((!angular.Scope|!Object), *)}
+ */
+angular.$parse_.assign = function(scope, newValue) {};
+
+/******************************************************************************
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * $provide Service
  *****************************************************************************/
 

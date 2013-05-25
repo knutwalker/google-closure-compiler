@@ -18,13 +18,19 @@ package com.google.javascript.jscomp;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Preconditions;
+<<<<<<< HEAD
 import com.google.common.base.Predicate;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.collect.ImmutableSet;
 import com.google.javascript.jscomp.CodingConvention.Bind;
 import com.google.javascript.rhino.IR;
 import com.google.javascript.rhino.Node;
 import com.google.javascript.rhino.Token;
+<<<<<<< HEAD
 import com.google.javascript.rhino.jstype.TernaryValue;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 import java.util.regex.Pattern;
 
@@ -37,22 +43,30 @@ import java.util.regex.Pattern;
 class PeepholeSubstituteAlternateSyntax
   extends AbstractPeepholeOptimization {
 
+<<<<<<< HEAD
   private static final int AND_PRECEDENCE = NodeUtil.precedence(Token.AND);
   private static final int OR_PRECEDENCE = NodeUtil.precedence(Token.OR);
   private static final int NOT_PRECEDENCE = NodeUtil.precedence(Token.NOT);
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private static final CodeGenerator REGEXP_ESCAPER =
       CodeGenerator.forCostEstimation(
           null /* blow up if we try to produce code */);
 
   private final boolean late;
 
+<<<<<<< HEAD
   private final int STRING_SPLIT_OVERHEAD = ".split('.')".length();
+=======
+  private static final int STRING_SPLIT_OVERHEAD = ".split('.')".length();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   static final DiagnosticType INVALID_REGULAR_EXPRESSION_FLAGS =
     DiagnosticType.warning(
         "JSC_INVALID_REGULAR_EXPRESSION_FLAGS",
         "Invalid flags to RegExp constructor: {0}");
 
+<<<<<<< HEAD
   static final Predicate<Node> DONT_TRAVERSE_FUNCTIONS_PREDICATE
       = new Predicate<Node>() {
     @Override
@@ -61,6 +75,8 @@ class PeepholeSubstituteAlternateSyntax
     }
   };
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   /**
    * @param late When late is false, this mean we are currently running before
    * most of the other optimizations. In this case we would avoid optimizations
@@ -79,6 +95,7 @@ class PeepholeSubstituteAlternateSyntax
   @SuppressWarnings("fallthrough")
   public Node optimizeSubtree(Node node) {
     switch(node.getType()) {
+<<<<<<< HEAD
       case Token.RETURN: {
         Node result = tryRemoveRedundantExit(node);
         if (result != node) {
@@ -130,6 +147,8 @@ class PeepholeSubstituteAlternateSyntax
         }
         return node;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       case Token.TRUE:
       case Token.FALSE:
         return reduceTrueFalse(node);
@@ -157,9 +176,12 @@ class PeepholeSubstituteAlternateSyntax
       case Token.NAME:
         return tryReplaceUndefined(node);
 
+<<<<<<< HEAD
       case Token.BLOCK:
         return tryReplaceIf(node);
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       case Token.ARRAYLIT:
         return tryMinimizeArrayLiteral(node);
 
@@ -168,6 +190,7 @@ class PeepholeSubstituteAlternateSyntax
     }
   }
 
+<<<<<<< HEAD
   private void tryJoinForCondition(Node n) {
     if (!late) {
       return;
@@ -208,6 +231,8 @@ class PeepholeSubstituteAlternateSyntax
     }
   }
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   private Node tryFoldSimpleFunctionCall(Node n) {
     Preconditions.checkState(n.isCall());
     Node callTarget = n.getFirstChild();
@@ -301,6 +326,7 @@ class PeepholeSubstituteAlternateSyntax
   }
 
   /**
+<<<<<<< HEAD
    * Use "return x?1:2;" in place of "if(x)return 1;return 2;"
    */
   private Node tryReplaceIf(Node n) {
@@ -395,6 +421,8 @@ class PeepholeSubstituteAlternateSyntax
   }
 
   /**
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Use "void 0" in place of "undefined"
    */
   private Node tryReplaceUndefined(Node n) {
@@ -410,6 +438,7 @@ class PeepholeSubstituteAlternateSyntax
     return n;
   }
 
+<<<<<<< HEAD
   /**
    * Reduce "return undefined" or "return void 0" to simply "return".
    *
@@ -1325,6 +1354,8 @@ class PeepholeSubstituteAlternateSyntax
 
     return n;
   }
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   private static final ImmutableSet<String> STANDARD_OBJECT_CONSTRUCTORS =
     // String, Number, and Boolean functions return non-object types, whereas
@@ -1423,7 +1454,11 @@ class PeepholeSubstituteAlternateSyntax
    * at least two. The remaining case may be unsafe since Array(number)
    * actually reserves memory for an empty array which contains number elements.
    */
+<<<<<<< HEAD
   private FoldArrayAction isSafeToFoldArrayConstructor(Node arg) {
+=======
+  private static FoldArrayAction isSafeToFoldArrayConstructor(Node arg) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     FoldArrayAction action = FoldArrayAction.NOT_SAFE_TO_FOLD;
 
     if (arg == null) {
@@ -1536,7 +1571,11 @@ class PeepholeSubstituteAlternateSyntax
   }
 
   private Node tryMinimizeStringArrayLiteral(Node n) {
+<<<<<<< HEAD
     if(!late) {
+=======
+    if (!late) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       return n;
     }
 
@@ -1576,7 +1615,11 @@ class PeepholeSubstituteAlternateSyntax
    * @param strings The strings that must be separated.
    * @return a delimiter string or null
    */
+<<<<<<< HEAD
   private String pickDelimiter(String[] strings) {
+=======
+  private static String pickDelimiter(String[] strings) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     boolean allLength1 = true;
     for (String s : strings) {
       if (s.length() != 1) {
@@ -1591,7 +1634,11 @@ class PeepholeSubstituteAlternateSyntax
 
     String[] delimiters = new String[]{" ", ";", ",", "{", "}", null};
     int i = 0;
+<<<<<<< HEAD
     NEXT_DELIMITER: for (;delimiters[i] != null; i++) {
+=======
+    NEXT_DELIMITER: for (; delimiters[i] != null; i++) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       for (String cur : strings) {
         if (cur.contains(delimiters[i])) {
           continue NEXT_DELIMITER;

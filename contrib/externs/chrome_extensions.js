@@ -17,11 +17,113 @@
 /**
  * @fileoverview Definitions for the Chromium extensions API.
  *
+<<<<<<< HEAD
  * Please do not add any chrome.experimental.* externs to this file. The
+=======
+ * There are several problematic issues regarding Chrome extension APIs and
+ * this externs files, including:
+ * A. When to add packages to this file
+ * B. Optional parameters
+ * C. Pseudo-types
+ * D. Events
+ * E. Nullability
+ *
+ * The best practices for each are described in more detail below.  It
+ * should be noted that, due to historical reasons, and the evolutionary
+ * nature of this file, much this file currently violates the best practices
+ * described below. As changed are made, the changes should adhere to the
+ * best practices.
+ *
+ * A. When to Add Packages to this File?
+ * Packages in chrome.experimental.* should *not* be added to this file. The
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * experimental APIs change very quickly, so rather than add them here, make a
  * separate externs file for your project, then move the API here when it moves
  * out of experimental.
  *
+<<<<<<< HEAD
+=======
+ * B. Optional Parameters
+ * The Chrome extension APIs make extensive use of optional parameters that
+ * are not at the end of the parameter list, "interior optional parameters",
+ * while the JS Compiler's type system requires optional parameters to be
+ * at the end. This creates a bit of tension:
+ *
+ * 1. If a method has N required params, then the parameter declarations
+ *    should have N required params.
+ * 2. If, due to interior optional params, a parameter can be of more than
+ *    one type, its at-param should:
+ *    a. be named to indicate both possibilities, eg, extensionIdOrRequest,
+ *       or getInfoOrCallback.
+ *    b. the type should include both types, in the same order as the parts
+ *       of the name, even when one type subsumes the other, eg, {string|*}
+ *       or {Object|function(string)}.
+ * See chrome.runtime.sendMessage for a complex example as sendMessage
+ * takes three params with the first and third being optional.
+ *
+ * C. Pseudo-types
+ * The Chrome APIs define many types are that actually pseudo-types, that
+ * is, they can't be instantiated by name, such as Port defined at
+ * http://developer.chrome.com/extensions/runtime.html#type-Port.
+ *
+ * There are two fundamentally different kinds of pseudo-types: those
+ * instantiated in extension code and those instantiated in extension
+ * library functions. The latter are returned by library functions or passed
+ * to callbacks. Currently, there are no instances of the former in Chrome
+ * Extension APIs, however, the app APIs include CreateWindowOptions, defined at
+ * http://developer.chrome.com/apps/app.window.html#type-CreateWindowOptions.
+ *
+ * Those types instantiated in extension code should be declared as typedefs
+ * so that object literals and objects created via goog.object are acceptable,
+ * for example, a subset of CreateWindowOptions would be:
+ *
+ *   * at-typedef {{id: (string|undefined), singleton: (boolean|undefined)}}
+ *   chrome.app.window.CreateWindowOptions;
+ *
+ * Those types instantiated in library code should be declared as classes.
+ * Always qualify the type name to reduce top-level pollution in this file:
+ *
+ *   Do:
+ *        function chrome.extension.Port() {}
+ *   Don't:
+ *        function Port() {}
+ *
+ * In both cases, when the type is used by more than one package use "shared",
+ * for example, chrome.shared.Port.
+ *
+ * D. Events
+ * Most packages define a set of events with the standard set of methods:
+ * addListener, removeListener, hasListener and hasListeners.  ChromeEvent
+ * is the appropriate type when an event's listeners do not take any
+ * parameters, however, many events take parameters specific to that event:
+ *
+ * 1. Create a pseduo-type for the event, for example,
+ *    chrome.runtime.PortEvent and define the four methods on it.
+ * 2. Fully describe the listener/callback's signature, for example,
+ *
+ *       * at-param {function(!chrome.runtime.Port): void} callback Callback.
+ *      chrome.runtime.PortEvent.prototype.addListener =
+ *          function(callback) {};
+ *    or
+ *
+ *       * at-param {function(*, !chrome.runtime.MessageSender,
+ *       *     function(*): void): (boolean|undefined)} callback Callback.
+ *      chrome.runtime.MessageSenderEvent.prototype.addListener =
+ *          function(callback) {};
+ *
+ * E. Nullability
+ * We treat the Chrome Extension API pages as "the truth".  Not-null types
+ * should be used in the following situations:
+ *
+ * 1. Parameters and return values that are not explicitly declared to handle
+ *    null.
+ * 2. Static event instances, for example, chrome.runtime.onConnect's type
+ *    should be: !chrome.runtime.PortEvent.
+ * 3. Optional params as there is little value to passing null when the
+ *    parameter can be omitted, of course, if null is explicitly declared
+ *    to be meaningful, then a nullable type should be used.
+ *
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @externs
  *
  */
@@ -41,6 +143,7 @@ var chrome = {};
 chrome.extension = {};
 
 
+<<<<<<< HEAD
 /** * @type {!Object.<string,string>|undefined} */
 chrome.extension.lastError;
 
@@ -53,11 +156,32 @@ chrome.extension.inIncognitoContext;
  * @param {string|Object.<string>=} opt_arg1 Either the extensionId to
  *     to connect to, in which case connectInfo params can be passed in the
  *     next optional argument, or the connectInfo params.
+=======
+/** @type {!Object.<string,string>|undefined} */
+chrome.extension.lastError;
+
+
+/** @type {boolean|undefined} */
+chrome.extension.inIncognitoContext;
+
+
+// TODO: change Object to !Object when it's clear nobody is passing in null
+// TODO: change Port to !Port since it should never be null
+/**
+ * @param {string|Object.<string>=} opt_extensionIdOrConnectInfo Either the
+ *     extensionId to connect to, in which case connectInfo params can be
+ *     passed in the next optional argument, or the connectInfo params.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {Object.<string>=} opt_connectInfo The connectInfo object,
  *     if arg1 was the extensionId to connect to.
  * @return {Port} New port.
  */
+<<<<<<< HEAD
 chrome.extension.connect = function(opt_arg1, opt_connectInfo) {};
+=======
+chrome.extension.connect = function(
+    opt_extensionIdOrConnectInfo, opt_connectInfo) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 
 /**
@@ -143,6 +267,267 @@ chrome.extension.onRequestExternal;
 
 
 /**
+<<<<<<< HEAD
+=======
+ * @see http://code.google.com/chrome/extensions/runtime.html
+ * @const
+ */
+chrome.runtime = {};
+
+
+/** @type {!Object.<string,string>|undefined} */
+chrome.runtime.lastError;
+
+
+/** @type {string} */
+chrome.runtime.id;
+
+
+/**
+ * @param {function(!Window=): void} callback Callback function.
+ */
+chrome.runtime.getBackgroundPage = function(callback) {};
+
+
+
+/**
+ * Manifest information returned from chrome.runtime.getManifest. See
+ * http://developer.chrome.com/extensions/manifest.html. Note that there are
+ * several other fields not included here. They should be added to these externs
+ * as needed.
+ * @constructor
+ */
+chrome.runtime.Manifest = function() {};
+
+
+/** @type {string} */
+chrome.runtime.Manifest.prototype.name;
+
+
+/** @type {string} */
+chrome.runtime.Manifest.prototype.version;
+
+
+/** @type {number|undefined} */
+chrome.runtime.Manifest.prototype.manifest_version;
+
+
+/** @type {string|undefined} */
+chrome.runtime.Manifest.prototype.description;
+
+
+/** @type {!chrome.runtime.Manifest.Oauth2|undefined} */
+chrome.runtime.Manifest.prototype.oauth2;
+
+
+/**
+ * Oauth2 info in the manifest.
+ * See http://developer.chrome.com/apps/app_identity.html#update_manifest.
+ * @constructor
+ */
+chrome.runtime.Manifest.Oauth2 = function() {};
+
+
+/** @type {string} */
+chrome.runtime.Manifest.Oauth2.prototype.client_id;
+
+
+/**
+ * http://developer.chrome.com/extensions/runtime.html#method-getManifest
+ * @return {!chrome.runtime.Manifest} The full manifest file of the app or
+ *     extension.
+ */
+chrome.runtime.getManifest = function() {};
+
+
+/**
+ * @param {string} path A path to a resource within an extension expressed
+ *     relative to it's install directory.
+ * @return {string} The fully-qualified URL to the resource.
+ */
+chrome.runtime.getURL = function(path) {};
+
+
+/**
+ * Reloads the app or extension.
+ */
+chrome.runtime.reload = function() {};
+
+
+/**
+ * @param {function(string, !Object=): void} callback
+ */
+chrome.runtime.requestUpdateCheck = function(callback) {};
+
+
+/**
+ * @param {string|!Object.<string>=} opt_extensionIdOrConnectInfo Either the
+ *     extensionId to connect to, in which case connectInfo params can be
+ *     passed in the next optional argument, or the connectInfo params.
+ * @param {!Object.<string>=} opt_connectInfo The connectInfo object,
+ *     if arg1 was the extensionId to connect to.
+ * @return {!Port} New port.
+ */
+chrome.runtime.connect = function(
+    opt_extensionIdOrConnectInfo, opt_connectInfo) {};
+
+
+/**
+ * @param {string|*} extensionIdOrMessage Either the extensionId to send the
+ *     message to, in which case the message is passed as the next arg, or the
+ *     message itself.
+ * @param {(*|function(*): void)=} opt_messageOrCallback The message, if arg1
+ *     was the extensionId, or the callback, if arg1 was the message, or
+ *     optional.
+ * @param {function(*): void=} opt_callback The callback function which
+ *     takes a JSON response object sent by the handler of the request.
+ */
+chrome.runtime.sendMessage = function(
+    extensionIdOrMessage, opt_messageOrCallback, opt_callback) {};
+
+
+/** @type {!chrome.runtime.PortEvent} */
+chrome.runtime.onConnect;
+
+
+/** @type {!chrome.runtime.PortEvent} */
+chrome.runtime.onConnectExternal;
+
+
+/** @type {!chrome.runtime.ObjectEvent} */
+chrome.runtime.onInstalled;
+
+
+/** @type {!chrome.runtime.MessageSenderEvent} */
+chrome.runtime.onMessage;
+
+
+/** @type {!chrome.runtime.MessageSenderEvent} */
+chrome.runtime.onMessageExternal;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onStartup;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onSuspend;
+
+
+/** @type {!ChromeEvent} */
+chrome.runtime.onSuspendCanceled;
+
+
+/** @type {!chrome.runtime.ObjectEvent} */
+chrome.runtime.onUpdateAvailable;
+
+
+
+/**
+ * Event whose listeners take an Object parameter.
+ * @constructor
+ */
+chrome.runtime.ObjectEvent = function() {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ */
+chrome.runtime.ObjectEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ */
+chrome.runtime.ObjectEvent.prototype.removeListener = function(callback) {};
+
+
+/**
+ * @param {function(!Object): void} callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.ObjectEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.ObjectEvent.prototype.hasListeners = function() {};
+
+
+
+/**
+ * Event whose listeners take a Port parameter.
+ * @constructor
+ */
+chrome.runtime.PortEvent = function() {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ */
+chrome.runtime.PortEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ */
+chrome.runtime.PortEvent.prototype.removeListener = function(callback) {};
+
+
+/**
+ * @param {function(!Port): void} callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.PortEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.PortEvent.prototype.hasListeners = function() {};
+
+
+
+/**
+ * Event whose listeners take a MessageSender and additional parameters.
+ * @see https://developer.chrome.com/dev/apps/runtime.html#event-onMessage
+ * @constructor
+ */
+chrome.runtime.MessageSenderEvent = function() {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ */
+chrome.runtime.MessageSenderEvent.prototype.addListener = function(callback) {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ */
+chrome.runtime.MessageSenderEvent.prototype.removeListener = function(callback)
+    {};
+
+
+/**
+ * @param {function(*, !MessageSender, function(*): void): (boolean|undefined)}
+ *     callback Callback.
+ * @return {boolean}
+ */
+chrome.runtime.MessageSenderEvent.prototype.hasListener = function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.runtime.MessageSenderEvent.prototype.hasListeners = function() {};
+
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @const
  * @see http://code.google.com/chrome/extensions/tabs.html
  */
@@ -541,6 +926,21 @@ chrome.browserAction.onClicked;
 
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {number} tabId the ID of the tab on which to disable this action.
+ */
+chrome.browserAction.disable = function(tabId) {};
+
+
+/**
+ * @param {number} tabId the ID of the tab on which to enable this action.
+ */
+chrome.browserAction.enable = function(tabId) {};
+
+
+/**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @const
  * @see http://code.google.com/chrome/extensions/bookmarks.html
  */
@@ -864,10 +1264,29 @@ chrome.management.setEnabled = function(id, enabled, callback) {};
 
 
 /**
+<<<<<<< HEAD
  * @param {string} id
  * @param {function(): void} callback
  */
 chrome.management.uninstall = function(id, callback) {};
+=======
+ * @param {string} id The id of an already installed extension.
+ * @param {(Object|function(): void)=} opt_optionsOrCallback An optional
+ *     uninstall options object or an optional callback function.
+ * @param {function(): void=} opt_callback An optional callback function.
+ */
+chrome.management.uninstall =
+    function(id, opt_optionsOrCallback, opt_callback) {};
+
+
+/**
+ * @param {(Object|function(): void)=} opt_optionsOrCallback An optional
+ *     uninstall options object or an optional callback function.
+ * @param {function(): void=} opt_callback An optional callback function.
+ */
+chrome.management.uninstallSelf =
+    function(opt_optionsOrCallback, opt_callback) {};
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 
 /** @type {ChromeEvent} */
@@ -1683,7 +2102,13 @@ Tab.prototype.index;
 
 /** @type {number} */
 Tab.prototype.windowId;
+<<<<<<< HEAD
 //** @type {number} */
+=======
+
+
+/** @type {number} */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 Tab.prototype.openerTabId;
 
 
@@ -1787,14 +2212,85 @@ ChromeEvent.prototype.addListener = function(callback) {};
 ChromeEvent.prototype.removeListener = function(callback) {};
 
 
+<<<<<<< HEAD
+=======
+// TODO: this returns boolean
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /** @param {Function} callback */
 ChromeEvent.prototype.hasListener = function(callback) {};
 
 
+<<<<<<< HEAD
+=======
+// TODO: this returns boolean, and doesn't take any parameters
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /** @param {Function} callback */
 ChromeEvent.prototype.hasListeners = function(callback) {};
 
 
+<<<<<<< HEAD
+=======
+/**
+ * @see http://developer.chrome.com/extensions/pushMessaging.html
+ * @const
+ */
+chrome.pushMessaging = {};
+
+
+/**
+ * @type {!chrome.pushMessaging.PushMessageEvent}
+ */
+chrome.pushMessaging.onMessage;
+
+
+/**
+ * @param {boolean|function(!chrome.pushMessaging.ChannelIdResult)}
+ *     interactiveOrCallback Either a flag(optional), if set to true, user will
+ *     be asked to log in if they are not already logged in, or, when he flag is
+ *     not given, the callback.
+ * @param {function(!chrome.pushMessaging.ChannelIdResult)=} opt_callback
+ *     Callback.
+ */
+chrome.pushMessaging.getChannelId =
+    function(interactiveOrCallback, opt_callback) {};
+
+
+/**
+ * Event whose listeners take a chrome.pushMessaging.Message parameter.
+ * @constructor
+ */
+chrome.pushMessaging.PushMessageEvent = function() {};
+
+
+/**
+ * @param {function(!chrome.pushMessaging.Message): void} callback
+ */
+chrome.pushMessaging.PushMessageEvent.prototype.addListener =
+    function(callback) {};
+
+
+/**
+ * @param {function(!chrome.pushMessaging.Message): void} callback
+ */
+chrome.pushMessaging.PushMessageEvent.prototype.removeListener =
+    function(callback) {};
+
+
+/**
+ * @param {function(!chrome.pushMessaging.Message): void} callback
+ * @return {boolean}
+ */
+chrome.pushMessaging.PushMessageEvent.prototype.hasListener =
+    function(callback) {};
+
+
+/**
+ * @return {boolean}
+ */
+chrome.pushMessaging.PushMessageEvent.prototype.hasListeners = function() {};
+
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /**
  * @see http://code.google.com/chrome/extensions/extension.html#type-Port
@@ -2503,3 +2999,41 @@ BlockingResponse.prototype.responseHeaders;
 
 /** @type {Object.<string,string>} */
 BlockingResponse.prototype.authCredentials;
+<<<<<<< HEAD
+=======
+
+
+
+/**
+ * @see http://developer.chrome.com/extensions/pushMessaging.html#type-Message
+ * @constructor
+ */
+chrome.pushMessaging.Message = function() {};
+
+
+/**
+ * @type {number}
+ */
+chrome.pushMessaging.Message.prototype.subchannelId;
+
+
+/**
+ * @type {string}
+ */
+chrome.pushMessaging.Message.prototype.payload;
+
+
+
+/**
+ * @see http://developer.chrome.com/extensions/pushMessaging.html#type-ChannelIdResult
+ * @constructor
+ */
+chrome.pushMessaging.ChannelIdResult = function() {};
+
+/**
+ * @type {string}
+ */
+chrome.pushMessaging.ChannelIdResult.prototype.channelId;
+
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77

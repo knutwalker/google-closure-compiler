@@ -727,7 +727,11 @@ jQuery.prototype.die = function(arg1, handler) {};
 
 /**
  * @param {Object} collection
+<<<<<<< HEAD
  * @param {function(number,?)} callback
+=======
+ * @param {function((number|string),?)} callback
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {Object}
  */
 jQuery.each = function(collection, callback) {};
@@ -740,7 +744,11 @@ jQuery.prototype.each = function(fnc) {};
 
 /**
  * @param {Object} collection
+<<<<<<< HEAD
  * @param {function(number,?)} callback
+=======
+ * @param {function((number|string),?)} callback
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {Object}
  */
 $.each = function(collection, callback) {};
@@ -1823,7 +1831,11 @@ jQuery.Promise.prototype.then =
 /**
  * @param {(string|Object.<string,*>)} arg1
  * @param {(string|number|boolean|function(number,String))=} arg2
+<<<<<<< HEAD
  * @return {(string|!jQuery)}
+=======
+ * @return {(string|boolean|!jQuery)}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 jQuery.prototype.prop = function(arg1, arg2) {};
 

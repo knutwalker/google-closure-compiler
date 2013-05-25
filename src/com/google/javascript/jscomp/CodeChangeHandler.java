@@ -19,6 +19,7 @@ package com.google.javascript.jscomp;
 /**
  * A simple listener for code change events.
  * @author nicksantos@google.com (Nick Santos)
+<<<<<<< HEAD
  */
 interface CodeChangeHandler {
 
@@ -58,4 +59,11 @@ interface CodeChangeHandler {
       throw new IllegalStateException("Code changes forbidden");
     }
   }
+=======
+ * @author dimvar@google.com (Dimitris Vardoulakis)
+ */
+interface CodeChangeHandler {
+  /** Report a change to some unspecified node of the AST. */
+  public void reportChange();
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

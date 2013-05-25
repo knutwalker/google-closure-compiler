@@ -32,6 +32,13 @@ import com.google.javascript.jscomp.deps.SortedDependencies.CircularDependencyEx
 import com.google.javascript.jscomp.deps.SortedDependencies.MissingProvideException;
 import com.google.javascript.jscomp.graph.LinkedDirectedGraph;
 
+<<<<<<< HEAD
+=======
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -41,10 +48,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+<<<<<<< HEAD
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * A {@link JSModule} dependency graph that assigns a depth to each module and
  * can answer depth-related queries about them. For the purposes of this class,
@@ -122,6 +132,20 @@ public class JSModuleGraph {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Gets all modules indexed by name.
+   */
+  Map<String, JSModule> getModulesByName() {
+    Map<String, JSModule> result = Maps.newHashMap();
+    for (JSModule m : modules) {
+      result.put(m.getName(), m);
+    }
+    return result;
+  }
+
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Gets the total number of modules.
    */
   int getModuleCount() {
@@ -330,7 +354,13 @@ public class JSModuleGraph {
   public List<CompilerInput> manageDependencies(
       List<String> entryPoints,
       List<CompilerInput> inputs)
+<<<<<<< HEAD
       throws CircularDependencyException, MissingProvideException {
+=======
+      throws CircularDependencyException,
+          MissingModuleException,
+          MissingProvideException {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     DependencyOptions depOptions = new DependencyOptions();
     depOptions.setDependencySorting(true);
     depOptions.setDependencyPruning(true);
@@ -354,6 +384,7 @@ public class JSModuleGraph {
   public List<CompilerInput> manageDependencies(
       DependencyOptions depOptions,
       List<CompilerInput> inputs)
+<<<<<<< HEAD
       throws CircularDependencyException, MissingProvideException {
 
     SortedDependencies<CompilerInput> sorter =
@@ -375,6 +406,15 @@ public class JSModuleGraph {
     } else {
       entryPointInputs.addAll(inputs);
     }
+=======
+      throws CircularDependencyException, MissingProvideException,
+          MissingModuleException {
+
+    SortedDependencies<CompilerInput> sorter =
+        new SortedDependencies<CompilerInput>(inputs);
+    Iterable<CompilerInput> entryPointInputs = createEntryPointInputs(
+        depOptions, inputs, sorter);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     // The order of inputs, sorted independently of modules.
     List<CompilerInput> absoluteOrder =
@@ -432,6 +472,57 @@ public class JSModuleGraph {
     return result;
   }
 
+<<<<<<< HEAD
+=======
+  private Collection<CompilerInput> createEntryPointInputs(
+      DependencyOptions depOptions,
+      List<CompilerInput> inputs,
+      SortedDependencies<CompilerInput> sorter)
+      throws MissingModuleException, MissingProvideException {
+    Set<CompilerInput> entryPointInputs = Sets.newLinkedHashSet();
+    Map<String, JSModule> modulesByName = getModulesByName();
+
+    if (depOptions.shouldPruneDependencies()) {
+      if (!depOptions.shouldDropMoochers()) {
+        entryPointInputs.addAll(sorter.getInputsWithoutProvides());
+      }
+
+      for (String entryPoint : depOptions.getEntryPoints()) {
+        // An entry point is either formatted as:
+        // 'foo.bar' - peg foo.bar to its current module
+        // 'modC:foo.bar' - peg foo.bar to modC
+        String inputName = entryPoint;
+        int splitPoint = entryPoint.indexOf(':');
+        CompilerInput entryPointInput = null;
+        if (splitPoint != -1) {
+          String moduleName = entryPoint.substring(0, splitPoint);
+          inputName = entryPoint.substring(
+              Math.min(splitPoint + 1, entryPoint.length() - 1));
+          JSModule module = modulesByName.get(moduleName);
+          if (module == null) {
+            throw new MissingModuleException(moduleName);
+          } else {
+            entryPointInput = sorter.getInputProviding(inputName);
+            entryPointInput.overrideModule(module);
+          }
+        } else {
+          entryPointInput = sorter.getInputProviding(inputName);
+        }
+
+        entryPointInputs.add(entryPointInput);
+      }
+
+      CompilerInput baseJs = sorter.maybeGetInputProviding("goog");
+      if (baseJs != null) {
+        entryPointInputs.add(baseJs);
+      }
+    } else {
+      entryPointInputs.addAll(inputs);
+    }
+    return entryPointInputs;
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   LinkedDirectedGraph<JSModule, String> toGraphvizGraph() {
     LinkedDirectedGraph<JSModule, String> graphViz =
         LinkedDirectedGraph.create();
@@ -465,12 +556,19 @@ public class JSModuleGraph {
     return d1 < d2 ? -1 : d2 == d1 ? m1.getName().compareTo(m2.getName()) : 1;
   }
 
+<<<<<<< HEAD
   /*
+=======
+  /**
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
    * Exception class for declaring when the modules being fed into a
    * JSModuleGraph as input aren't in dependence order, and so can't be
    * processed for caching of various dependency-related queries.
    */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   protected static class ModuleDependenceException
       extends IllegalArgumentException {
     private static final long serialVersionUID = 1;
@@ -494,4 +592,14 @@ public class JSModuleGraph {
     }
   }
 
+<<<<<<< HEAD
+=======
+  /** Another exception class */
+  public static class MissingModuleException extends Exception {
+    MissingModuleException(String moduleName) {
+      super(moduleName);
+    }
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

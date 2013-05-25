@@ -17,8 +17,11 @@ package com.google.javascript.jscomp;
 
 import com.google.common.base.Strings;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * Verbose message formatter. This formatter generates very loud and long
  * messages with multi-line source excerpts.

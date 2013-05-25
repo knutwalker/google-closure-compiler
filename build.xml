@@ -47,7 +47,10 @@
   <property name="classes.dir" value="${build.dir}/classes" />
   <property name="testClasses.dir" value="${build.dir}/test" />
   <property name="javadoc.dir" value="${build.dir}/javadoc" />
+<<<<<<< HEAD
   <property name="stylesheetfile" value="${javadoc.dir}/dev_javadoc.css" />
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   <property name="lib.dir" value="${basedir}/lib" />
   <property name="tools.dir" value="${basedir}/tools" />
   <property name="compiler-jarfile"
@@ -82,6 +85,7 @@
            uri="antlib:org.apache.maven.artifact.ant"
            classpathref="maven-ant-tasks.classpath" />
 
+<<<<<<< HEAD
   <!-- gather svn version -->
   <target name="svnversion">
     <exec outputproperty="build.svnVersion"
@@ -89,6 +93,19 @@
       failonerror="false"
       failifexecutionfails="false"
       dir="."/>
+=======
+  <!-- gather release version -->
+  <target name="relversion">
+    <exec outputproperty="build.relVersion"
+      executable="git"
+      failonerror="false"
+      failifexecutionfails="false"
+      dir=".">
+      <arg value="describe"/>
+      <arg value="--tag"/>
+      <arg value="--always"/>
+    </exec>
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   </target>
 
   <!-- compile rhino -->
@@ -128,6 +145,7 @@
     </exec>
   </target>
 
+<<<<<<< HEAD
   <!-- Generate pom.xml with the proper svn build number -->
   <target name="pom" depends="svnversion">
     <copy file="closure-compiler.pom" tofile="${build.dir}/pom.xml">
@@ -140,6 +158,20 @@
     <property name="compiler-jarfile-nodeps" value="${build.dir}/closure-${ant.project.name}-r${build.svnVersion}.jar" />
     <property name="compiler-jarfile-javadoc" value="${build.dir}/closure-${ant.project.name}-r${build.svnVersion}-javadoc.jar" />
     <property name="compiler-jarfile-sources" value="${build.dir}/closure-${ant.project.name}-r${build.svnVersion}-sources.jar" />
+=======
+  <!-- Generate pom.xml with the proper rel build number -->
+  <target name="pom" depends="relversion">
+    <copy file="closure-compiler.pom" tofile="${build.dir}/pom.xml">
+      <filterset>
+        <filter token="build.relVersion"
+             value="${build.relVersion}"/>
+      </filterset>
+    </copy>
+
+    <property name="compiler-jarfile-nodeps" value="${build.dir}/closure-${ant.project.name}-${build.relVersion}.jar" />
+    <property name="compiler-jarfile-javadoc" value="${build.dir}/closure-${ant.project.name}-${build.relVersion}-javadoc.jar" />
+    <property name="compiler-jarfile-sources" value="${build.dir}/closure-${ant.project.name}-${build.relVersion}-sources.jar" />
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
     <artifact:pom id="project" file="${build.dir}/pom.xml" />
   </target>
@@ -248,17 +280,29 @@
 
   <target name="compile"
           description="compile the source code"
+<<<<<<< HEAD
           depends="rhino-jarjar,svnversion">
     <mkdir dir="${classes.dir}" />
     <javac srcdir="${gen.dir}"
            destdir="${classes.dir}"
            excludes=".svn"
+=======
+          depends="rhino-jarjar,relversion">
+    <mkdir dir="${classes.dir}" />
+    <javac srcdir="${gen.dir}"
+           destdir="${classes.dir}"
+           excludes=".svn,.git"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="${javac.debug}">
       <classpath refid="srcclasspath.path" />
     </javac>
     <javac srcdir="${src.dir}"
            destdir="${classes.dir}"
+<<<<<<< HEAD
            excludes=".svn,**/jsonml/**,**/webservice/**,**/testing/**"
+=======
+           excludes=".svn,.git,**/jsonml/**,**/webservice/**,**/testing/**"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="${javac.debug}">
       <classpath refid="srcclasspath.path" />
     </javac>
@@ -276,7 +320,11 @@
         file="${classes.dir}/com/google/javascript/jscomp/parsing/ParserConfig.properties"
         comment="Parser properties">
       <entry key="compiler.date" type="date" value="now"/>
+<<<<<<< HEAD
       <entry key="compiler.version" value="${build.svnVersion}"/>
+=======
+      <entry key="compiler.version" value="${build.relVersion}"/>
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     </propertyfile>
 
     <!-- Move runtime_type_check.js where RuntimeTypeCheck.java expects it. -->
@@ -326,13 +374,21 @@
     <mkdir dir="${testClasses.dir}" />
     <javac srcdir="${src.dir}"
            destdir="${testClasses.dir}"
+<<<<<<< HEAD
            excludes=".svn"
+=======
+           excludes=".svn,.git"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="on">
       <classpath refid="allclasspath.path" />
     </javac>
     <javac srcdir="${test.dir}"
            destdir="${testClasses.dir}"
+<<<<<<< HEAD
            excludes=".svn"
+=======
+           excludes=".svn,.git"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="on">
       <classpath refid="allclasspath.path" />
     </javac>
@@ -396,15 +452,21 @@
          destdir="${javadoc.dir}"
          author="false"
          protected="true"
+<<<<<<< HEAD
          windowtitle="Compiler"
          additionalparam=" -notimestamp "
          stylesheetfile="${stylesheetfile}">
+=======
+         windowtitle="Closure Compiler"
+         additionalparam=" -notimestamp ">
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       <sourcepath>
         <pathelement location="${src.dir}" />
         <pathelement location="${gen.dir}" />
       </sourcepath>
       <classpath refid="allclasspath.path" />
       <link href="http://java.sun.com/javase/6/docs/api/" />
+<<<<<<< HEAD
       <bottom><![CDATA[
         <div id="footer">
           <div id="footerlogo">
@@ -422,6 +484,8 @@
         </div>
       ]]>
       </bottom>
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     </javadoc>
   </target>
 
@@ -461,7 +525,11 @@
     <mkdir dir="${jsonml-classes.dir}" />
     <javac srcdir="${jsonml.dir}"
            destdir="${jsonml-classes.dir}"
+<<<<<<< HEAD
            excludes=".svn"
+=======
+           excludes=".svn,.git"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="${javac.debug}">
       <classpath refid="jsonml-classpath.path" />
     </javac>
@@ -485,7 +553,11 @@
     <mkdir dir="${webservice-classes.dir}" />
     <javac srcdir="${webservice.dir}"
            destdir="${webservice-classes.dir}"
+<<<<<<< HEAD
            excludes=".svn"
+=======
+           excludes=".svn,.git"
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
            debug="${javac.debug}">
       <classpath refid="jsonml-classpath.path" />
     </javac>

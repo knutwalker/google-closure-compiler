@@ -73,6 +73,7 @@ class NameReferenceGraph extends
 
   // If we have a call site that we absolutely have no idea what variable it
   // it calls or reference, we'd point it to UNKNOWN.
+<<<<<<< HEAD
   final Name UNKNOWN;
 
   // Represents the "main" global block as well as externs.
@@ -80,6 +81,15 @@ class NameReferenceGraph extends
 
   // The implicit "window" object.
   final Name WINDOW;
+=======
+  final Name unknown;
+
+  // Represents the "main" global block as well as externs.
+  final Name main;
+
+  // The implicit "window" object.
+  final Name window;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
   final AbstractCompiler compiler;
 
@@ -88,6 +98,7 @@ class NameReferenceGraph extends
     this.compiler = compiler;
 
     // Initialize builtins.
+<<<<<<< HEAD
     UNKNOWN = new Name("{UNKNOWN}", true);
     UNKNOWN.isAliased = true;
     UNKNOWN.type = compiler.getTypeRegistry().getNativeType(
@@ -99,6 +110,19 @@ class NameReferenceGraph extends
 
     WINDOW = new Name("window", true);
     this.createNode(WINDOW);
+=======
+    unknown = new Name("{UNKNOWN}", true);
+    unknown.isAliased = true;
+    unknown.type = compiler.getTypeRegistry().getNativeType(
+        JSTypeNative.NO_TYPE);
+    this.createNode(unknown);
+
+    main = new Name("{Global Main}", true);
+    this.createNode(main);
+
+    window = new Name("window", true);
+    this.createNode(window);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   public Name defineNameIfNotExists(String name, boolean isExtern) {

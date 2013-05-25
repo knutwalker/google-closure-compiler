@@ -464,8 +464,15 @@ Array.prototype.join = function(opt_separator) {};
 /**
  * Removes the last element from an array and returns that element.
  *
+<<<<<<< HEAD
  * @this {Object}
  * @modifies {this}
+=======
+ * @return {T}
+ * @this {{length: number}|Array.<T>}
+ * @modifies {this}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/pop
  */
 Array.prototype.pop = function() {};
@@ -474,9 +481,16 @@ Array.prototype.pop = function() {};
  * Mutates an array by appending the given elements and returning the new
  * length of the array.
  *
+<<<<<<< HEAD
  * @param {...*} var_args
  * @return {number} The new length of the array.
  * @this {Object}
+=======
+ * @param {...T} var_args
+ * @return {number} The new length of the array.
+ * @this {{length: number}|Array.<T>}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @modifies {this}
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/push
  */
@@ -496,8 +510,15 @@ Array.prototype.reverse = function() {};
  * Removes the first element from an array and returns that element. This
  * method changes the length of the array.
  *
+<<<<<<< HEAD
  * @this {Object}
  * @modifies {this}
+=======
+ * @this {{length: number}|Array.<T>}
+ * @modifies {this}
+ * @return {T}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/shift
  */
 Array.prototype.shift = function() {};
@@ -509,8 +530,14 @@ Array.prototype.shift = function() {};
  *     non-number type will be auto-cast by the browser to a number.
  * @param {*=} opt_end Zero-based index at which to end extraction.  slice
  *     extracts up to but not including end.
+<<<<<<< HEAD
  * @return {!Array}
  * @this {Object}
+=======
+ * @return {!Array.<T>}
+ * @this {{length: number}|Array.<T>}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/slice
  */
@@ -519,9 +546,16 @@ Array.prototype.slice = function(opt_begin, opt_end) {};
 /**
  * Sorts the elements of an array in place.
  *
+<<<<<<< HEAD
  * @param {Function=} opt_compareFunction Specifies a function that defines the
  *     sort order.
  * @this {Object}
+=======
+ * @param {function(T,T):number=} opt_compareFunction Specifies a function that 
+ *     defines the sort order.
+ * @this {{length: number}|Array.<T>}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/sort
  */
 Array.prototype.sort = function(opt_compareFunction) {};
@@ -530,6 +564,7 @@ Array.prototype.sort = function(opt_compareFunction) {};
  * Changes the content of an array, adding new elements while removing old
  * elements.
  *
+<<<<<<< HEAD
  * @param {*=} opt_index Index at which to start changing the array. If negative, *     will begin that many elements from the end.  A non-number type will be
  *     auto-cast by the browser to a number.
  * @param {*=} opt_howMany An integer indicating the number of old array elements
@@ -538,6 +573,18 @@ Array.prototype.sort = function(opt_compareFunction) {};
  * @return {!Array}
  * @this {Object}
  * @modifies {this}
+=======
+ * @param {*=} opt_index Index at which to start changing the array. If negative,
+ *     will begin that many elements from the end.  A non-number type will be
+ *     auto-cast by the browser to a number.
+ * @param {*=} opt_howMany An integer indicating the number of old array elements
+ *     to remove.
+ * @param {...T} var_args
+ * @return {!Array.<T>}
+ * @this {{length: number}|Array.<T>}
+ * @modifies {this}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/splice
  */
 Array.prototype.splice = function(opt_index, opt_howMany, var_args) {};
@@ -574,9 +621,17 @@ Array.prototype.unshift = function(var_args) {};
  * Apply a function simultaneously against two values of the array (from
  * left-to-right) as to reduce it to a single value.
  *
+<<<<<<< HEAD
  * @param {?function(?, ?, number, Array) : ?} callback
  * @param {*=} opt_initialValue
  * @this {Object}
+=======
+ * @param {?function(?, T, number, !Array.<T>) : R} callback
+ * @param {*=} opt_initialValue
+ * @return {R}
+ * @this {{length: number}|Array.<T>}
+ * @template T,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/reduce
  */
 Array.prototype.reduce = function(callback, opt_initialValue) {};
@@ -585,80 +640,145 @@ Array.prototype.reduce = function(callback, opt_initialValue) {};
  * Apply a function simultaneously against two values of the array (from
  * right-to-left) as to reduce it to a single value.
  *
+<<<<<<< HEAD
  * @param {?function(?, ?, number, Array) : ?} callback
  * @param {*=} opt_initialValue
  * @this {Object}
+=======
+ * @param {?function(?, T, number, !Array.<T>) : R} callback
+ * @param {*=} opt_initialValue
+ * @return {R}
+ * @this {{length: number}|Array.<T>}
+ * @template T,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/reduceRight
  */
 Array.prototype.reduceRight = function(callback, opt_initialValue) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {Function} callback
  * @param {Object=} opt_thisobj
  * @return {boolean}
  * @this {Object}
+=======
+ * @param {?function(this:S, T, number, !Array.<T>): ?} callback
+ * @param {S=} opt_thisobj
+ * @return {boolean}
+ * @this {{length: number}|Array.<T>}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/every
  */
 Array.prototype.every = function(callback, opt_thisobj) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {Function} callback
  * @param {Object=} opt_thisobj
  * @return {!Array}
  * @this {Object}
+=======
+ * @param {?function(this:S, T, number, !Array.<T>): ?} callback
+ * @param {S=} opt_thisobj
+ * @return {!Array.<T>}
+ * @this {{length: number}|Array.<T>}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/filter
  */
 Array.prototype.filter = function(callback, opt_thisobj) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {Function} callback
  * @param {Object=} opt_thisobj
  * @this {Object}
+=======
+ * @param {?function(this:S, T, number, !Array.<T>): ?} callback
+ * @param {S=} opt_thisobj
+ * @this {{length: number}|Array.<T>}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/forEach
  */
 Array.prototype.forEach = function(callback, opt_thisobj) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {*} obj
  * @param {number=} opt_fromIndex
  * @return {number}
  * @this {Object}
  * @nosideeffects
+=======
+ * @param {T} obj
+ * @param {number=} opt_fromIndex
+ * @return {number}
+ * @this {{length: number}|Array.<T>}
+ * @nosideeffects
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/indexOf
  */
 Array.prototype.indexOf = function(obj, opt_fromIndex) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {*} obj
  * @param {number=} opt_fromIndex
  * @return {number}
  * @this {Object}
  * @nosideeffects
+=======
+ * @param {T} obj
+ * @param {number=} opt_fromIndex
+ * @return {number}
+ * @this {{length: number}|Array.<T>}
+ * @nosideeffects
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/lastIndexOf
  */
 Array.prototype.lastIndexOf = function(obj, opt_fromIndex) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {Function} callback
  * @param {Object=} opt_thisobj
  * @return {!Array}
  * @this {Object}
+=======
+ * @param {?function(this:S, T, number, !Array.<T>): R} callback
+ * @param {S=} opt_thisobj
+ * @return {!Array.<R>}
+ * @this {{length: number}|Array.<T>}
+ * @template T,S,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/map
  */
 Array.prototype.map = function(callback, opt_thisobj) {};
 
 /**
  * Available in ECMAScript 5, Mozilla 1.6+.
+<<<<<<< HEAD
  * @param {Function} callback
  * @param {Object=} opt_thisobj
  * @return {boolean}
  * @this {Object}
+=======
+ * @param {?function(this:S, T, number, !Array.<T>): ?} callback
+ * @param {S=} opt_thisobj
+ * @return {boolean}
+ * @this {{length: number}|Array.<T>}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/some
  */
 Array.prototype.some = function(callback, opt_thisobj) {};
@@ -682,34 +802,65 @@ Array.prototype.input;
 Array.prototype.length;
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {Function} callback
  * @param {Object=} opt_context
  * @return {boolean}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {?function(this:S, T, number, ?) : ?} callback
+ * @param {S=} opt_context
+ * @return {boolean}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.every = function(arr, callback, opt_context) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {Function} callback
  * @param {Object=} opt_context
  * @return {!Array}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {?function(this:S, T, number, ?) : ?} callback
+ * @param {S=} opt_context
+ * @return {!Array}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.filter = function(arr, callback, opt_context) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {Function} callback
  * @param {Object=} opt_context
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {?function(this:S, T, number, ?) : ?} callback
+ * @param {S=} opt_context
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.forEach = function(arr, callback, opt_context) {};
 
 /**
  * Mozilla 1.6+ only.
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {*} obj
  * @param {number=} opt_fromIndex
  * @return {number}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {T} obj
+ * @param {number=} opt_fromIndex
+ * @return {number}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/indexOf
  */
@@ -717,44 +868,84 @@ Array.indexOf = function(arr, obj, opt_fromIndex) {};
 
 /**
  * Mozilla 1.6+ only.
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {*} obj
  * @param {number=} opt_fromIndex
  * @return {number}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {T} obj
+ * @param {number=} opt_fromIndex
+ * @return {number}
+ * @template T
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/lastIndexOf
  */
 Array.lastIndexOf = function(arr, obj, opt_fromIndex) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {Function} callback
  * @param {Object=} opt_context
  * @return {!Array}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {?function(this:S, T, number, !Array.<T>): R} callback
+ * @param {S=} opt_context
+ * @return {!Array.<R>}
+ * @template T,S,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.map = function(arr, callback, opt_context) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {function(*, *, number, Array) : *} callback
  * @param {*=} opt_initialValue
  * @return {*}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {function(?, T, number, Array) : R} callback
+ * @param {?=} opt_initialValue
+ * @return {R}
+ * @template T,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.reduce = function(arr, callback, opt_initialValue) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {function(*, *, number, Array) : *} callback
  * @param {*=} opt_initialValue
  * @return {*}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {function(?, T, number, Array) : R} callback
+ * @param {?=} opt_initialValue
+ * @return {R}
+ * @template T,R
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.reduceRight = function(arr, callback, opt_initialValue) {};
 
 /**
+<<<<<<< HEAD
  * @param { ?{length: number} } arr
  * @param {Function} callback
  * @param {Object=} opt_context
  * @return {boolean}
+=======
+ * @param {{length: number}|Array.<T>} arr
+ * @param {?function(this:S, T, number, ?) : ?} callback
+ * @param {S=} opt_context
+ * @return {boolean}
+ * @template T,S
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 Array.some = function(arr, callback, opt_context) {};
 
@@ -801,6 +992,10 @@ Boolean.prototype.toString = function() {};
 function Number(opt_value) {}
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {Number|number}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number=} opt_fractionDigits
  * @return {string}
  * @nosideeffects
@@ -809,6 +1004,10 @@ function Number(opt_value) {}
 Number.prototype.toExponential = function(opt_fractionDigits) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {Number|number}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {*=} opt_digits
  * @return {string}
  * @nosideeffects
@@ -817,6 +1016,10 @@ Number.prototype.toExponential = function(opt_fractionDigits) {};
 Number.prototype.toFixed = function(opt_digits) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {Number|number}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number=} opt_precision
  * @return {string}
  * @nosideeffects
@@ -826,6 +1029,10 @@ Number.prototype.toPrecision = function(opt_precision) {};
 
 /**
  * Returns a string representing the number.
+<<<<<<< HEAD
+=======
+ * @this {Number|number}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {(number|Number)=} opt_radix An optional radix.
  * @return {string}
  * @nosideeffects
@@ -1527,6 +1734,10 @@ function String(opt_str) {}
 String.fromCharCode = function(var_args) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/anchor
@@ -1534,6 +1745,10 @@ String.fromCharCode = function(var_args) {};
 String.prototype.anchor = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/big
@@ -1541,6 +1756,10 @@ String.prototype.anchor = function() {};
 String.prototype.big = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/blink
@@ -1548,6 +1767,10 @@ String.prototype.big = function() {};
 String.prototype.blink = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/bold
@@ -1557,6 +1780,10 @@ String.prototype.bold = function() {};
 /**
  * Returns the specified character from a string.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} index
  * @return {string}
  * @nosideeffects
@@ -1568,6 +1795,10 @@ String.prototype.charAt = function(index) {};
  * Returns a number indicating the Unicode value of the character at the given
  * index.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number=} opt_index
  * @return {number}
  * @nosideeffects
@@ -1578,6 +1809,10 @@ String.prototype.charCodeAt = function(opt_index) {};
 /**
  * Combines the text of two or more strings and returns a new string.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {...*} var_args
  * @return {string}
  * @nosideeffects
@@ -1586,6 +1821,10 @@ String.prototype.charCodeAt = function(opt_index) {};
 String.prototype.concat = function(var_args) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/fixed
@@ -1593,6 +1832,10 @@ String.prototype.concat = function(var_args) {};
 String.prototype.fixed = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {string} color
  * @return {string}
  * @nosideeffects
@@ -1601,6 +1844,10 @@ String.prototype.fixed = function() {};
 String.prototype.fontcolor = function(color) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} size
  * @return {string}
  * @nosideeffects
@@ -1613,6 +1860,10 @@ String.prototype.fontsize = function(size) {};
  * of the specified value, starting the search at fromIndex, returns -1 if the
  * value is not found.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {string|null} searchValue
  * @param {(number|null)=} opt_fromIndex
  * @return {number}
@@ -1622,6 +1873,10 @@ String.prototype.fontsize = function(size) {};
 String.prototype.indexOf = function(searchValue, opt_fromIndex) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/italics
@@ -1633,6 +1888,10 @@ String.prototype.italics = function() {};
  * the specified value, or -1 if not found. The calling string is searched
  * backward, starting at fromIndex.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {string|null} searchValue
  * @param {(number|null)=} opt_fromIndex
  * @return {number}
@@ -1642,6 +1901,10 @@ String.prototype.italics = function() {};
 String.prototype.lastIndexOf = function(searchValue, opt_fromIndex) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {string} hrefAttribute
  * @return {string}
  * @nosideeffects
@@ -1665,6 +1928,10 @@ String.prototype.localeCompare = function(other) {};
  * Used to retrieve the matches when matching a string against a regular
  * expression.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {*} regexp
  * @return {Array.<string>} This should really return an Array with a few
  *     special properties, but we do not have a good way to model this in
@@ -1674,6 +1941,10 @@ String.prototype.localeCompare = function(other) {};
 String.prototype.match = function(regexp) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/quote
@@ -1686,6 +1957,10 @@ String.prototype.quote = function() {};
  *
  * This may have side-effects if the replacement function has side-effects.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {RegExp|string} regex
  * @param {string|Function} str
  * @param {string=} opt_flags
@@ -1698,6 +1973,10 @@ String.prototype.replace = function(regex, str, opt_flags) {};
  * Executes the search for a match between a regular expression and this String
  * object.
  *
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {RegExp|string} regexp
  * @return {number}
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/search
@@ -1705,6 +1984,10 @@ String.prototype.replace = function(regex, str, opt_flags) {};
 String.prototype.search = function(regexp) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} begin
  * @param {number=} opt_end
  * @return {string}
@@ -1714,6 +1997,10 @@ String.prototype.search = function(regexp) {};
 String.prototype.slice = function(begin, opt_end) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/small
@@ -1721,6 +2008,10 @@ String.prototype.slice = function(begin, opt_end) {};
 String.prototype.small = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {*=} opt_separator
  * @param {number=} opt_limit
  * @return {!Array.<string>}
@@ -1737,6 +2028,10 @@ String.prototype.split = function(opt_separator, opt_limit) {};
 String.prototype.strike = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/sub
@@ -1744,6 +2039,10 @@ String.prototype.strike = function() {};
 String.prototype.sub = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} start
  * @param {number=} opt_length
  * @return {string} The specified substring.
@@ -1753,6 +2052,10 @@ String.prototype.sub = function() {};
 String.prototype.substr = function(start, opt_length) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {number} start
  * @param {number=} opt_end
  * @return {string} The specified substring.
@@ -1762,6 +2065,10 @@ String.prototype.substr = function(start, opt_length) {};
 String.prototype.substring = function(start, opt_end) {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/sup
@@ -1769,6 +2076,10 @@ String.prototype.substring = function(start, opt_end) {};
 String.prototype.sup = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/toLocaleUpperCase
@@ -1776,6 +2087,10 @@ String.prototype.sup = function() {};
 String.prototype.toLocaleUpperCase = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/toLocaleLowerCase
@@ -1783,6 +2098,10 @@ String.prototype.toLocaleUpperCase = function() {};
 String.prototype.toLocaleLowerCase = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/toLowerCase
@@ -1790,6 +2109,10 @@ String.prototype.toLocaleLowerCase = function() {};
 String.prototype.toLowerCase = function() {};
 
 /**
+<<<<<<< HEAD
+=======
+ * @this {String|string}
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @return {string}
  * @nosideeffects
  * @see http://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/String/toUpperCase

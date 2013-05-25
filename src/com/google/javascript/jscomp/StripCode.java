@@ -16,7 +16,10 @@
 
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import javax.annotation.Nullable;
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import com.google.common.collect.Sets;
 import com.google.javascript.jscomp.CodingConvention.SubclassRelationship;
 import com.google.javascript.jscomp.NodeTraversal.AbstractPostOrderCallback;
@@ -26,6 +29,11 @@ import com.google.javascript.rhino.Token;
 
 import java.util.Set;
 
+<<<<<<< HEAD
+=======
+import javax.annotation.Nullable;
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 /**
  * A pass for stripping a list of provided JavaScript object types.
  *
@@ -260,10 +268,21 @@ class StripCode implements CompilerPass {
           replaceWithEmpty(ancestor, ancParent);
           break;
         }
+<<<<<<< HEAD
         int type = ancestor.getType();
         if (type != Token.GETPROP &&
             type != Token.GETELEM &&
             type != Token.CALL) {
+=======
+        if (ancestor.isAssign()) {
+          Node ancParent = ancestor.getParent();
+          ancParent.replaceChild(
+              ancestor, ancestor.getLastChild().detachFromParent());
+          break;
+        }
+        if (!NodeUtil.isGet(ancestor)
+            && !ancestor.isCall()) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           replaceWithNull(ancestorChild, ancestor);
           break;
         }
@@ -288,7 +307,11 @@ class StripCode implements CompilerPass {
       //   l-value
       //   r-value
       Node lvalue = n.getFirstChild();
+<<<<<<< HEAD
       if (nameEndsWithFieldNameToStrip(lvalue) ||
+=======
+      if (nameIncludesFieldNameToStrip(lvalue) ||
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           qualifiedNameBeginsWithStripType(lvalue)) {
 
         // Limit to EXPR_RESULT because it is not
@@ -321,7 +344,11 @@ class StripCode implements CompilerPass {
       // EXPR_RESULT
       //   expression
       Node expression = n.getFirstChild();
+<<<<<<< HEAD
       if (nameEndsWithFieldNameToStrip(expression) ||
+=======
+      if (nameIncludesFieldNameToStrip(expression) ||
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           qualifiedNameBeginsWithStripType(expression)) {
         if (parent.isExprResult()) {
           Node gramps = parent.getParent();
@@ -395,7 +422,11 @@ class StripCode implements CompilerPass {
            n.isNew()) &&
           n.hasChildren() &&
           (qualifiedNameBeginsWithStripType(n.getFirstChild()) ||
+<<<<<<< HEAD
               nameEndsWithFieldNameToStrip(n.getFirstChild()));
+=======
+              nameIncludesFieldNameToStrip(n.getFirstChild()));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     /**
@@ -455,7 +486,11 @@ class StripCode implements CompilerPass {
     /**
      * Gets whether a CALL node triggers statement removal, based on the name
      * of the object whose method is being called, or the name of the method.
+<<<<<<< HEAD
      * Checks whether the name begins with a strip type, ends with a field name
+=======
+     * Checks whether the name begins with a strip type, includes a field name
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
      * that's a strip name, or belongs to the set of global class-defining
      * functions (e.g. goog.inherits).
      *
@@ -495,13 +530,19 @@ class StripCode implements CompilerPass {
       }
 
       Node callee = function.getFirstChild();
+<<<<<<< HEAD
       return nameEndsWithFieldNameToStrip(callee) ||
           nameEndsWithFieldNameToStrip(function) ||
+=======
+      return nameIncludesFieldNameToStrip(callee) ||
+          nameIncludesFieldNameToStrip(function) ||
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           qualifiedNameBeginsWithStripType(function) ||
           actsOnStripType(t, n);
     }
 
     /**
+<<<<<<< HEAD
      * Gets whether a name ends with a field name that should be stripped. For
      * example, this function would return true when passed "this.logger" or
      * "a.b.c.myLogger" if "logger" is a strip name.
@@ -514,6 +555,16 @@ class StripCode implements CompilerPass {
         Node propNode = n.getLastChild();
         return propNode != null && propNode.isString() &&
                isStripName(propNode.getString());
+=======
+     * @return Whether a name includes a field name that should be stripped.
+     * E.g., "foo.stripMe.bar", "(foo.bar).stripMe", etc.
+     */
+    boolean nameIncludesFieldNameToStrip(@Nullable Node n) {
+      if (n != null && n.isGetProp()) {
+        Node propNode = n.getLastChild();
+        return isStripName(propNode.getString())
+            || nameIncludesFieldNameToStrip(n.getFirstChild());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       }
       return false;
     }

@@ -203,4 +203,16 @@ class ControlFlowGraph<N> extends
         return false;
     }
   }
+<<<<<<< HEAD
+=======
+
+  @Override
+  public String toString() {
+    String s = "CFG:\n";
+    for (GraphvizEdge e : getGraphvizEdges()) {
+      s += e.toString() + '\n';
+    }
+    return s;
+  }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 }

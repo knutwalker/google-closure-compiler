@@ -522,7 +522,11 @@ class PeepholeRemoveDeadCode extends AbstractPeepholeOptimization {
       c = next;
     }
 
+<<<<<<< HEAD
     if (n.isSyntheticBlock() ||  n.getParent() == null) {
+=======
+    if (n.isSyntheticBlock() || n.isScript() || n.getParent() == null) {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       return n;
     }
 

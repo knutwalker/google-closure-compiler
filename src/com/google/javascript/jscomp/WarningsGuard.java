@@ -15,8 +15,11 @@
  */
 package com.google.javascript.jscomp;
 
+<<<<<<< HEAD
 import com.google.javascript.jscomp.CheckLevel;
 
+=======
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 import java.io.Serializable;
 
 /**
@@ -44,6 +47,10 @@ import java.io.Serializable;
  */
 public abstract class WarningsGuard implements Serializable {
 
+<<<<<<< HEAD
+=======
+  /** Priority */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static enum Priority {
     MAX(1),
     MIN(100),

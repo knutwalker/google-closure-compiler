@@ -165,7 +165,11 @@ public final class SymbolTable
    * undefined.
    */
   public Ordering<Symbol> getNaturalSymbolOrdering() {
+<<<<<<< HEAD
     return SYMBOL_ORDERING;
+=======
+    return symbolOrdering;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 
   @Override
@@ -498,7 +502,11 @@ public final class SymbolTable
    * "function%0", "function%1", etc.
    */
   public void addAnonymousFunctions() {
+<<<<<<< HEAD
     TreeSet<SymbolScope> scopes = Sets.newTreeSet(LEXICAL_SCOPE_ORDERING);
+=======
+    TreeSet<SymbolScope> scopes = Sets.newTreeSet(lexicalScopeOrdering);
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     for (SymbolScope scope : getAllScopes()) {
       if (scope.isLexicalScope()) {
         scopes.add(scope);
@@ -950,11 +958,22 @@ public final class SymbolTable
     ObjectType instanceType = type;
     Iterable<String> propNames = type.getOwnPropertyNames();
     if (instanceType.isFunctionPrototypeType()) {
+<<<<<<< HEAD
       // Merge the properties of "Foo.prototype" and "new Foo()" together.
       instanceType = instanceType.getOwnerFunction().getInstanceType();
       Set<String> set = Sets.newHashSet(propNames);
       Iterables.addAll(set, instanceType.getOwnPropertyNames());
       propNames = set;
+=======
+      // Guard against modifying foo.prototype when foo is a regular (non-constructor) function.
+      if (instanceType.getOwnerFunction().hasInstanceType()) {
+        // Merge the properties of "Foo.prototype" and "new Foo()" together.
+        instanceType = instanceType.getOwnerFunction().getInstanceType();
+        Set<String> set = Sets.newHashSet(propNames);
+        Iterables.addAll(set, instanceType.getOwnPropertyNames());
+        propNames = set;
+      }
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     }
 
     s.setPropertyScope(new SymbolScope(null, parentPropertyScope, type, s));
@@ -1043,6 +1062,10 @@ public final class SymbolTable
     return myScope;
   }
 
+<<<<<<< HEAD
+=======
+  /** A symbol-table entry */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static final class Symbol extends SimpleSlot {
     // Use a linked hash map, so that the results are deterministic
     // (and so the declaration always comes first).
@@ -1149,12 +1172,20 @@ public final class SymbolTable
     }
   }
 
+<<<<<<< HEAD
+=======
+  /** Reference */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static final class Reference extends SimpleReference<Symbol> {
     Reference(Symbol symbol, Node node) {
       super(symbol, node);
     }
   }
 
+<<<<<<< HEAD
+=======
+  /** Scope of a symbol */
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public static final class SymbolScope implements StaticScope<JSType> {
     private final Node rootNode;
     private final SymbolScope parent;
@@ -1533,6 +1564,7 @@ public final class SymbolTable
 
     public void visitTypeNode(SymbolScope scope, Node n) {
       if (n.isString()) {
+<<<<<<< HEAD
         Symbol symbol = scope.getSlot(n.getString());
         if (symbol == null) {
           // If we can't find this type, it might be a reference to a
@@ -1544,6 +1576,13 @@ public final class SymbolTable
         }
         if (symbol != null) {
           symbol.defineReferenceAt(n);
+=======
+        Symbol symbol = lookupPossiblyDottedName(scope, n.getString());
+        if (symbol != null) {
+          symbol.defineReferenceAt(n);
+        } else {
+          logger.warning("Could not find symbol for type: " + n.getString());
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
         }
       }
 
@@ -1552,6 +1591,7 @@ public final class SymbolTable
         visitTypeNode(scope, child);
       }
     }
+<<<<<<< HEAD
   }
 
   // Comparators
@@ -1562,6 +1602,50 @@ public final class SymbolTable
     @Override
     public int compare(Node a, Node b) {
       int result = SOURCE_NAME_ORDERING.compare(
+=======
+
+    // TODO(peterhal): @template types.
+    private Symbol lookupPossiblyDottedName(SymbolScope scope, String dottedName) {
+      // Try the dotted name to start.
+      String[] names = dottedName.split("\\.");
+      Symbol result = null;
+      SymbolScope currentScope = scope;
+      for (int i = 0; i < names.length; i++) {
+        String name = names[i];
+        result = currentScope.getSlot(name);
+        if (result == null) {
+          break;
+        }
+        if (i < (names.length - 1)) {
+          currentScope = result.getPropertyScope();
+          if (currentScope == null) {
+            result = null;
+            break;
+          }
+        }
+      }
+
+      if (result == null) {
+        // If we can't find this type, it might be a reference to a
+        // primitive type (like {string}). Autobox it to check.
+        JSType type = typeRegistry.getType(dottedName);
+        JSType autobox = type == null ? null : type.autoboxesTo();
+        result = autobox == null
+            ? null : getSymbolForTypeHelper(autobox, true);
+      }
+      return result;
+    }
+  }
+
+  // Comparators
+  private final Ordering<String> sourceNameOrdering =
+      Ordering.natural().nullsFirst();
+
+  private final Ordering<Node> nodeOrdering = new Ordering<Node>() {
+    @Override
+    public int compare(Node a, Node b) {
+      int result = sourceNameOrdering.compare(
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
           a.getSourceFileName(), b.getSourceFileName());
       if (result != 0) {
         return result;
@@ -1573,17 +1657,29 @@ public final class SymbolTable
     }
   };
 
+<<<<<<< HEAD
   private final Ordering<SymbolScope> LEXICAL_SCOPE_ORDERING =
+=======
+  private final Ordering<SymbolScope> lexicalScopeOrdering =
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       new Ordering<SymbolScope>() {
     @Override
     public int compare(SymbolScope a, SymbolScope b) {
       Preconditions.checkState(a.isLexicalScope() && b.isLexicalScope(),
                                "We can only sort lexical scopes");
+<<<<<<< HEAD
       return NODE_ORDERING.compare(a.getRootNode(), b.getRootNode());
     }
   };
 
   private final Ordering<Symbol> SYMBOL_ORDERING = new Ordering<Symbol>() {
+=======
+      return nodeOrdering.compare(a.getRootNode(), b.getRootNode());
+    }
+  };
+
+  private final Ordering<Symbol> symbolOrdering = new Ordering<Symbol>() {
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     @Override
     public int compare(Symbol a, Symbol b) {
       SymbolScope scopeA = getScope(a);

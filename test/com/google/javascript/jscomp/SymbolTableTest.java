@@ -584,6 +584,43 @@ public class SymbolTableTest extends TestCase {
     }
   }
 
+<<<<<<< HEAD
+=======
+  public void testDottedReferencesInJSDocType() {
+    SymbolTable table = createSymbolTable(
+        "var goog = {};\n" +
+        "/** @constructor */ goog.Foo = function() {}\n" +
+        "/** @type {goog.Foo} */ var x;\n" +
+        "/** @param {goog.Foo} x */ function f(x) {}\n" +
+        "/** @return {function(): goog.Foo} */ function g() {}\n" +
+        "/**\n" +
+        " * @constructor\n" +
+        " * @extends {goog.Foo}\n" +
+        " */ function Sub() {}");
+    Symbol foo = getGlobalVar(table, "goog.Foo");
+    assertNotNull(foo);
+
+    List<Reference> refs = table.getReferenceList(foo);
+    assertEquals(5, refs.size());
+
+    assertEquals(2, refs.get(0).getNode().getLineno());
+    assertEquals(20, refs.get(0).getNode().getCharno());
+    assertEquals(8, refs.get(0).getNode().getLength());
+
+    assertEquals(3, refs.get(1).getNode().getLineno());
+    assertEquals(11, refs.get(1).getNode().getCharno());
+
+    assertEquals(4, refs.get(2).getNode().getLineno());
+    assertEquals(12, refs.get(2).getNode().getCharno());
+
+    assertEquals(5, refs.get(3).getNode().getLineno());
+    assertEquals(25, refs.get(3).getNode().getCharno());
+
+    assertEquals(8, refs.get(4).getNode().getLineno());
+    assertEquals(13, refs.get(4).getNode().getCharno());
+  }
+
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   public void testReferencesInJSDocName() {
     String code = "/** @param {Object} x */ function f(x) {}\n";
     SymbolTable table = createSymbolTable(code);

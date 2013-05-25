@@ -46,10 +46,17 @@ class CodePrinter {
   // version.
 
   private abstract static class MappedCodePrinter extends CodeConsumer {
+<<<<<<< HEAD
     final private Deque<Mapping> mappings;
     final private List<Mapping> allMappings;
     final private boolean createSrcMap;
     final private SourceMap.DetailLevel sourceMapDetailLevel;
+=======
+    private final Deque<Mapping> mappings;
+    private final List<Mapping> allMappings;
+    private final boolean createSrcMap;
+    private final SourceMap.DetailLevel sourceMapDetailLevel;
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
     protected final StringBuilder code = new StringBuilder(1024);
     protected final int lineLengthThreshold;
     protected int lineLength = 0;

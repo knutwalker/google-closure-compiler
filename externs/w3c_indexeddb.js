@@ -282,6 +282,7 @@ IDBRequest.DONE;
  */
 webkitIDBRequest.DONE;
 
+<<<<<<< HEAD
 /**
  * @type {number}
  * @const
@@ -321,6 +322,35 @@ IDBRequest.prototype.source;
  * @const
  */
 IDBRequest.prototype.transaction;
+=======
+/** @type {number} */
+IDBRequest.prototype.readyState; // readonly
+
+/** @type {function(!Event)} */
+IDBRequest.prototype.onsuccess = function(e) {};
+
+/** @type {function(!Event)} */
+IDBRequest.prototype.onerror = function(e) {};
+
+/** @type {*} */
+IDBRequest.prototype.result;  // readonly
+
+/**
+ * @type {number}
+ * @deprecated Use "error"
+ */
+IDBRequest.prototype.errorCode;  // readonly
+
+
+/** @type {!DOMError} */
+IDBRequest.prototype.error; // readonly
+
+/** @type {Object} */
+IDBRequest.prototype.source; // readonly
+
+/** @type {IDBTransaction} */
+IDBRequest.prototype.transaction; // readonly
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
 
 /** @type {function(new:IDBOpenDBRequest)} */
 Window.prototype.IDBOpenDBRequest;
@@ -507,7 +537,11 @@ IDBObjectStore.prototype.openCursor = function(range, direction) {};
 
 /**
  * @param {string} name The name of the index.
+<<<<<<< HEAD
  * @param {string} keyPath The path to the index key.
+=======
+ * @param {string|!Array.<string>} keyPath The path to the index key.
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  * @param {Object=} opt_paramters Optional parameters
  *     for the created index.
  * @return {!IDBIndex} The IDBIndex object.
@@ -526,8 +560,14 @@ IDBObjectStore.prototype.index = function(name) {};
 IDBObjectStore.prototype.deleteIndex = function(indexName) {};
 
 /**
+<<<<<<< HEAD
  * @param {IDBKeyType=} key The key of this value.
  * @return {!IDBRequest} The IDBRequest object.
+=======
+ * @param {(IDBKeyType|IDBKeyRange)=} key The key of this value.
+ * @return {!IDBRequest} The IDBRequest object.
+ * @see http://www.w3.org/TR/IndexedDB/#widl-IDBObjectStore-count
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
  */
 IDBObjectStore.prototype.count = function(key) {};
 

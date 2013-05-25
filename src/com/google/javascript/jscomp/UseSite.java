@@ -45,6 +45,10 @@ class UseSite {
 
   @Override
   public boolean equals(Object o) {
+<<<<<<< HEAD
     return (o instanceof UseSite && ((UseSite)(o)).node.equals(this.node));
+=======
+    return (o instanceof UseSite && ((UseSite) o).node.equals(this.node));
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
   }
 }

@@ -31,7 +31,11 @@ interface JoinOp<L extends LatticeElement> extends Function<List<L>, L> {
    * An implementation of {@code JoinOp} that makes it easy to join to
    * lattice elements at a time.
    */
+<<<<<<< HEAD
   static abstract class BinaryJoinOp<L extends LatticeElement>
+=======
+  abstract static class BinaryJoinOp<L extends LatticeElement>
+>>>>>>> 5c522db6e745151faa1d8dc310d145e94f78ac77
       implements JoinOp<L> {
     @Override
     public final L apply(List<L> values) {
