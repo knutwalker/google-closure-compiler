@@ -36,6 +36,7 @@ import java.util.List;
  * argument is an array of the values being used for the placeholders, in the
  * order they appear in the source code.
  *
+ * @author tbreisacher@google.com (Tyler Breisacher)
  */
 class ReplaceMessagesForChrome extends JsMessageVisitor {
 
